@@ -1,0 +1,4 @@
+create database catalogo_digital_tiendita_pm;
+use catalogo_digital_tiendita_pm;
+
+CREATE TABLE producto
