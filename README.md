@@ -12,66 +12,75 @@ Sistema de catálogo digital para emprendimiento Tiendita PM, con visualización
 
 ## Instalación (entorno de desarrollo)
 
+<details>
+
+<summary>Click para pasos de instalación</summary>
+
+### Instalando en entorno de desarrollo
+
 1. Clonar el repositorio en el directorio deseado:
 
 *Se recomienda clonar el repositorio usando SSH en lugar de URL web*
 
-´´´bash
+```bash
 git clone https://github.com/garaneda21/catalogo-digital-tiendita-pm
 cd catalogo-digital-tiendita-pm
-´´´
+```
 
 2. Instalar dependendias de PHP:
 
-´´´bash
+```bash
 composer install
-´´´
+```
 
 3. Configura el archivo ´.env´ a partir del de ejemplo para el entorno de desarrollo:
 
 - Configurar principalmente la conexión a la base de datos
 
-´´´bash
+```bash
 cp .env.example .env
-´´´
+```
 
 4. Generar clave de aplicación en archivo ´.env´:
 
-´´´bash
+```bash
 php artisan key:generate
-´´´
+```
 
 5. Correr las migraciones de base de datos:
 
-´´´bash
+```bash
 php artisan migrate
-´´´
+```
 
 6. Iniciar servidor de desarrollo:
 
-´´´bash
+```bash
 php artisan serve
-´´´
+```
+
+    
+</details>
 
 ## Contribución
 
 1. Crea una rama para tu funcionalidad/tarea:
 
-´´´bash
+```bash
 git switch -c feature/<nombre-funcionalidad/tarea>
-´´´
+```
 
 2. Realiza cambios y haz commit:
 
-´´´bash
+```bash
 git add <archivos-cambiados>
 git commit -m "<descripcion pequeña del cambio>"
-´´´
+```
 
 3. Pushea tus cambios de la rama:
 
-´´´bash
+```bash
 git push origin feature/<nombre-funcionalidad/tarea> 
-´´´
+```
 
 4. Crea un Pull Request (PR) a la rama ´develop´ desde GitHub para que sea revisado por otro desarrollador
