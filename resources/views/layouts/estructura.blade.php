@@ -1,11 +1,15 @@
+{{-- Esta define la estructura (header, footer) de las vistas que aparezcan en el sitio web  --}}
+{{-- En este caso lo que variaría en cada pagina es el titulo (@yield('titulo')) y el 
+contenido @yield('contenido_catalogo') --}}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Descubre los mejores productos de belleza en Tiendita PM. Perfumes, skincare, maquillaje y más. ¡Compra directo por WhatsApp!">
-  <title>Tiendita PM</title>
-
+  <title>@yield('titulo_catalogo')</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
   <style> 
   /* Estos estilos son para la barra nav de las categorias */
     nav ul {
@@ -143,55 +147,12 @@ footer p {
     </nav>
   </header>
 
-  <section class="hero">
-    <h2>Descubre tu belleza con Tiendita PM ✨</h2>
-    <p>Perfumes, skincare, maquillaje y más. ¡Compra con confianza!</p>
-    <button href="catalogo.html">Ver catálogo</button>
-    <button onclick="window.open('https://wa.me/56912345678?text=Hola%20Tiendita%20PM%2C%20vi%20tu%20cat%C3%A1logo%20y%20me%20interesa%20un%20producto%20%F0%9F%98%8A')">Comprar por WhatsApp</button>
-  </section>
-
-  <section class="destacados" id="catalogo">
-    <h3 class="section-title">Productos Destacados</h3>
-    <div class="productos">
-      <div class="producto">
-        <img src="https://via.placeholder.com/250x250?text=Perfume+1" alt="Perfume">
-        <h3>Perfume Floral</h3>
-        <p>$12.990</p>
-      </div>
-      <div class="producto">
-        <img src="https://via.placeholder.com/250x250?text=Maquillaje" alt="Maquillaje">
-        <h3>Paleta de Sombras</h3>
-        <p>$9.990</p>
-      </div>
-      <div class="producto">
-        <img src="https://via.placeholder.com/250x250?text=Skincare" alt="Skincare">
-        <h3>Kit Skincare</h3>
-        <p>$14.990</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="categorias">
-    <h3 class="section-title">Categorías</h3>
-    <div class="items">
-      <div class="categoria">
-        <img src="https://via.placeholder.com/250x150?text=Perfumes" alt="Perfumes">
-        <h3>Perfumes</h3>
-      </div>
-      <div class="categoria">
-        <img src="https://via.placeholder.com/250x150?text=Maquillaje" alt="Maquillaje">
-        <h3>Maquillaje</h3>
-      </div>
-      <div class="categoria">
-        <img src="https://via.placeholder.com/250x150?text=Skincare" alt="Skincare">
-        <h3>Skincare</h3>
-      </div>
-    </div>
-  </section>
+  @yield('contenido_catalogo')
 
   <footer id="contacto">
     <p>Contáctanos por WhatsApp o síguenos en redes sociales.</p>
     <p>© 2025 Tiendita PM - Todos los derechos reservados</p>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 </html>
