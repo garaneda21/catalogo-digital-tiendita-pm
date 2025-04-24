@@ -7,21 +7,21 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Ejecutar las migraciones.
+     * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
         Schema::create('accion', function (Blueprint $table) {
-            $table->id('id_accion')->unsigned();  // Define un ID auto-incremental y sin signo
-            $table->integer('nombre_accion')->unsigned();  // Define un entero sin signo
-            $table->primary('id_accion');  // Define la clave primaria
+            $table->id('id_accion')->unsigned();
+            $table->integer('nombre_accion')->unsigned();
+            $table->primary('id_accion');
         });
     }
 
     /**
-     * Revertir las migraciones.
+     * Reverse the migrations.
      *
      * @return void
      */
