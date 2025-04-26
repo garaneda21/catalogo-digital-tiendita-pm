@@ -14,12 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('administrador', function (Blueprint $table) {
-            $table->id('id_admin')->unsigned();
+            $table->id();
             $table->string('nombre_admin', 50);
             $table->string('correo_admin', 100);
             $table->string('pwd', 255);
             $table->boolean('activo')->default(0);
-            $table->primary('id_admin');
         });
     }
 

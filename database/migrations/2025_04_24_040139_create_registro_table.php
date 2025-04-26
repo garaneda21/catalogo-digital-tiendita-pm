@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('registro', function (Blueprint $table) {
-            $table->id('id_registro')->unsigned();
+            $table->id();
             $table->dateTime('fecha_hora');
             $table->foreignId('id_accion')->constrained('accion')->onDelete('cascade');
             $table->foreignId('id_producto')->constrained('producto')->onDelete('cascade');
             $table->foreignId('id_admin')->constrained('administrador')->onDelete('cascade');
-            $table->primary('id_registro');
         });
     }
 

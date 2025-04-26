@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('producto', function (Blueprint $table) {
-            $table->id('id_producto')->unsigned();
+            $table->id();
             $table->string('nombre_producto', 250);
             $table->text('descripcion')->nullable();
             $table->integer('stock_actual')->unsigned()->default(0);
@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('imagen_url', 500)->nullable();
             $table->foreignId('id_estado')->constrained('estado')->onDelete('cascade');
             $table->foreignId('id_categoria')->constrained('categoria')->onDelete('cascade');
-            $table->primary('id_producto');
         });
     }
 
