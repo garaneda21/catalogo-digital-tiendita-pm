@@ -16,6 +16,7 @@ class Producto extends Model
         'stock_actual',
         'precio',
         'imagen_url',
-        'nombre_producto',
     ];
+
+    public $timestamps = false;
 }

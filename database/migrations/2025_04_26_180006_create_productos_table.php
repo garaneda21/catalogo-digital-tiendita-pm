@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Estado;
 use App\Models\Categoria;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,7 +20,7 @@ return new class extends Migration
             $table->integer('stock_actual', false, true)->default(0);
             $table->decimal('precio', 12, 2)->default(0.00);
             $table->string('imagen_url', 500)->nullable();
-            $table->foreignIdFor(Estado::class)->constrained()->cascadeOnDelete();
+            $table->boolean('estado_producto')->default(1);
             $table->foreignIdFor(Categoria::class)->constrained()->cascadeOnDelete();
         });
     }
