@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('configuracion', function (Blueprint $table) {
-            $table->id('id_config')->unsigned();
+        Schema::create('configs', function (Blueprint $table) {
+            $table->id();
             $table->string('numero_whatsapp', 20);
             $table->string('nombre_tienda', 100);
             $table->string('seo_keywords', 250)->nullable();
             $table->text('seo_descriptions')->nullable();
-            $table->primary('id_config');
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('configuracion');
+        Schema::dropIfExists('configs');
     }
 };
