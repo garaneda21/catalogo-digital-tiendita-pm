@@ -12,10 +12,11 @@ class Producto extends Model
 
     protected $fillable = [
         'nombre_producto',
-        'drescripcion',
+        'descripcion',
         'stock_actual',
         'precio',
         'imagen_url',
+        'categoria_id',
     ];
 
     public $timestamps = false;

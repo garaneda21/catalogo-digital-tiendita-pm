@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\ProductoController;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('producto', ProductoController::class);
 
 Route::get('/{categoria}', function ($categoria) {
     $productos = Categoria::where('nombre_categoria', $categoria)->first();
@@ -18,3 +21,4 @@ Route::get('/{categoria}', function ($categoria) {
         'productos' => $productos,
     ]);
 });
+
