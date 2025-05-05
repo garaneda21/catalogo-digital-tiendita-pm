@@ -24,7 +24,7 @@
                         <!-- Nombre Producto -->
                         <div class="col-span-full">
                             <label for="nombre_producto" class="block text-sm/6 font-medium text-gray-900">Nombre
-                                    Producto <span class="text-sm text-gray-500">(requerido)</span></label>
+                                Producto <span class="text-sm text-gray-500">(requerido)</span></label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
@@ -36,14 +36,19 @@
 
                         <!-- Categoría -->
                         <div class="col-span-full">
-                            <label for="categoria" class="block text-sm/6 font-medium text-gray-900">Categoría <span class="text-sm text-gray-500">(requerido)</span></label>
+                            <label for="categoria" class="block text-sm/6 font-medium text-gray-900">Categoría <span
+                                    class="text-sm text-gray-500">(requerido)</span></label>
                             <div class="mt-2 grid grid-cols-1">
+
                                 <select id="categoria" name="categoria"
                                     class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-                                    <option value="1">Perfumes</option>
-                                    <option value="2">Ropa</option>
-                                    <option value="3">Otro</option>
+
+                                    @foreach ($categorias->all() as $categoria)
+                                        <option value="{{ $categoria->id }}">{{ $categoria->nombre_categoria }}</option>
+                                    @endforeach
+
                                 </select>
+
                                 <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
                                     viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
                                     <path fill-rule="evenodd"
@@ -55,7 +60,8 @@
 
                         <!-- Precio -->
                         <div class="col-span-full">
-                            <label for="precio" class="block text-sm/6 font-medium text-gray-900">Precio <span class="text-sm text-gray-500">(requerido)</span></label>
+                            <label for="precio" class="block text-sm/6 font-medium text-gray-900">Precio <span
+                                    class="text-sm text-gray-500">(requerido)</span></label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
@@ -67,7 +73,8 @@
 
                         <!-- Stock Actual -->
                         <div class="col-span-full">
-                            <label for="stock_actual" class="block text-sm/6 font-medium text-gray-900">Stock Actual</label>
+                            <label for="stock_actual" class="block text-sm/6 font-medium text-gray-900">Stock
+                                Actual</label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
@@ -79,7 +86,8 @@
 
                         <!-- Descripción -->
                         <div class="col-span-full">
-                            <label for="descripcion" class="block text-sm/6 font-medium text-gray-900">Descripción</label>
+                            <label for="descripcion"
+                                class="block text-sm/6 font-medium text-gray-900">Descripción</label>
                             <div class="mt-2">
                                 <textarea name="descripcion" id="descripcion" rows="3"
                                     class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"></textarea>

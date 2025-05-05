@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -15,28 +16,26 @@ class ProductoController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('crear');
+        $categorias = Categoria::all();
+
+        return view('productos.create', [
+            'categorias' => $categorias,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         // TODO: Implementar las siguientes validaciones
         // - Producto ya existe
 
         $request->validate([
-            'nombre_producto'  =>  ['required'],
+            'nombre_producto'  =>  ['required', 'max:250'],
             'categoria'        =>  ['required'],
             'descripcion'      =>  [],
             'stock_actual'     =>  ['gte:0'],
-            'precio'           =>  ['required','gte:0'],
+            'precio'           =>  ['required', 'gte:0'],
             // 'imagen_url' => [],
         ]);
 
