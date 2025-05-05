@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nombre_producto', 250);
             $table->text('descripcion')->nullable();
             $table->integer('stock_actual', false, true)->default(0);
-            $table->decimal('precio', 12, 2)->default(0.00);
+            $table->integer('precio')->default(0);
             $table->string('imagen_url', 500)->nullable();
             $table->boolean('estado_producto')->default(1);
             $table->foreignIdFor(Categoria::class)->constrained()->cascadeOnDelete();
