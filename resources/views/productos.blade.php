@@ -37,10 +37,10 @@
                             class="aspect-square w-full bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
                         <div class="p-4">
                             <h2 class="text-lg font-semibold text-gray-800">
-                                {{ $producto['nombre_producto'] }}
+                                {{ $producto->nombre_producto }}
                             </h2>
-                            <p class="text-xl font-bold text-pink-600 mt-2">$ {{ $producto['precio'] }}</p>
-                            <p class="text-md text-gray-500 mt-1">{{ $producto->categoria['nombre_categoria'] }}</p>
+                            <p class="text-xl font-bold text-pink-600 mt-2">$ {{ $producto->precio }}</p>
+                            <p class="text-md text-gray-500 mt-1">{{ $producto->categoria->nombre_categoria }}</p>
                         </div>
                     </a>
                 @endforeach
