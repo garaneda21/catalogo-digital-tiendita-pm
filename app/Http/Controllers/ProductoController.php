@@ -10,7 +10,11 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        return view('admin.productos.index');
+        $productos = Producto::paginate(10);
+
+        return view('admin.productos.index', [
+            'productos' => $productos,
+        ]);
     }
 
     public function create()
