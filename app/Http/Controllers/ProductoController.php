@@ -8,19 +8,16 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return view('admin.productos.index');
     }
 
     public function create()
     {
         $categorias = Categoria::all();
 
-        return view('productos.create', [
+        return view('admin.productos.create', [
             'categorias' => $categorias,
         ]);
     }
@@ -31,23 +28,23 @@ class ProductoController extends Controller
         // - Producto ya existe
 
         $request->validate([
-            'nombre_producto'  =>  ['required', 'max:250'],
-            'categoria'        =>  ['required'],
-            'descripcion'      =>  [],
-            'stock_actual'     =>  ['gte:0'],
-            'precio'           =>  ['required', 'gte:0'],
+            'nombre_producto' => ['required', 'max:250'],
+            'categoria' => ['required'],
+            'descripcion' => [],
+            'stock_actual' => ['gte:0'],
+            'precio' => ['required', 'gte:0'],
             // 'imagen_url' => [],
         ]);
 
         Producto::create([
-            'nombre_producto'  =>  request('nombre_producto'),
-            'categoria_id'     =>  request('categoria'),
-            'descripcion'      =>  request('descripcion'),
-            'stock_actual'     =>  request('stock_actual'),
-            'precio'           =>  request('precio'),
+            'nombre_producto' => request('nombre_producto'),
+            'categoria_id' => request('categoria'),
+            'descripcion' => request('descripcion'),
+            'stock_actual' => request('stock_actual'),
+            'precio' => request('precio'),
         ]);
 
-        return redirect('/');
+        return redirect('/admin/productos/index');
     }
 
     /**
