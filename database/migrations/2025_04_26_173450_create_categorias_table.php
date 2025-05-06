@@ -23,8 +23,10 @@ return new class extends Migration
 
         DB::table('categorias')->insert([
             ['nombre_categoria' => 'Perfumes'],
+            ['nombre_categoria' => 'Skincare'],
+            ['nombre_categoria' => 'Maquillaje'],
             ['nombre_categoria' => 'Ropa'],
-            ['nombre_categoria' => 'Accesorios'],
+            ['nombre_categoria' => 'Carteras'],
         ]);
     }
 

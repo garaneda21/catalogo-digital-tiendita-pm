@@ -5,19 +5,19 @@ use App\Models\Categoria;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('catalogo/inicio');
+    return view('/inicio');
 });
 
 Route::resource('admin/productos', ProductoController::class);
 
 Route::get('/{categoria}', function ($categoria) {
-    $productos = Categoria::where('nombre_categoria', $categoria)->first();
+    $categorias = Categoria::where('nombre_categoria', $categoria)->first();
 
-    if (! $productos) {
+    if (! $categorias) {
         abort(404);
     }
 
     return view('productos', [
-        'productos' => $productos->productos,
+        'productos' => $categorias->productos()->paginate(24),
     ]);
 });

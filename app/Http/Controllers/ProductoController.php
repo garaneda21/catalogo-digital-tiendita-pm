@@ -35,8 +35,8 @@ class ProductoController extends Controller
             'nombre_producto' => ['required', 'max:250'],
             'categoria' => ['required'],
             'descripcion' => [],
-            'stock_actual' => ['gte:0'],
-            'precio' => ['required', 'gte:0'],
+            'stock_actual' => ['gte:0', 'max:9'],
+            'precio' => ['required', 'gte:0', 'max:9'],
             // 'imagen_url' => [],
         ]);
 
