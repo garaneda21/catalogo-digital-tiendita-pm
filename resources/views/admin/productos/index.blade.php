@@ -46,7 +46,7 @@
 
                 <!-- Botón editar -->
                 <div class="w-full md:w-auto">
-                    <a href="/admin/productos/edit">
+                    <a href="{{ route('productos.edit', $producto->id) }}">
                         <button
                             class="inline-block px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">
                             Editar
