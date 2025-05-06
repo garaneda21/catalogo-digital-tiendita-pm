@@ -11,16 +11,16 @@ class ProductoController extends Controller
     public function index(Request $request)
     {
         $query = Producto::with('categoria');
-    
+
         if ($request->has('search')) {
             $query->where('nombre_producto', 'like', '%' . $request->search . '%');
         }
-    
+
         $productos = $query->paginate(10);
-    
+
         return view('admin.productos.index', compact('productos'));
     }
-    
+
 
     public function create()
     {
@@ -82,8 +82,8 @@ class ProductoController extends Controller
             'nombre_producto' => ['required', 'max:250'],
             'categoria' => ['required'],
             'descripcion' => [],
-            'stock_actual' => ['nullable', 'gte:0'],
-            'precio' => ['required', 'gte:0'],
+            'stock_actual' => ['nullable', 'gte:0', 'max:9'],
+            'precio' => ['required', 'gte:0', 'max:9'],
         ]);
 
         $producto->update([
