@@ -1,23 +1,36 @@
 <x-layouts.panel>
 
-    <div class="flex justify-between items-center mb-6">
-        <input type="text" placeholder="Buscar..." class="border px-4 py-2 rounded w-1/2">
-        <button class="bg-gray-300 p-2 rounded hover:bg-gray-400">☰</button>
+    <div class="py-4 mx-auto">
+        <form class="flex w-full">
+            <input type="text" name="search" placeholder="Buscar producto..."
+                class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm" />
+            <button type="submit"
+                class="px-4 py-2 bg-blue-600 text-white text-sm rounded-r-md hover:bg-blue-700 transition">
+                Buscar
+            </button>
+        </form>
     </div>
 
-    <div>
-        {{ $productos->links() }}
-    </div>
+    <!-- El botón para orderar y cambiar tipo de vista -->
 
-    <div class="space-y-2 p-4 mx-auto">
+    <!-- <div class="flex justify-between items-center mb-6"> -->
+    <!--     <p class="text-gray-500">ordenar por: </p> -->
+    <!--     <button class="bg-gray-300 p-2 rounded hover:bg-gray-400 px-5">☰</button> -->
+    <!-- </div> -->
+
+
+    <div class="py-4 space-y-2 mx-auto">
+
+        <div>
+            {{ $productos->appends(['search' => request('search')])->links() }}
+        </div>
 
         @foreach ($productos as $producto)
-            <div
-                class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
+            <div class="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
 
                 <!-- Imagen -->
-                <div class="w-full md:w-28 h-28 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                    <img src="https://placehold.co/400x400" alt="Perfume Floral" class="w-full h-full object-cover">
+                <div class="w-full md:w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <img src="https://placehold.co/100x100" alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
                 </div>
 
                 <!-- Info del producto -->
@@ -33,7 +46,7 @@
 
                 <!-- Botón editar -->
                 <div class="w-full md:w-auto">
-                    <a href="">
+                    <a href="/admin/productos/edit">
                         <button
                             class="inline-block px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">
                             Editar
@@ -42,12 +55,7 @@
                 </div>
             </div>
         @endforeach
-
-
     </div>
 
-    <div>
-        {{ $productos->links() }}
-    </div>
 
 </x-layouts.panel>

@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $productos = Producto::paginate(10);
+        $productos = Producto::where('nombre_producto', 'like', '%' . $request->search . '%')->paginate(10);
 
         return view('admin.productos.index', [
             'productos' => $productos,
@@ -48,7 +48,7 @@ class ProductoController extends Controller
             'precio' => request('precio'),
         ]);
 
-        return redirect('/admin/productos/index');
+        return redirect('/admin/productos/');
     }
 
     /**
