@@ -1,13 +1,11 @@
 <?php
 
+use App\Http\Controllers\ProductoController;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\CategoriaController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('catalogo/inicio');
 });
 
 Route::resource('admin/productos', ProductoController::class);
@@ -15,12 +13,11 @@ Route::resource('admin/productos', ProductoController::class);
 Route::get('/{categoria}', function ($categoria) {
     $productos = Categoria::where('nombre_categoria', $categoria)->first();
 
-    if (!$productos) {
+    if (! $productos) {
         abort(404);
     }
 
     return view('productos', [
-        'productos' => $productos,
+        'productos' => $productos->productos,
     ]);
 });
-

@@ -53,7 +53,7 @@ class ProductoController extends Controller
             'precio' => request('precio'),
         ]);
 
-        return redirect('/admin/productos/index');
+        return redirect('/admin/productos/');
     }
 
     /**
