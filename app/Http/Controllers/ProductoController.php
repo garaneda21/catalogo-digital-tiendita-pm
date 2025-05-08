@@ -41,16 +41,21 @@ class ProductoController extends Controller
             'categoria' => ['required'],
             'descripcion' => [],
             'stock_actual' => ['gte:0', 'max:9'],
-            'precio' => ['required', 'gte:0', 'max:9'],
+            'precio' => ['required', 'string', 'max:12'], //solo se verifica que llega un string ya que por el script ya viene limpio
             // 'imagen_url' => [],
         ]);
+
+        //Limpiamos el string de precio y lo dejamos como entero
+        $precioRaw = $request->input('precio'); // "$12.345"
+        $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
+
 
         Producto::create([
             'nombre_producto' => request('nombre_producto'),
             'categoria_id' => request('categoria'),
             'descripcion' => request('descripcion'),
             'stock_actual' => request('stock_actual'),
-            'precio' => request('precio'),
+            'precio' => $precio,
         ]);
 
         return redirect('/admin/productos/');
@@ -83,15 +88,20 @@ class ProductoController extends Controller
             'categoria' => ['required'],
             'descripcion' => [],
             'stock_actual' => ['nullable', 'gte:0', 'max:9'],
-            'precio' => ['required', 'gte:0', 'max:9'],
+            'precio' => ['required', 'string', 'max:12'],  //el maximo es 12 por los puntos y $
         ]);
+
+        //Limpiamos el string de precio y lo dejamos como entero
+        $precioRaw = $request->input('precio'); // "$12.345"
+        $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
+
 
         $producto->update([
             'nombre_producto' => $request->input('nombre_producto'),
             'categoria_id' => $request->input('categoria'),
             'descripcion' => $request->input('descripcion'),
             'stock_actual' => $request->input('stock_actual'),
-            'precio' => $request->input('precio'),
+            'precio' => $precio,
         ]);
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado con éxito');

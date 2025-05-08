@@ -41,7 +41,7 @@
                             Precio <span class="text-sm text-gray-500">(requerido)</span>
                         </label>
                         <div class="mt-2">
-                            <input type="number" step="1" name="precio" id="precio" 
+                            <input type="text" name="precio" id="precio" 
                             value="{{ old('precio', $producto->precio) }}" 
                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>

@@ -30,5 +30,21 @@
             {{ $slot }}
         </main>
     </div>
+    <!-- Este script es para colocarle signo peso y puntos a los input precio -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('precio');
+        
+            input.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, ''); // Solo números
+                if (value) {
+                    value = new Intl.NumberFormat('es-CL').format(value);
+                    e.target.value = '$' + value;
+                } else {
+                    e.target.value = '';
+                }
+            });
+        });
+        </script>        
 </body>
 </html>
