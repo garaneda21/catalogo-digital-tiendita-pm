@@ -42,8 +42,12 @@ class ProductoController extends Controller
             'descripcion' => [],
             'stock_actual' => ['gte:0', 'max:9'],
             'precio' => ['required', 'gte:0', 'max:9'],
-            // 'imagen_url' => [],
+            'image' => 'required|image',
         ]);
+
+        // para la imágen
+        $nombre_imagen = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $nombre_imagen);
 
         Producto::create([
             'nombre_producto' => request('nombre_producto'),
@@ -51,6 +55,7 @@ class ProductoController extends Controller
             'descripcion' => request('descripcion'),
             'stock_actual' => request('stock_actual'),
             'precio' => request('precio'),
+            'imagen_url' => '/images/' . $nombre_imagen,
         ]);
 
         return redirect('/admin/productos/');
