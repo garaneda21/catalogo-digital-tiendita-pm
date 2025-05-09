@@ -53,6 +53,36 @@
                         </button>
                     </a>
                 </div>
+
+                <!-- Botón eliminar -->
+                <div class="w-full md:w-auto">
+                    <button
+                        data-bs-toggle="modal" data-bs-target="#confirmDelete{{ $producto->id }}" class="inline-block px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition">
+                        Eliminar
+                    </button>
+                </div>
+                <!-- Modal de confirmación de eliminación -->
+                <div class="modal fade" id="confirmDelete{{ $producto->id }}" tabindex="-1" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Confirmar eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>¿Estás seguro de que deseas eliminar <strong>{{ $producto->nombre_producto }}</strong>?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <form action="{{ route('productos.destroy', $producto->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Sí, eliminar</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
         @endforeach
     </div>
