@@ -42,12 +42,14 @@ class ProductoController extends Controller
             'descripcion' => [],
             'stock_actual' => ['gte:0', 'max:9'],
             'precio' => ['required', 'gte:0', 'max:9'],
-            'image' => 'required|image',
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // para la imágen
-        $nombre_imagen = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $nombre_imagen);
+        if ($request->image) {
+            $url_imagen = '/images/' . time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $url_imagen);
+        }
 
         Producto::create([
             'nombre_producto' => request('nombre_producto'),
@@ -55,7 +57,7 @@ class ProductoController extends Controller
             'descripcion' => request('descripcion'),
             'stock_actual' => request('stock_actual'),
             'precio' => request('precio'),
-            'imagen_url' => '/images/' . $nombre_imagen,
+            'imagen_url' => $url_imagen ?? null,
         ]);
 
         return redirect('/admin/productos/');

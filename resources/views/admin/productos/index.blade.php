@@ -30,8 +30,7 @@
 
                 <!-- Imagen -->
                 <div class="w-full md:w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                    <img src="{{ $producto->imagen_url }}" alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
-                    <img src="{{ asset($producto->imange_url) }}">
+                    <img src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}" alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
                 </div>
 
                 <!-- Info del producto -->
