@@ -40,7 +40,7 @@ contenido @yield('contenido_catalogo') --}}
     {{ $slot }}
 
     <footer id="contacto" class="bg-[#3D3C63] text-white py-12">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6 text-center">
             <!-- Contacto -->
             <div>
                 <h3 class="text-xl font-semibold mb-4">Contáctanos</h3>

@@ -62,6 +62,14 @@
         </div>
     </section>
 
+    <!-- Nosotros -->
+    <section class="py-16 px-6 bg-[#f8e9d4]">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-10 text-[#D88C4B]">Nosotros</h2>
+            <p class="text-[#3D3C63] text-lg max-w-xl mx-auto">Explora una colección pensada para ti, llena de detalles, colores y productos únicos.</p>
+        </div>
+    </section>
+
 </x-components.layouts.estructura>
 
 @section('titulo_catalogo')
