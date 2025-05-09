@@ -1,52 +1,67 @@
 {{-- Con extends definimos la estructura descrita en layouts --}}
 <x-layouts.estructura>
-    <section class="hero">
-        <h2>Descubre tu belleza con Tiendita PM ✨</h2>
-        <p>Perfumes, skincare, maquillaje y más. ¡Compra con confianza!</p>
-        <button href="catalogo.html">Ver catálogo</button>
-        <button
-            onclick="window.open('https://wa.me/56912345678?text=Hola%20Tiendita%20PM%2C%20vi%20tu%20cat%C3%A1logo%20y%20me%20interesa%20un%20producto%20%F0%9F%98%8A')">Comprar
-            por WhatsApp</button>
+    <!-- Hero -->
+    <section class="text-center py-20 px-6 bg-[#f8e9d4]">
+        <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
+        <p class="text-[#587A6C] text-lg max-w-xl mx-auto">Explora una colección pensada para ti, llena de detalles, colores y productos únicos.</p>
+        <a href="#catalogo" class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">Ver Catálogo</a>
     </section>
 
-    <section class="destacados" id="catalogo">
-        <h3 class="section-title">Productos Destacados</h3>
-        <div class="productos">
-            <div class="producto">
-                <img src="https://via.placeholder.com/250x250?text=Perfume+1" alt="Perfume">
-                <h3>Perfume Floral</h3>
-                <p>$12.990</p>
-            </div>
-            <div class="producto">
-                <img src="https://via.placeholder.com/250x250?text=Maquillaje" alt="Maquillaje">
-                <h3>Paleta de Sombras</h3>
-                <p>$9.990</p>
-            </div>
-            <div class="producto">
-                <img src="https://via.placeholder.com/250x250?text=Skincare" alt="Skincare">
-                <h3>Kit Skincare</h3>
-                <p>$14.990</p>
+    <!-- Destacados -->
+    <section class="py-16 px-6 bg-[#fcf6ed]">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-semibold text-center mb-10">Productos Destacados</h2>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Producto 1" class="w-full h-64 object-cover rounded-t-2xl">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Producto 1</h3>
+                        <p class="text-[#D88C4B] font-semibold">$12.000</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Producto 2" class="w-full h-64 object-cover rounded-t-2xl">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Producto 2</h3>
+                        <p class="text-[#D88C4B] font-semibold">$15.500</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Producto 3" class="w-full h-64 object-cover rounded-t-2xl">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Producto 3</h3>
+                        <p class="text-[#D88C4B] font-semibold">$18.990</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="categorias">
-        <h3 class="section-title">Categorías</h3>
-        <div class="items">
-            <div class="categoria">
-                <img src="https://via.placeholder.com/250x150?text=Perfumes" alt="Perfumes">
-                <h3>Perfumes</h3>
-            </div>
-            <div class="categoria">
-                <img src="https://via.placeholder.com/250x150?text=Maquillaje" alt="Maquillaje">
-                <h3>Maquillaje</h3>
-            </div>
-            <div class="categoria">
-                <img src="https://via.placeholder.com/250x150?text=Skincare" alt="Skincare">
-                <h3>Skincare</h3>
+    <!-- Categorías -->
+    <section class="py-16 px-6 bg-[#fcf6ed]">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-semibold text-center mb-10">Categorías</h2>
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Perfumes" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Perfumes</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Skincare" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Skincare</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Maquillaje" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Maquillaje</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Ropa" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Ropa</h3>
+                </div>
             </div>
         </div>
     </section>
+
 </x-components.layouts.estructura>
 
 @section('titulo_catalogo')
