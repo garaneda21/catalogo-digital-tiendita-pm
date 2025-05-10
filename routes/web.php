@@ -8,6 +8,7 @@ Route::get('/', function () {
     return view('/inicio');
 });
 
+Route::redirect('admin', 'admin/productos');
 Route::resource('admin/productos', ProductoController::class);
 
 Route::get('/{categoria}', function ($categoria) {
