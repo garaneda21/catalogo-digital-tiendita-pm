@@ -10,186 +10,59 @@ contenido @yield('contenido_catalogo') --}}
     <meta name="description"
         content="Descubre los mejores productos de belleza en Tiendita PM. Perfumes, skincare, maquillaje y más. ¡Compra directo por WhatsApp!">
     <title>@yield('titulo_catalogo')</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estos estilos son para la barra nav de las categorias */
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 1rem;
-        }
-
-        nav li {
-            position: relative;
-        }
-
-        nav ul ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            padding: 0.5rem;
-        }
-
-        nav li:hover>ul {
-            display: block;
-        }
-
-        nav a {
-            text-decoration: none;
-        }
-
-        /*Los siguientes son estilos que entregó el chatgpt xdd*/
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
-
         body {
-            background-color: #fff8f2;
-            color: #333;
+            font-family: 'Open Sans', sans-serif;
         }
-
-        header {
-            background-color: #ff914d;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        header h1 {
-            color: white;
-            font-size: 1.8rem;
-        }
-
-        nav a {
-            margin-left: 1.5rem;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .hero {
-            background: linear-gradient(to right, #ffc3a0, #ffafbd);
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .hero h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-
-        .hero button {
-            background-color: #ff6f00;
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .destacados,
-        .categorias,
-        .beneficios,
-        footer {
-            padding: 2rem;
-        }
-
-        .section-title {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-        }
-
-        .productos,
-        .items {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .producto,
-        .categoria,
-        .beneficio {
-            background: white;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            flex: 1 1 calc(33% - 1rem);
-            min-width: 200px;
-        }
-
-        .producto img,
-        .categoria img {
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        .producto h3,
-        .categoria h3 {
-            margin: 0.5rem 0;
-        }
-
-        footer {
-            background-color: #ff914d;
-            color: white;
-            text-align: center;
-        }
-
-        footer p {
-            padding: 1rem 0;
-        }
-
-        @media (max-width: 768px) {
-
-            .producto,
-            .categoria,
-            .beneficio {
-                flex: 1 1 100%;
-            }
+        h1, h2, h3, h4 {
+          font-family: 'Playfair Display', serif;
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <h1>Tiendita PM</h1>
-        <nav>
-            <ul>
-                <!-- <li><input type="text" placeholder="Buscar producto"></li> -->
-                <li><a href="/">Inicio</a></li>
-                <li>
-                    <a href="#categorias">Categorías</a>
-                    <ul>
-                        <li><a href="/perfumes">Perfumes</a></li>
-                        <li><a href="/skincare">Skincare</a></li>
-                        <li><a href="/maquillaje">Maquillaje</a></li>
-                        <li><a href="/ropa">Ropa</a></li>
-                        <li><a href="/carteras">Carteras</a></li>
-                    </ul>
-                </li>
-                <li><a href="#Nosotros">Nosotros</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
+    <header class="bg-[#f8e9d4]">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-serif text-[#3D3C63]">Tiendita PM</h1>
+            <nav class="space-x-6 text-sm font-semibold">
+                <a href="/" class=" text-[#D88C4B] hover:text-[#3D3C63]">Inicio</a>
+                <a href="/perfumes" class="text-[#D88C4B] hover:text-[#3D3C63]">Catálogo</a>
+                <a href="#nosotros" class="text-[#D88C4B] hover:text-[#3D3C63]">Nosotros</a>
+                <a href="#contacto" class="text-[#D88C4B] hover:text-[#3D3C63]">Contacto</a>
+            </nav>
+        </div>
     </header>
 
     {{ $slot }}
 
-    <footer id="contacto">
-        <p>Contáctanos por WhatsApp o síguenos en redes sociales.</p>
-        <p>© 2025 Tiendita PM - Todos los derechos reservados</p>
+    <footer id="contacto" class="bg-[#3D3C63] text-white py-12">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6 text-center">
+            <!-- Contacto -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Contáctanos</h3>
+                <p>Email: hola@tienditapm.cl</p>
+                <p>WhatsApp: +56 9 1234 5678</p>
+            </div>
+            <!-- Redes Sociales -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Síguenos</h3>
+                <ul>
+                    <li><a href="#" class="hover:underline">Instagram</a></li>
+                    <li><a href="#" class="hover:underline">Facebook</a></li>
+                    <li><a href="#" class="hover:underline">TikTok</a></li>
+                </ul>
+            </div>
+            <!-- Nosotros -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Nosotros</h3>
+                <p>Pequeño emprendimiento con alma creativa. Diseñamos con pasión para ti.</p>
+            </div>
+        </div>
+        <div class="text-center mt-8 text-sm text-[#E5B958]">© 2025 Tiendita PM. Todos los derechos reservados.</div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
