@@ -41,10 +41,14 @@ class ProductoController extends Controller
             'categoria' => ['required'],
             'descripcion' => [],
             'stock_actual' => ['gte:0', 'max:9'],
-            'precio' => ['required', 'gte:0', 'max:9'],
+            'precio' => ['required', 'string', 'max:12'],
             'imagen' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
+        //Limpiamos el string de precio y lo dejamos como entero
+        $precioRaw = $request->input('precio'); // "$12.345"
+        $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
+      
         // para la imágen
         if ($request->imagen) {
             $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
@@ -56,7 +60,7 @@ class ProductoController extends Controller
             'categoria_id' => request('categoria'),
             'descripcion' => request('descripcion'),
             'stock_actual' => request('stock_actual'),
-            'precio' => request('precio'),
+            'precio' => $precio,
             'imagen_url' => $url_imagen ?? null,
         ]);
 
@@ -91,10 +95,14 @@ class ProductoController extends Controller
             'categoria' => ['required'],
             'descripcion' => [],
             'stock_actual' => ['nullable', 'gte:0', 'max:9'],
-            'precio' => ['required', 'gte:0', 'max:9'],
+            'precio' => ['required', 'string', 'max:12'],  //el maximo es 12 por los puntos y $
             'imagen' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
+        //Limpiamos el string de precio y lo dejamos como entero
+        $precioRaw = $request->input('precio'); // "$12.345"
+        $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
+      
         // para la imágen
         if ($request->imagen) {
             $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
@@ -111,7 +119,7 @@ class ProductoController extends Controller
             'categoria_id' => $request->input('categoria'),
             'descripcion' => $request->input('descripcion'),
             'stock_actual' => $request->input('stock_actual'),
-            'precio' => $request->input('precio'),
+            'precio' => $precio,
             'imagen_url' => $url_imagen ?? $producto->imagen_url,
         ]);
 
@@ -123,6 +131,8 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
     }
 }
