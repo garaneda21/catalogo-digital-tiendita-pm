@@ -15,7 +15,8 @@
                 @foreach ($productos as $producto)
                     <a href="#" data-bs-toggle="modal" data-bs-target="#modal{{ $producto->id }}" 
                         class="border rounded-2xl overflow-hidden group shadow hover:shadow-lg bg-gray-50 hover:bg-gray-100">
-                        <img src="https://placehold.co/500x500" alt=""
+                        <img src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}" alt="{{ $producto->nombre_producto}}"
+
                             class="aspect-square w-full bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
                         <div class="p-4">   
                             <h2 class="text-lg font-semibold text-gray-800">

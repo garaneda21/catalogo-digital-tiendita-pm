@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductoController extends Controller
 {
@@ -13,14 +14,13 @@ class ProductoController extends Controller
         $query = Producto::with('categoria');
 
         if ($request->has('search')) {
-            $query->where('nombre_producto', 'like', '%' . $request->search . '%');
+            $query->where('nombre_producto', 'like', '%'.$request->search.'%');
         }
 
         $productos = $query->paginate(10);
 
         return view('admin.productos.index', compact('productos'));
     }
-
 
     public function create()
     {
@@ -41,14 +41,19 @@ class ProductoController extends Controller
             'categoria' => ['required'],
             'descripcion' => [],
             'stock_actual' => ['gte:0', 'max:9'],
-            'precio' => ['required', 'string', 'max:12'], //solo se verifica que llega un string ya que por el script ya viene limpio
-            // 'imagen_url' => [],
+            'precio' => ['required', 'string', 'max:12'],
+            'imagen' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
         //Limpiamos el string de precio y lo dejamos como entero
         $precioRaw = $request->input('precio'); // "$12.345"
         $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
-
+      
+        // para la imágen
+        if ($request->imagen) {
+            $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
+            $request->imagen->move(public_path('images/productos'), $url_imagen);
+        }
 
         Producto::create([
             'nombre_producto' => request('nombre_producto'),
@@ -56,6 +61,7 @@ class ProductoController extends Controller
             'descripcion' => request('descripcion'),
             'stock_actual' => request('stock_actual'),
             'precio' => $precio,
+            'imagen_url' => $url_imagen ?? null,
         ]);
 
         return redirect('/admin/productos/');
@@ -75,6 +81,7 @@ class ProductoController extends Controller
     public function edit(Producto $producto)
     {
         $categorias = Categoria::all();
+
         return view('admin.productos.edit', compact('producto', 'categorias'));
     }
 
@@ -89,12 +96,23 @@ class ProductoController extends Controller
             'descripcion' => [],
             'stock_actual' => ['nullable', 'gte:0', 'max:9'],
             'precio' => ['required', 'string', 'max:12'],  //el maximo es 12 por los puntos y $
+            'imagen' => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
 
         //Limpiamos el string de precio y lo dejamos como entero
         $precioRaw = $request->input('precio'); // "$12.345"
         $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
+      
+        // para la imágen
+        if ($request->imagen) {
+            $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
+            $request->imagen->move(public_path('images/productos'), $url_imagen);
 
+            // TODO: eliminar imagen anterior
+            /* if ($producto->imagen_url && File::exists($producto->imagen_url)) { */
+            /*     File::delete($producto->imagen_url); */
+            /* } */
+        }
 
         $producto->update([
             'nombre_producto' => $request->input('nombre_producto'),
@@ -102,6 +120,7 @@ class ProductoController extends Controller
             'descripcion' => $request->input('descripcion'),
             'stock_actual' => $request->input('stock_actual'),
             'precio' => $precio,
+            'imagen_url' => $url_imagen ?? $producto->imagen_url,
         ]);
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado con éxito');
