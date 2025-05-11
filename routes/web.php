@@ -52,3 +52,11 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
 
     return view('productos', compact('productos'));
 });
+
+// Ruta para vista en detalle de cada producto
+/* 
+    NOTA: Para mejorar posicionamiento web y mejor visibilidad de las URL, se recomienda
+    usar slug en vez de id para las rutas.
+*/
+Route::get('/producto/{id}', [ProductoController::class, 'show'])->name('producto.show');
+
