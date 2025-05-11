@@ -3,7 +3,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <!-- Imagen del producto -->
             <div class="w-full">
-                <img src="https://placehold.co/500x500" alt="{{ $producto->nombre_producto }}" class="rounded-2xl shadow-lg w-full object-cover">
+                <img src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}" alt="{{ $producto->nombre_producto }}" class="rounded-2xl shadow-lg w-full object-cover">
             </div>
 
             <!-- Información del producto -->
@@ -23,8 +23,8 @@
                     </form>
 
                     <!-- Botón WhatsApp -->
-                    <a 
-                        href="https://wa.me/56979828311?text={{ urlencode('Hola!, estoy interesad@ en el producto ' . $producto->nombre_producto) }}" 
+                    <a
+                        href="https://wa.me/56979828311?text={{ urlencode('Hola!, estoy interesad@ en el producto ' . $producto->nombre_producto) }}"
                         target="_blank"
                         class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-xl shadow flex items-center gap-2"
                     >
@@ -32,7 +32,7 @@
                         WhatsApp
                     </a>
                 </div>
-                
+
                 <p class="text-gray-600">Descripción:<br>{{ $producto->descripcion }}</p>
 
             </div>
