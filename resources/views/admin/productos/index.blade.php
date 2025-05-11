@@ -1,16 +1,5 @@
 <x-layouts.panel>
 
-    <div class="py-4 mx-auto">
-        <form class="flex w-full">
-            <input type="text" name="search" placeholder="Buscar producto..." value="{{ request('search') }}"
-                class="flex-grow px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm" />
-            <button type="submit"
-                class="px-4 py-2 bg-blue-600 text-white text-sm rounded-r-md hover:bg-blue-700 transition">
-                Buscar
-            </button>
-        </form>
-    </div>
-
     <!-- El botón para orderar y cambiar tipo de vista -->
 
     <!-- <div class="flex justify-between items-center mb-6"> -->
@@ -25,23 +14,21 @@
             {{ $productos->appends(['search' => request('search')])->links() }}
         </div>
 
-        <form method="GET" class="mb-4">
-            <input type="hidden" name="search" value="{{ request('search') }}">
-
-            <label for="ordering" class="bloce mb-1 text-sm font-medium text-gray-700">Ordenar por:</label>
-            <select name="ordering" id="ordering" onchange="this.form.submit()"
-                class="block bg-[#587A6C] text-[#F7F5F2] w-full max-w-xs px-3 py-2 rounded-2xl shadow-sm focus:outline focus:ring-blue-500 focus:border-blue-500 text-sm">
-                <option value="">-- Seleccionar --</option>
-                <option value="nombre_asc" {{ request('ordering') == 'nombre_asc' ? 'selected' : '' }}>Nombre (A-Z)
+        <div class="columns-2">
+            <x-select-orden>
+                <option value="nombre_asc" {{ request('ordering') == 'nombre_asc' ? 'selected' : '' }}>Nombre
+                    (A-Z)
                 </option>
                 <option value="nombre_desc" {{ request('ordering') == 'nombre_desc' ? 'selected' : '' }}>Nombre
                     (Z-A)</option>
-                <option value="precio_asc" {{ request('ordering') == 'precio_asc' ? 'selected' : '' }}>Precio (menor
+                <option value="precio_asc" {{ request('ordering') == 'precio_asc' ? 'selected' : '' }}>Precio
+                    (menor
                     a mayor)</option>
                 <option value="precio_desc" {{ request('ordering') == 'precio_desc' ? 'selected' : '' }}>Precio
                     (mayor a menor)</option>
-            </select>
-        </form>
+            </x-select-orden>
+            <x-cuadro-busqueda></x-cuadro-busqueda>
+        </div>
 
         @foreach ($productos as $producto)
             <div
