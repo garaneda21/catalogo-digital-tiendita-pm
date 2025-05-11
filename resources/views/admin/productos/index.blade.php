@@ -42,7 +42,7 @@
 
                 <!-- Info del producto -->
                 <div class="flex-1 space-y-1">
-                    <h2 class="text-lg font-semibold text-gray-800">{{ $producto->nombre_producto }}</h2>
+                    <h2 class="text-lg font-semibold text-gray-800"><a href="#" data-bs-toggle="modal" data-bs-target="#modal{{ $producto->id }}">{{ $producto->nombre_producto }}</a></h2>
 
                     <div class="text-sm text-gray-600">
                         <span class="font-medium">Precio:</span> ${{ $producto->precio }}<br>
@@ -89,6 +89,29 @@
                                 </form>
                                 <button type="button" class="btn btn-secondary btn-sm"
                                     data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para ver detalles de producto (con bootstrap)-->
+                <!-- Se activará cuando se clickee el nombre del producto -->
+                <div class="modal fade" id="modal{{ $producto->id }}" tabindex="-1">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><strong>{{ $producto->nombre_producto }}</strong></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="https://placehold.co/500x500" alt=""
+                                    class="aspect-square w-full bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
+                                <p><strong>Precio:</strong> ${{ number_format($producto->precio, 0, ',', '.') }}
+                                </p>
+                                <p><strong>Descripción:</strong> {{ $producto->descripcion }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>

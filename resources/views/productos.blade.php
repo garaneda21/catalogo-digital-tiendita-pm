@@ -34,7 +34,7 @@
         <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-8">
 
             @foreach ($productos as $producto)
-                <a href="#" data-bs-toggle="modal" data-bs-target="#modal{{ $producto->id }}"
+                <a href="{{ route('producto.show', $producto->id) }}"
                     class="group text-center">
                     <img src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}"
                         alt="{{ $producto->nombre_producto }}"
@@ -49,27 +49,6 @@
                     </div>
                 </a>
 
-                <!-- Modal para ver detalles de producto (con bootstrap)-->
-                <div class="modal fade" id="modal{{ $producto->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"><strong>{{ $producto->nombre_producto }}</strong></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <img src="https://placehold.co/500x500" alt=""
-                                    class="aspect-square w-full bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
-                                <p><strong>Precio:</strong> ${{ number_format($producto->precio, 0, ',', '.') }}
-                                </p>
-                                <p><strong>Descripción:</strong> {{ $producto->descripcion }}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             @endforeach
         </div>
     </div>
