@@ -1,6 +1,6 @@
 <x-layouts.panel>
 
-    <form method="POST" action="{{ route('productos.update', $producto->id) }}">
+    <form method="POST" enctype="multipart/form-data" action="{{ route('productos.update', $producto->id) }}">
         @csrf
         @method('PUT')
 
@@ -10,80 +10,90 @@
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
-                    <div class="col-span-full">
-                        <label for="nombre_producto" class="block text-sm/6 font-medium text-gray-900">
-                            Nombre Producto <span class="text-sm text-gray-500">(requerido)</span>
-                        </label>
-                        <div class="mt-2">
-                            <input type="text" name="nombre_producto" id="nombre_producto"
-                            value="{{ old('nombre_producto', $producto->nombre_producto) }}"
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        </div>
-                    </div>
 
-                    <div class="col-span-full">
-                        <label for="categoria" class="block text-sm/6 font-medium text-gray-900">
-                            Categoría <span class="text-sm text-gray-500">(requerido)</span>
-                        </label>
+                    <!-- Nombre Producto -->
+                    <x-form-field>
+                        <x-form-label for="nombre_producto">Nombre Producto
+                            <span class="text-sm text-red-500">(requerido)</span>
+                        </x-form-label>
                         <div class="mt-2">
-                            <select name="categoria" id="categoria" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                @foreach ($categorias as $categoria)
-                                    <option value="{{ $categoria->id }}" {{ $producto->categoria_id == $categoria->id ? 'selected' : '' }}>
+                            <x-form-input type="text" name="nombre_producto" id="nombre_producto"
+                                value="{{ $producto->nombre_producto }}"></x-form-input>
+                        </div>
+                    </x-form-field>
+
+                    <!-- Categoría -->
+                    <x-form-field>
+                        <x-form-label for="categoria">Categoría
+                            <span class="text-sm text-red-500">(requerido)</span>
+                        </x-form-label>
+                        <div class="mt-2">
+                            <x-form-select id="categoria" name="categoria">
+                                @foreach ($categorias->all() as $categoria)
+                                    {{ $esta_seleccionado = $producto->categoria_id == $categoria->id ? true : false }}
+                                    <option value="{{ $categoria->id }}" {{ $esta_seleccionado ? 'selected' : '' }}>
                                         {{ $categoria->nombre_categoria }}
+                                        {{ $esta_seleccionado ? '(seleccionado)' : '' }}
                                     </option>
                                 @endforeach
-                            </select>
+                            </x-form-select>
                         </div>
-                    </div>
+                    </x-form-field>
 
-                    <div class="col-span-full">
-                        <label for="precio" class="block text-sm/6 font-medium text-gray-900">
-                            Precio <span class="text-sm text-gray-500">(requerido)</span>
-                        </label>
+                    <!-- Precio -->
+                    <x-form-field>
+                        <x-form-label for="precio">Precio
+                            <span class="text-sm text-red-500">(requerido)</span>
+                        </x-form-label>
                         <div class="mt-2">
-                            <input type="number" step="1" name="precio" id="precio" 
-                            value="{{ old('precio', $producto->precio) }}" 
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            <x-form-input type="text" name="precio" id="precio"
+                                value="{{ $producto->precio }}"></x-form-input>
                         </div>
-                    </div>
+                    </x-form-field>
 
-                    <div class="col-span-full">
-                    <label for="stock_actual" class="block text-sm/6 font-medium text-gray-900">Stock Actual</label>
+                    <!-- Stock Actual -->
+                    <x-form-field>
+                        <x-form-label for="stock_actual">Stock Actual</x-form-label>
                         <div class="mt-2">
-                            <input type="number" name="stock_actual" id="stock_actual" min="0" 
-                            value="{{ old('stock_actual', $producto->stock_actual) }}"
-                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            <x-form-input type="text" name="stock_actual" id="stock_actual"
+                                value="{{ $producto->stock_actual }}"></x-form-input>
                         </div>
-                    </div>
+                    </x-form-field>
 
-                    <div class="col-span-full">
-                        <label for="descripcion" class="block text-sm/6 font-medium text-gray-900">Descripción</label>
+
+                    <!-- Descripción -->
+                    <x-form-field>
+                        <x-form-label for="descripcion">Descripción</x-form-label>
                         <div class="mt-2">
-                            <textarea name="descripcion" id="descripcion" rows="3"
-                                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{ old('descripcion', $producto->descripcion) }}</textarea>
+                            <x-form-textarea name="descripcion" id="descripcion"
+                                rows="3">{{ $producto->descripcion }}</x-form-textarea>
                         </div>
-                    </div>
+                    </x-form-field>
+
+                    <!-- Imagen -->
+                    <x-form-field>
+                        <x-form-label for="imagen">Imagen del producto</x-form-label>
+
+                        <div class="mt-2">
+                            <x-form-input-image :imagen_actual="$producto->imagen_url" />
+                        </div>
+                    </x-form-field>
 
                     @if ($errors->any())
-                        <div class="col-span-full mt-4 text-sm text-red-600">
-                            <ul class="list-disc pl-5 space-y-1">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                        <x-form-errorcard />
                     @endif
                 </div>
             </div>
+
+            <div class="mt-6 flex items-center justify-end gap-x-6">
+                <a href="{{ route('productos.index') }}" class="text-sm/6 font-semibold text-gray-900">Cancelar</a>
+                <button type="submit"
+                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Actualizar
+                </button>
+            </div>
         </div>
-        
-        <div class="mt-6 flex items-center justify-end gap-x-6">
-            <a href="{{ route('productos.index') }}" class="text-sm/6 font-semibold text-gray-900">Cancelar</a>
-            <button type="submit"
-            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Actualizar
-            </button>
-        </div>
+
     </form>
 
 </x-layouts.panel>
