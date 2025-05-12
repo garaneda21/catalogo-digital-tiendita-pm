@@ -1,5 +1,17 @@
 {{-- Con extends definimos la estructura descrita en layouts --}}
 <x-layouts.estructura>
+
+    <!-- Barra de categorías -->
+    <div class="w-full bg-[#f8e9d4] py-2 px-4 overflow-w-auto">
+        <div class="flex justify-center space-x-4 whitespace-nowrap">
+            <x-categoria-barra href="/perfumes">Perfumes</x-categoria-barra>
+            <x-categoria-barra href="/skincare">Skincare</x-categoria-barra>
+            <x-categoria-barra href="/maquillaje">Maquillaje</x-categoria-barra>
+            <x-categoria-barra href="/ropa">Ropa</x-categoria-barra>
+            <x-categoria-barra href="/carteras">Carteras</x-categoria-barra>
+        </div>
+    </div>
+
     <section class="py-2 px-6 bg-[#f8e9d4]">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
 
