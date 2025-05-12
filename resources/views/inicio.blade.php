@@ -1,5 +1,6 @@
 {{-- Con extends definimos la estructura descrita en layouts --}}
 <x-layouts.estructura>
+
     <!-- Barra de categorías -->
     <div class="w-full bg-[#f8e9d4] py-2 px-4 overflow-w-auto">
         <div class="flex justify-center space-x-4 whitespace-nowrap">
@@ -10,14 +11,27 @@
             <x-categoria-barra href="/carteras">Carteras</x-categoria-barra>
         </div>
     </div>
-    <!-- Hero -->
-    <section class="text-center py-20 px-6 bg-[#f8e9d4]">
-        <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
-        <p class="text-[#587A6C] text-lg max-w-xl mx-auto">Explora una colección pensada para ti, llena de detalles,
-            colores y productos únicos.</p>
-        <a href="#catalogo"
-            class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">Ver
-            Catálogo</a>
+
+    <section class="py-2 px-6 bg-[#f8e9d4]">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+
+            <!-- Texto a la izquierda -->
+            <div class="md:w-1/2 text-left">
+                <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
+                <p class="text-[#587A6C] text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de detalles,
+                    colores y productos únicos.</p>
+                <a href="/perfumes"
+                    class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">
+                    Ver Catálogo
+                </a>
+            </div>
+
+            <!-- Logo a la derecha -->
+            <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
+                <img src="/images/logo.jpeg" alt="Logo Tiendita PM" class="max-w-[400px] h-auto" />
+            </div>
+
+        </div>
     </section>
 
     <!-- Destacados -->
@@ -90,5 +104,5 @@
     </x-components.layouts.estructura>
 
     @section('titulo_catalogo')
-    Tiendita PM
+        Tiendita PM
     @endsection
