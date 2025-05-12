@@ -1,10 +1,25 @@
 {{-- Con extends definimos la estructura descrita en layouts --}}
 <x-layouts.estructura>
-    <!-- Hero -->
-    <section class="text-center py-20 px-6 bg-[#f8e9d4]">
-        <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
-        <p class="text-[#587A6C] text-lg max-w-xl mx-auto">Explora una colección pensada para ti, llena de detalles, colores y productos únicos.</p>
-        <a href="#catalogo" class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">Ver Catálogo</a>
+    <section class="py-2 px-6 bg-[#f8e9d4]">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+
+            <!-- Texto a la izquierda -->
+            <div class="md:w-1/2 text-left">
+                <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
+                <p class="text-[#587A6C] text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de detalles,
+                    colores y productos únicos.</p>
+                <a href="/perfumes"
+                    class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">
+                    Ver Catálogo
+                </a>
+            </div>
+
+            <!-- Logo a la derecha -->
+            <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
+                <img src="/images/logo.jpeg" alt="Logo Tiendita PM" class="max-w-[400px] h-auto" />
+            </div>
+
+        </div>
     </section>
 
     <!-- Destacados -->
@@ -13,21 +28,24 @@
             <h2 class="text-3xl font-semibold text-center mb-10">Productos Destacados</h2>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
-                    <img src="https://placehold.co/500x500" alt="Producto 1" class="w-full h-64 object-cover rounded-t-2xl">
+                    <img src="https://placehold.co/500x500" alt="Producto 1"
+                        class="w-full h-64 object-cover rounded-t-2xl">
                     <div class="p-4">
                         <h3 class="text-lg font-bold">Producto 1</h3>
                         <p class="text-[#D88C4B] font-semibold">$12.000</p>
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
-                    <img src="https://placehold.co/500x500" alt="Producto 2" class="w-full h-64 object-cover rounded-t-2xl">
+                    <img src="https://placehold.co/500x500" alt="Producto 2"
+                        class="w-full h-64 object-cover rounded-t-2xl">
                     <div class="p-4">
                         <h3 class="text-lg font-bold">Producto 2</h3>
                         <p class="text-[#D88C4B] font-semibold">$15.500</p>
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
-                    <img src="https://placehold.co/500x500" alt="Producto 3" class="w-full h-64 object-cover rounded-t-2xl">
+                    <img src="https://placehold.co/500x500" alt="Producto 3"
+                        class="w-full h-64 object-cover rounded-t-2xl">
                     <div class="p-4">
                         <h3 class="text-lg font-bold">Producto 3</h3>
                         <p class="text-[#D88C4B] font-semibold">$18.990</p>
@@ -66,12 +84,13 @@
     <section class="py-16 px-6 bg-[#f8e9d4]">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-4xl font-bold text-center mb-10 text-[#D88C4B]">Nosotros</h2>
-            <p class="text-[#3D3C63] text-lg max-w-xl mx-auto">Explora una colección pensada para ti, llena de detalles, colores y productos únicos.</p>
+            <p class="text-[#3D3C63] text-lg max-w-xl mx-auto">Explora una colección pensada para ti, llena de detalles,
+                colores y productos únicos.</p>
         </div>
     </section>
 
-</x-components.layouts.estructura>
+    </x-components.layouts.estructura>
 
-@section('titulo_catalogo')
-    Tiendita PM
-@endsection
+    @section('titulo_catalogo')
+        Tiendita PM
+    @endsection

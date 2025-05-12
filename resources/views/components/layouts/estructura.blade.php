@@ -31,8 +31,8 @@ contenido @yield('contenido_catalogo') --}}
 
 <body>
     <header class="bg-[#f8e9d4]">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-serif text-[#3D3C63]">Tiendita PM</h1>
+        <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="/"> <h1 class="text-2xl font-serif text-[#3D3C63]">Tiendita PM</h1> </a>
             <nav class="space-x-6 text-sm font-semibold">
                 <a href="/" class=" text-[#D88C4B] hover:text-[#3D3C63]">Inicio</a>
                 <a href="/perfumes" class="text-[#D88C4B] hover:text-[#3D3C63]">Catálogo</a>
