@@ -1,17 +1,36 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Livewire\Volt\Volt;
 use App\Http\Controllers\ProductoController;
 use App\Models\Categoria;
 use App\Models\Producto;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/inicio', function () {
     return view('/inicio');
 });
 
 Route::redirect('admin', 'admin/productos');
 Route::resource('admin/productos', ProductoController::class);
+
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    Route::redirect('settings', 'settings/profile');
+
+    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
+    Volt::route('settings/password', 'settings.password')->name('settings.password');
+    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+});
+
+require __DIR__.'/auth.php';
 
 Route::get('/{categoria}', function ($categoria, Request $request) {
     // TODO: Estoy reciclando mucho código xd, pendiente encontrar mejor forma de obtener todos los productos
@@ -54,9 +73,9 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
 });
 
 // Ruta para vista en detalle de cada producto
-/* 
-    NOTA: Para mejorar posicionamiento web y mejor visibilidad de las URL, se recomienda
-    usar slug en vez de id para las rutas.
-*/
+/*
+ *    NOTA: Para mejorar posicionamiento web y mejor visibilidad de las URL, se recomienda
+ *    usar slug en vez de id para las rutas.
+ */
 Route::get('/producto/{id}', [ProductoController::class, 'show'])->name('producto.show');
 
