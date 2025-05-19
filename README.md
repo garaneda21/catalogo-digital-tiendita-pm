@@ -56,7 +56,7 @@ php artisan migrate
 6. Iniciar servidor de desarrollo:
 
 ```bash
-php artisan serve
+composer run dev
 ```
 
     
