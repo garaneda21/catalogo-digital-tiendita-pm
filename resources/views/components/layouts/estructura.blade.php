@@ -11,28 +11,18 @@ contenido @yield('contenido_catalogo') --}}
     <meta name="description"
         content="Descubre los mejores productos de belleza en Tiendita PM. Perfumes, skincare, maquillaje y más. ¡Compra directo por WhatsApp!">
     <title>@yield('titulo_catalogo')</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
     <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: 'Playfair Display', serif;
-        }
+        h1, h2, h3, h4 { font-family: font-serif; }
     </style>
 </head>
 
 <body>
     <header class="bg-[#f8e9d4]">
         <div class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="/"> <h1 class="text-2xl font-serif text-[#3D3C63]">Tiendita PM</h1> </a>
+            <a href="/">
+                <h1 class="text-2xl font-serif text-[#3D3C63]">Tiendita PM</h1>
+            </a>
             <nav class="space-x-6 text-sm font-semibold">
                 <a href="/" class=" text-[#D88C4B] hover:text-[#3D3C63]">Inicio</a>
                 <a href="/perfumes" class="text-[#D88C4B] hover:text-[#3D3C63]">Catálogo</a>
