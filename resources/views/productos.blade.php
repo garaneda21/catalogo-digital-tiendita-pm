@@ -1,25 +1,11 @@
 <x-layouts.estructura>
-    <div class="mx-auto max-w-2xl p-4 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <div class="mx-auto max-w-6xl p-4">
 
-        <div>
+        <div class="mb-4">
             {{ $productos->links() }}
         </div>
 
-        <div class="columns-2">
-            <x-select-orden>
-                <option value="nombre_asc" {{ request('ordering') == 'nombre_asc' ? 'selected' : '' }}>Nombre
-                    (A-Z)
-                </option>
-                <option value="nombre_desc" {{ request('ordering') == 'nombre_desc' ? 'selected' : '' }}>Nombre
-                    (Z-A)</option>
-                <option value="precio_asc" {{ request('ordering') == 'precio_asc' ? 'selected' : '' }}>Precio
-                    (menor
-                    a mayor)</option>
-                <option value="precio_desc" {{ request('ordering') == 'precio_desc' ? 'selected' : '' }}>Precio
-                    (mayor a menor)</option>
-            </x-select-orden>
-            <x-cuadro-busqueda></x-cuadro-busqueda>
-        </div>
+        <x-ordenamiento-y-busqueda></x-ordenamiento-y-busqueda>
 
         @if ($productos->count() == 0)
             <div class="mt-10 flex flex-col items-center justify-center text-center py-10 text-[#3D3C63]">
@@ -31,11 +17,10 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-8">
+        <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4 xl:gap-x-8">
 
             @foreach ($productos as $producto)
-                <a href="{{ route('producto.show', $producto->id) }}"
-                    class="group text-center">
+                <a href="{{ route('producto.show', $producto->id) }}" class="group text-center">
                     <img src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}"
                         alt="{{ $producto->nombre_producto }}"
                         class="rounded-2xl border aspect-square w-full object-cover group-hover:opacity-75">
@@ -48,7 +33,6 @@
                             ${{ number_format($producto->precio, 0, ',', '.') }}</p>
                     </div>
                 </a>
-
             @endforeach
         </div>
     </div>

@@ -14,21 +14,7 @@
             {{ $productos->appends(['search' => request('search')])->links() }}
         </div>
 
-        <div class="columns-2">
-            <x-select-orden>
-                <option value="nombre_asc" {{ request('ordering') == 'nombre_asc' ? 'selected' : '' }}>Nombre
-                    (A-Z)
-                </option>
-                <option value="nombre_desc" {{ request('ordering') == 'nombre_desc' ? 'selected' : '' }}>Nombre
-                    (Z-A)</option>
-                <option value="precio_asc" {{ request('ordering') == 'precio_asc' ? 'selected' : '' }}>Precio
-                    (menor
-                    a mayor)</option>
-                <option value="precio_desc" {{ request('ordering') == 'precio_desc' ? 'selected' : '' }}>Precio
-                    (mayor a menor)</option>
-            </x-select-orden>
-            <x-cuadro-busqueda></x-cuadro-busqueda>
-        </div>
+        <x-ordenamiento-y-busqueda></x-ordenamiento-y-busqueda>
 
         @foreach ($productos as $producto)
             <div
