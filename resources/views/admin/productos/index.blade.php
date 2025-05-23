@@ -69,25 +69,26 @@
                     </button>
                 </div>
                 <!-- Modal de confirmación de eliminación -->
-                <div class="modal fade" id="confirmDelete{{ $producto->id }}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Confirmar eliminación</h5>
+                <div class="modal fade fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 hidden" id="confirmDelete{{ $producto->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog relative top-1/4 mx-auto max-w-md">
+                        <div class="modal-content bg-white rounded-lg shadow-lg p-6">
+                            <div class="modal-header flex justify-between items-center">
+                                <h5 class="text-xl font-medium">Confirmar eliminación</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body mt-4">
                                 <p>¿Estás seguro de que deseas eliminar
                                     <strong>{{ $producto->nombre_producto }}</strong>?
                                 </p>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer flex justify-end mt-4 space-x-2">
                                 <form action="{{ route('productos.destroy', $producto->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Sí, eliminar</button>
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1.5 px-4 rounded text-sm">
+                                        Sí, eliminar</button>
                                 </form>
-                                <button type="button" class="btn btn-secondary btn-sm"
+                                <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1.5 px-4 rounded text-sm"
                                     data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
@@ -96,26 +97,48 @@
 
                 <!-- Modal para ver detalles de producto (con bootstrap)-->
                 <!-- Se activará cuando se clickee el nombre del producto -->
-                <div class="modal fade" id="modal{{ $producto->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"><strong>{{ $producto->nombre_producto }}</strong></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <!-- Modal -->
+                <div class="modal fade fixed inset-0 z-50 bg-black bg-opacity-50 hidden"
+                     id="modal{{ $producto->id }}"
+                     tabindex="-1"
+                     aria-hidden="true">
+                            
+                    <div class="modal-dialog relative mx-auto mt-24 w-full max-w-sm">
+                        <div class="modal-content bg-white rounded-lg shadow-lg overflow-hidden">
+                            
+                            <!-- Header -->
+                            <div class="modal-header flex items-center justify-between p-4 border-b">
+                                <h5 class="text-lg font-semibold text-gray-900">{{ $producto->nombre_producto }}</h5>
+                                <button type="button"
+                                        class="text-gray-500 hover:text-gray-700 focus:outline-none text-2xl font-bold"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    &times;
+                                </button>
                             </div>
-                            <div class="modal-body">
-                                <img src="https://placehold.co/500x500" alt=""
-                                    class="aspect-square w-full bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
-                                <p><strong>Precio:</strong> ${{ number_format($producto->precio, 0, ',', '.') }}
-                                </p>
+                            
+                            <!-- Body -->
+                            <div class="modal-body p-4 space-y-3 text-gray-800">
+                                <img src="https://placehold.co/500x500"
+                                     alt="Imagen del producto"
+                                     class="aspect-square w-full bg-gray-200 object-cover rounded">
+                                
+                                <p><strong>Precio:</strong> ${{ number_format($producto->precio, 0, ',', '.') }}</p>
                                 <p><strong>Descripción:</strong> {{ $producto->descripcion }}</p>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            
+                            <!-- Footer -->
+                            <div class="modal-footer flex justify-end p-4 border-t">
+                                <button type="button"
+                                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"
+                                        data-bs-dismiss="modal">
+                                    Cerrar
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         @endforeach
     </div>
