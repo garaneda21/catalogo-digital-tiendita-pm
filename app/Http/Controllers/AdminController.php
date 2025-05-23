@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Aministrador;
+use App\Models\Administrador;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,7 +21,7 @@ class AdminController extends Controller
             'pwd' => 'required',
         ]);
 
-        $admin = Aministrador::where('correo_admin', $request->correo_admin)->first();
+        $admin = Administrador::where('correo_admin', $request->correo_admin)->first();
 
         if ($admin && Hash::check($request->pwd, $admin->pwd) && $admin->activo) {
             Auth::login($admin);
