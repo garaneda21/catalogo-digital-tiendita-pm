@@ -34,7 +34,27 @@
     --color-accent: var(--color-neutral-800);
     --color-accent-content: var(--color-neutral-800);
     --color-accent-foreground: var(--color-white);
+
+    --color-crema: #F8E8D3;
+    --color-crema-claro: #FDF1E6;
+    --color-azul-profundo: #3D3C63;
+    --color-gris-lavanda: #63637B;
+    --color-melocoton: #D6866B;
+
+    --color-terracota: #CC715C;
+    --color-blanco: #FFFFFF;
+
+    --color-verde-salvia: #A2AD8E;
+    --color-verde-oliva: #5E7B62;
+
+    --color-beige-suave: #D9CBB6;
+
+    --color-mostaza: #F7C873;
+    --color-naranja-floral: #EB8D60;
+    --color-lila-pastel: #CAB5CF;
+    --color-verde-hoja: #B5C4A9;
 }
+
 
 @layer theme {
     .dark {
@@ -60,7 +80,7 @@
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
 }
 
 input:focus[data-flux-control],
