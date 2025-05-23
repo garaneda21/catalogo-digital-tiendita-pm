@@ -15,7 +15,7 @@ class Administrador extends Model
     protected $fillable = [
         'nombre_admin',
         'correo_admin',
-        'pwd', // evaluar si es seguro
+        'password', // evaluar si es seguro
         'activo',
     ];
 }
