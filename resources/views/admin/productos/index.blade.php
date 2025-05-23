@@ -69,7 +69,7 @@
                     </button>
                 </div>
                 <!-- Modal de confirmación de eliminación -->
-                <div class="modal fade fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 hidden" id="confirmDelete{{ $producto->id }}" tabindex="-1" aria-hidden="true">
+                <div class="modal fade fixed top-0 left-0 w-full h-full bg-black/50 z-50 hidden" id="confirmDelete{{ $producto->id }}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog relative top-1/4 mx-auto max-w-md">
                         <div class="modal-content bg-white rounded-lg shadow-lg p-6">
                             <div class="modal-header flex justify-between items-center">
@@ -98,13 +98,13 @@
                 <!-- Modal para ver detalles de producto (con bootstrap)-->
                 <!-- Se activará cuando se clickee el nombre del producto -->
                 <!-- Modal -->
-                <div class="modal fade fixed inset-0 z-50 bg-black bg-opacity-50 hidden"
+                <div class="modal fade fixed inset-0 z-50 bg-black/50 hidden"
                      id="modal{{ $producto->id }}"
                      tabindex="-1"
                      aria-hidden="true">
                             
                     <div class="modal-dialog relative mx-auto mt-24 w-full max-w-sm">
-                        <div class="modal-content bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="modal-content bg-white rounded-lg shadow-lg max-h-[80vh] overflow-y-auto">
                             
                             <!-- Header -->
                             <div class="modal-header flex items-center justify-between p-4 border-b">
