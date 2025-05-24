@@ -15,7 +15,7 @@ Route::redirect('admin', 'admin/productos');
 Route::resource('admin/productos', ProductoController::class);
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');      //ahora la raiz lleva al inicio del catalogo
 })->name('home');
 
 Route::view('dashboard', 'dashboard')

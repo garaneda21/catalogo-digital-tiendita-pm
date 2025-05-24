@@ -17,6 +17,6 @@ class Logout
         Session::invalidate();
         Session::regenerateToken();
 
-        return redirect('/');
+        return redirect('/inicio'); //Ahora al cerrar sesión se vuelve a la pantalla de inicio
     }
 }

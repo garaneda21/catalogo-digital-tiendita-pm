@@ -1,4 +1,4 @@
-<nav class="bg-crema-claro px-6 py-3 mx-auto max-w-7xl">
+<nav class="bg-[#f8e9d4] px-6 py-3 mx-auto max-w-7xl">
     <div class="flex items-center justify-between">
         <!-- Logo -->
         <div class="text-xl font-bold text-azul-profundo">
@@ -32,8 +32,33 @@
                 <div class="flex items-center gap-6 text text-azul-profundo font-semibold">
                     <nav class="flex items-center justify-end gap-4">
                         @auth
-                            <!-- aqui iria algo que muestre el usuario logeado-->
-                            <!-- También que le permita deslogearse -->
+                            <div class="relative">
+                                <button id="dropdownButton" type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150">
+                                    Hola {{auth()->user()->name}}!
+                                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            
+                                <div id="dropdownMenu" 
+                                     class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" {{-- Importante: 'hidden' por defecto --}}
+                                     role="menu" aria-orientation="vertical" aria-labelledby="dropdownButton" tabindex="-1">
+                                    <div class="py-1" role="none">
+                                        <div class="grid flex-1 text-start text-sm leading-tight">
+                                            <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
+                                            <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                                        </div>
+                                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                                        <flux:menu.item :href="route('settings.profile')" icon="cog" wire:navigate>{{ __('Mis compras') }}</flux:menu.item>
+                                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                            @csrf
+                                            <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full cursor-pointer">
+                                                {{ __('Log Out') }}
+                                            </flux:menu.item>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @else
                             <a href="{{ route('login') }}" class="py-1 hover:underline">Iniciar Sesión</a>
                             @if (Route::has('register'))

@@ -11,7 +11,7 @@ contenido @yield('contenido_catalogo') --}}
     <meta name="description"
         content="Descubre los mejores productos de belleza en Tiendita PM. Perfumes, skincare, maquillaje y más. ¡Compra directo por WhatsApp!">
     <title>@yield('titulo_catalogo')</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         h1,
         h2,
@@ -24,7 +24,7 @@ contenido @yield('contenido_catalogo') --}}
 
 <body>
 
-    <header class="bg-texto-principal">
+    <header class="bg-texto-principal bg-[#f8e9d4]">
         <x-navbar />
     </header>
 
