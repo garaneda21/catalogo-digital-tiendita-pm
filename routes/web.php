@@ -1,8 +1,10 @@
 <?php
 
+use App\Livewire\Settings\Appearance;
+use App\Livewire\Settings\Password;
+use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use Livewire\Volt\Volt;
 use App\Http\Controllers\ProductoController;
 use App\Models\Categoria;
 use App\Models\Producto;
