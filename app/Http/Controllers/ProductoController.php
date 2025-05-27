@@ -57,12 +57,12 @@ class ProductoController extends Controller
         // - Producto ya existe
 
         $request->validate([
-            'nombre_producto' => ['required', 'max:250'],
+            'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
             'descripcion'     => [],
             'stock_actual'    => ['gte:0', 'max:9'],
             'precio'          => ['required', 'string', 'max:12'],
-            'imagen'          => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
 
         // Limpiamos el string de precio y lo dejamos como entero
@@ -91,8 +91,8 @@ class ProductoController extends Controller
      * Display the specified resource.
      * Usado para vista detallada en pagina de producto
      * NOTA: A futuro implementar slug en vez de id para mejorar visualizacion
-     * de la url y posicionamiento 
-     * ej url con id =   producto/15 
+     * de la url y posicionamiento
+     * ej url con id =   producto/15
      * ej url con slug = producto/polera-oversize-blanca
      */
     public function show($id)
