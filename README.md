@@ -27,10 +27,10 @@ git clone https://github.com/garaneda21/catalogo-digital-tiendita-pm
 cd catalogo-digital-tiendita-pm
 ```
 
-2. Instalar dependendias de PHP:
+2. Instalar dependendias de PHP y Node:
 
 ```bash
-composer install
+composer install && npm install
 ```
 
 3. Configura el archivo ´.env´ a partir del de ejemplo para el entorno de desarrollo:
