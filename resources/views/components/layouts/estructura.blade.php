@@ -12,9 +12,6 @@ contenido @yield('contenido_catalogo') --}}
         content="Descubre los mejores productos de belleza en Tiendita PM. Perfumes, skincare, maquillaje y más. ¡Compra directo por WhatsApp!">
     <title>@yield('titulo_catalogo')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        h1, h2, h3, h4 { font-family: 'Playfair Display', font-serif; }
-    </style>
 </head>
 
 <body>

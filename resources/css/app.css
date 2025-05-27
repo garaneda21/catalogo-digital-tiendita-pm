@@ -49,6 +49,10 @@
     --color-lila-pastel: #CAB5CF;
     --color-verde-hoja: #B5C4A9;
 
+    /* para modo oscuro */
+    --color-azul-oscuro: #2A2C3D;
+    --color-gris-oscuro: #1F1F2E;
+
     --color-accent: var(--color-neutral-800);
     --color-accent-content: var(--color-neutral-800);
     --color-accent-foreground: var(--color-white);
@@ -87,7 +91,10 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: 'Playfair Display', font-serif;
 }
 
