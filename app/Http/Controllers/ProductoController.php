@@ -53,9 +53,6 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: Implementar las siguientes validaciones
-        // - Producto ya existe
-
         $request->validate([
             'nombre_producto' => ['required', 'max:250'],
             'categoria'       => ['required'],
@@ -91,8 +88,8 @@ class ProductoController extends Controller
      * Display the specified resource.
      * Usado para vista detallada en pagina de producto
      * NOTA: A futuro implementar slug en vez de id para mejorar visualizacion
-     * de la url y posicionamiento 
-     * ej url con id =   producto/15 
+     * de la url y posicionamiento
+     * ej url con id =   producto/15
      * ej url con slug = producto/polera-oversize-blanca
      */
     public function show($id)
