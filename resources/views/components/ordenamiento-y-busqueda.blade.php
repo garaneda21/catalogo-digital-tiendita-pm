@@ -9,14 +9,11 @@
             <select name="ordering" id="ordering" onchange="this.form.submit()"
                 class="w-full bg-[#587A6C] text-[#F7F5F2] px-3 py-2 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                 <option value="">-- Seleccionar --</option>
-                <option value="nombre_asc" {{ request('ordering') == 'nombre_asc' ? 'selected' : '' }}>Nombre
-                    (A-Z)</option>
-                <option value="nombre_desc" {{ request('ordering') == 'nombre_desc' ? 'selected' : '' }}>Nombre
-                    (Z-A)</option>
-                <option value="precio_asc" {{ request('ordering') == 'precio_asc' ? 'selected' : '' }}>Precio
-                    (menor a mayor)</option>
-                <option value="precio_desc" {{ request('ordering') == 'precio_desc' ? 'selected' : '' }}>Precio
-                    (mayor a menor)</option>
+                <option value="recientes" {{ request('ordering') == 'recientes' ? 'selected' : '' }}>Añadidos Recientemente</option>
+                <option value="nombre_asc" {{ request('ordering') == 'nombre_asc' ? 'selected' : '' }}>Nombre (A-Z)</option>
+                <option value="nombre_desc" {{ request('ordering') == 'nombre_desc' ? 'selected' : '' }}>Nombre (Z-A)</option>
+                <option value="precio_asc" {{ request('ordering') == 'precio_asc' ? 'selected' : '' }}>Precio (menor a mayor)</option>
+                <option value="precio_desc" {{ request('ordering') == 'precio_desc' ? 'selected' : '' }}>Precio (mayor a menor)</option>
             </select>
         </div>
 

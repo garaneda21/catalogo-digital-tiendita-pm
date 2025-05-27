@@ -19,6 +19,9 @@ class ProductoController extends Controller
 
         // Ordenamiento
         switch ($request->ordering) {
+            case 'recientes':
+                $query->orderBy('created_at', 'desc');
+                break;
             case 'nombre_asc':
                 $query->orderBy('nombre_producto', 'asc');
                 break;
@@ -32,7 +35,7 @@ class ProductoController extends Controller
                 $query->orderBy('precio', 'desc');
                 break;
             default:
-                $query->orderBy('nombre_producto', 'asc'); // orden por defecto
+                $query->orderBy('created_at', 'desc');
                 break;
         }
 
@@ -91,13 +94,14 @@ class ProductoController extends Controller
      * Display the specified resource.
      * Usado para vista detallada en pagina de producto
      * NOTA: A futuro implementar slug en vez de id para mejorar visualizacion
-     * de la url y posicionamiento 
-     * ej url con id =   producto/15 
+     * de la url y posicionamiento
+     * ej url con id =   producto/15
      * ej url con slug = producto/polera-oversize-blanca
      */
     public function show($id)
     {
         $producto = Producto::where('id', $id)->firstOrFail();
+
         return view('producto.show', compact('producto'));
     }
 
@@ -161,5 +165,4 @@ class ProductoController extends Controller
 
         return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
     }
-
 }
