@@ -10,7 +10,10 @@ use App\Http\Controllers\ProductoController;
 use App\Models\Categoria;
 use App\Models\Producto;
 
-Route::view('/', 'inicio')->name('inicio');
+Route::get('/', function () {
+    $categorias = Categoria::all();
+    return view('inicio', compact('categorias'));
+})->name('inicio');
 
 Route::view('/test', 'test');
 
