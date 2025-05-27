@@ -16,12 +16,12 @@
                  placeholder="email@example.com" viewable />
          </div>
 
-         <flux:button variant="primary" type="submit" class="w-full text-white bg-verde-oliva hover:bg-verde-oliva/70">{{ __('Email password reset link') }}
+         <flux:button variant="primary" type="submit" class="w-full text-white bg-verde-oliva hover:bg-verde-oliva/70">{{ __('Enviar link de reinicio a tu correo') }}
          </flux:button>
      </form>
 
      <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-azul-profundo dark:text-white">
-         {{ __('Regresar a') }}
-         <flux:link class="text-melocoton" :href="route('login')" wire:navigate>{{ __('log in') }}</flux:link>
+         {{ __('De lo contrario, regresa a') }}
+         <flux:link class="text-melocoton" :href="route('login')" wire:navigate>{{ __('Inicio de sesión') }}</flux:link>
      </div>
  </div>
