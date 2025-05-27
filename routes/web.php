@@ -9,14 +9,14 @@ use App\Http\Controllers\ProductoController;
 use App\Models\Categoria;
 use App\Models\Producto;
 
-Route::get('/inicio', function () {
-    return view('/inicio');
-});
+Route::view('/', 'inicio')->name('inicio');
+
+Route::view('/test', 'test');
 
 Route::redirect('admin', 'admin/productos');
 Route::resource('admin/productos', ProductoController::class);
 
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('welcome');
 })->name('home');
 
