@@ -13,7 +13,7 @@ contenido @yield('contenido_catalogo') --}}
     <title>@yield('titulo_catalogo')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        h1, h2, h3, h4 { font-family: font-serif; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', font-serif; }
     </style>
 </head>
 
