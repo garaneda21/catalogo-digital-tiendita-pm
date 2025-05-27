@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -15,6 +16,9 @@ Route::view('/test', 'test');
 
 Route::redirect('admin', 'admin/productos');
 Route::resource('admin/productos', ProductoController::class);
+
+// Administrar Categorías
+Route::resource('admin/categorias', CategoriaController::class);
 
 Route::get('/home', function () {
     return view('welcome');
