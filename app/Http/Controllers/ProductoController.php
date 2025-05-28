@@ -117,12 +117,12 @@ class ProductoController extends Controller
     public function update(Request $request, Producto $producto)
     {
         $request->validate([
-            'nombre_producto' => ['required', 'max:250'],
+            'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
             'descripcion'     => [],
             'stock_actual'    => ['nullable', 'gte:0', 'max:9'],
             'precio'          => ['required', 'string', 'max:12'],  // el maximo es 12 por los puntos y $
-            'imagen'          => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
 
         // Limpiamos el string de precio y lo dejamos como entero
