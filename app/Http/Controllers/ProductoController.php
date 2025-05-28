@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule; // Importa la clase Rule para evitar duplicados al editar
 use Illuminate\Support\Facades\File;
 
 class ProductoController extends Controller
@@ -120,7 +119,7 @@ class ProductoController extends Controller
     public function update(Request $request, Producto $producto)
     {
         $request->validate([
-            'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
+            'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
             'descripcion'     => [],
             'stock_actual'    => ['nullable', 'gte:0', 'max:9'],
