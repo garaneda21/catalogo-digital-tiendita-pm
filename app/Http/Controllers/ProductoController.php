@@ -84,6 +84,8 @@ class ProductoController extends Controller
             'imagen_url'      => $url_imagen ?? null,
         ]);
 
+        session()->flash('success_create', '¡Producto creado exitosamente!');
+
         return redirect('/admin/productos/');
     }
 
@@ -149,7 +151,9 @@ class ProductoController extends Controller
             'imagen_url'      => $url_imagen ?? $producto->imagen_url,
         ]);
 
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado con éxito');
+        session()->flash('success_update', '¡Producto actualizado exitosamente!');
+
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -159,7 +163,9 @@ class ProductoController extends Controller
     {
         $producto->delete();
 
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+        session()->flash('success_delete', '¡Producto eliminado exitosamente!');
+
+        return redirect()->route('productos.index');
     }
 
 }
