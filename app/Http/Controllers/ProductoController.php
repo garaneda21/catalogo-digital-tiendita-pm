@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule; // Importa la clase Rule para evitar duplicados al editar
 use Illuminate\Support\Facades\File;
 
 class ProductoController extends Controller
@@ -84,6 +85,8 @@ class ProductoController extends Controller
             'imagen_url'      => $url_imagen ?? null,
         ]);
 
+        session()->flash('success_create', '¡Producto creado exitosamente!');
+
         return redirect('/admin/productos/');
     }
 
@@ -117,7 +120,7 @@ class ProductoController extends Controller
     public function update(Request $request, Producto $producto)
     {
         $request->validate([
-            'nombre_producto' => ['required', 'max:250', 'unique:productos'],
+            'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
             'categoria'       => ['required'],
             'descripcion'     => [],
             'stock_actual'    => ['nullable', 'gte:0', 'max:9'],
@@ -149,7 +152,9 @@ class ProductoController extends Controller
             'imagen_url'      => $url_imagen ?? $producto->imagen_url,
         ]);
 
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado con éxito');
+        session()->flash('success_update', '¡Producto actualizado exitosamente!');
+
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -159,7 +164,9 @@ class ProductoController extends Controller
     {
         $producto->delete();
 
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+        session()->flash('success_delete', '¡Producto eliminado exitosamente!');
+
+        return redirect()->route('productos.index');
     }
 
 }
