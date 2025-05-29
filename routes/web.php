@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'inicio')->name('inicio');
-Route::redirect('admin', 'admin/productos');
+Route::redirect('admin', 'productos');
 
 Route::view('/test', 'test');
 
