@@ -10,25 +10,19 @@
 
     <form wire:submit="login" class="flex flex-col gap-6">
         <!-- Email Address -->
-        <div>
-            <label class="text-azul-profundo dark:text-white font-bold text-sm">Correo Electrónico</label>
-            <flux:input wire:model="email" :label="__('')" type="email" required autofocus autocomplete="email"
-                placeholder="email@example.com" />
-        </div>
+        <flux:input wire:model="email" :label="__('Correo Electrónico')" type="email" required autofocus
+            autocomplete="email" placeholder="email@example.com" />
 
         <!-- Password -->
         <div class="relative">
-            <div>
-                <label class="text-azul-profundo dark:text-white font-bold text-sm">Contraseña</label>
-                <flux:input wire:model="password" :label="__('')" type="password" required
-                    autocomplete="current-password" viewable />
-                @if (Route::has('password.request'))
-                    <flux:link class="absolute end-0 top-0 text-sm text-melocoton" :href="route('password.request')"
-                        wire:navigate>
-                        {{ __('¿Olvidaste tu contraseña?') }}
-                    </flux:link>
-                @endif
-            </div>
+            <flux:input wire:model="password" :label="__('Contraseña')" type="password" required
+                autocomplete="current-password" viewable />
+            @if (Route::has('password.request'))
+                <flux:link class="absolute end-0 top-0 text-sm text-melocoton" :href="route('password.request')"
+                    wire:navigate>
+                    {{ __('¿Olvidaste tu contraseña?') }}
+                </flux:link>
+            @endif
         </div>
 
         <!-- Remember Me -->
@@ -36,7 +30,8 @@
 
         <div class="flex items-center justify-end">
             <flux:button variant="primary" type="submit"
-                class="w-full text-white bg-verde-oliva hover:bg-verde-oliva/70">{{ __('Iniciar sesión') }}</flux:button>
+                class="w-full text-white bg-verde-oliva hover:bg-verde-oliva/70">{{ __('Iniciar sesión') }}
+            </flux:button>
         </div>
     </form>
 
