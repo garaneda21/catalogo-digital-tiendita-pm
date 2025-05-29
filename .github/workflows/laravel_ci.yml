@@ -1,0 +1,59 @@
+name: Tiendita-PM CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0 # Puedes usar otra versión si lo necesitas, ej. mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root # Usar un secreto para la contraseña root
+          MYSQL_DATABASE: catalogo_digital_tiendita_pm     # Nombre de la DB para testing
+          MYSQL_USER: root          # Usuario para testing
+          MYSQL_PASSWORD: root      # Contraseña para testing
+        ports:
+          - 3306:3306 # Mapea el puerto del contenedor al host del runner
+        options: >- # Opciones para el servicio, incluyendo una verificación de salud
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    # Define las variables de entorno para el job, que Laravel usará para conectarse
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1 # O 'mysql' si prefieres usar el nombre del servicio
+      DB_PORT: 3306
+      DB_DATABASE: catalogo_digital_tiendita_pm
+      DB_USERNAME: root
+      DB_PASSWORD: root
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2' # O la versión de PHP que uses (ej. '8.1', '8.3')
+        extensions: pdo_mysql, bcmath, gd, zip, dom, mbstring, xml # Extensiones comunes de Laravel
+        coverage: none # Puedes cambiar a xdebug o pcov si necesitas cobertura de código
+
+    - name: Install Composer Dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+    - name: Create .env file
+      run: cp .env.example .env
+
+    - name: Generate Application Key
+      run: php artisan key:generate
+      
+    - name: Run PHPUnit Tests
+      run: vendor/bin/phpunit
+    
