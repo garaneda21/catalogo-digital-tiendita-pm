@@ -1,4 +1,10 @@
-<x-layouts.panel>
+<x-layouts.app :title="__('Dashboard')">
+
+    <x-panel.header nombre_header="Editar producto">
+        <flux:button href="/admin/productos" icon="arrow-left" class="dark:text-black! dark:bg-white! hover:bg-gray-200! rounded-3xl!">
+            Volver
+        </flux:button>
+    </x-panel.header>
 
     <form method="POST" enctype="multipart/form-data" action="{{ route('productos.update', $producto->id) }}">
         @csrf
@@ -6,7 +12,6 @@
 
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base/7 font-semibold text-gray-900">Editar Producto</h2>
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
@@ -95,5 +100,4 @@
         </div>
 
     </form>
-
-</x-layouts.panel>
+</x-layouts.app>
