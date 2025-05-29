@@ -13,37 +13,33 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 #[Layout('components.layouts.auth')]
-class Login extends Component
+class AdminLogin extends Component
 {
     #[Validate('required|string|email')]
-    public string $email = '';
+    public string $correo_admin = '';
 
     #[Validate('required|string')]
     public string $password = '';
 
-    public bool $remember = false;
-
-    /**
-     * Handle an incoming authentication request.
-     */
+    // Manejar petición de autenticación.
     public function login(): void
     {
         $this->validate();
 
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::guard('web')->attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (! Auth::guard('admin')->attempt(['correo_admin' => $this->correo_admin, 'password' => $this->password])) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'correo_admin' => __('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('inicio', absolute: false), navigate: false);
+        $this->redirectIntended(default: route('login-admin', absolute: false), navigate: false);
     }
 
     /**
@@ -72,6 +68,6 @@ class Login extends Component
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->correo_admin).'|'.request()->ip());
     }
 }
