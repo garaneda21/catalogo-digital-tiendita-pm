@@ -19,6 +19,9 @@ class ProductoController extends Controller
 
         // Ordenamiento
         switch ($request->ordering) {
+            case 'recientes':
+                $query->orderBy('created_at', 'desc');
+                break;
             case 'nombre_asc':
                 $query->orderBy('nombre_producto', 'asc');
                 break;
@@ -32,7 +35,7 @@ class ProductoController extends Controller
                 $query->orderBy('precio', 'desc');
                 break;
             default:
-                $query->orderBy('nombre_producto', 'asc'); // orden por defecto
+                $query->orderBy('created_at', 'desc');
                 break;
         }
 
@@ -100,6 +103,7 @@ class ProductoController extends Controller
     public function show($id)
     {
         $producto = Producto::where('id', $id)->firstOrFail();
+
         return view('producto.show', compact('producto'));
     }
 
@@ -167,5 +171,4 @@ class ProductoController extends Controller
 
         return redirect()->route('productos.index');
     }
-
 }
