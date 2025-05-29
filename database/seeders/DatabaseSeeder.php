@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(ProductoSeeder::class);
+        $this->call(AdministradorSeeder::class);
     }
 }
