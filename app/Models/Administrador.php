@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Administrador extends Model
+class Administrador extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\AdministradorFactory> */
     use HasFactory;
@@ -15,7 +16,30 @@ class Administrador extends Model
     protected $fillable = [
         'nombre_admin',
         'correo_admin',
-        'pwd', // evaluar si es seguro
-        'activo',
+        'password',
     ];
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
+
 }

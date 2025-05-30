@@ -10,25 +10,48 @@
 
     <div class="py-4 space-y-2 mx-auto">
 
+        @if (session('success_create'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">¡Éxito!</strong>
+                <span class="block sm:inline">{{ session('success_create') }}</span>
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
+                        <title>Cerrar</title>
+                        <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 2.65a1.2 1.2 0 1 1-1.697-1.697L8.303 10l-2.651-2.651a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-2.651a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.651a1.2 1.2 0 0 1 0 1.697z"/>
+                    </svg>
+                </span>
+            </div>
+        @endif
+        @if (session('success_update'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">¡Éxito!</strong>
+                <span class="block sm:inline">{{ session('success_update') }}</span>
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
+                        <title>Cerrar</title>
+                        <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 2.65a1.2 1.2 0 1 1-1.697-1.697L8.303 10l-2.651-2.651a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-2.651a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.651a1.2 1.2 0 0 1 0 1.697z"/>
+                    </svg>
+                </span>
+            </div>
+        @endif
+        @if (session('success_delete'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">¡Éxito!</strong>
+                <span class="block sm:inline">{{ session('success_delete') }}</span>
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
+                        <title>Cerrar</title>
+                        <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 2.65a1.2 1.2 0 1 1-1.697-1.697L8.303 10l-2.651-2.651a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-2.651a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.651a1.2 1.2 0 0 1 0 1.697z"/>
+                    </svg>
+                </span>
+            </div>
+        @endif
+
         <div>
             {{ $productos->appends(['search' => request('search')])->links() }}
         </div>
 
-        <div class="columns-2">
-            <x-select-orden>
-                <option value="nombre_asc" {{ request('ordering') == 'nombre_asc' ? 'selected' : '' }}>Nombre
-                    (A-Z)
-                </option>
-                <option value="nombre_desc" {{ request('ordering') == 'nombre_desc' ? 'selected' : '' }}>Nombre
-                    (Z-A)</option>
-                <option value="precio_asc" {{ request('ordering') == 'precio_asc' ? 'selected' : '' }}>Precio
-                    (menor
-                    a mayor)</option>
-                <option value="precio_desc" {{ request('ordering') == 'precio_desc' ? 'selected' : '' }}>Precio
-                    (mayor a menor)</option>
-            </x-select-orden>
-            <x-cuadro-busqueda></x-cuadro-busqueda>
-        </div>
+        <x-ordenamiento-y-busqueda></x-ordenamiento-y-busqueda>
 
         @foreach ($productos as $producto)
             <div
@@ -69,25 +92,26 @@
                     </button>
                 </div>
                 <!-- Modal de confirmación de eliminación -->
-                <div class="modal fade" id="confirmDelete{{ $producto->id }}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Confirmar eliminación</h5>
+                <div class="modal fade fixed top-0 left-0 w-full h-full bg-black/50 z-50 hidden" id="confirmDelete{{ $producto->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog relative top-1/4 mx-auto max-w-md">
+                        <div class="modal-content bg-white rounded-lg shadow-lg p-6">
+                            <div class="modal-header flex justify-between items-center">
+                                <h5 class="text-xl font-medium">Confirmar eliminación</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body mt-4">
                                 <p>¿Estás seguro de que deseas eliminar
                                     <strong>{{ $producto->nombre_producto }}</strong>?
                                 </p>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer flex justify-end mt-4 space-x-2">
                                 <form action="{{ route('productos.destroy', $producto->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Sí, eliminar</button>
+                                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-1.5 px-4 rounded text-sm">
+                                        Sí, eliminar</button>
                                 </form>
-                                <button type="button" class="btn btn-secondary btn-sm"
+                                <button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1.5 px-4 rounded text-sm"
                                     data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
@@ -96,29 +120,52 @@
 
                 <!-- Modal para ver detalles de producto (con bootstrap)-->
                 <!-- Se activará cuando se clickee el nombre del producto -->
-                <div class="modal fade" id="modal{{ $producto->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"><strong>{{ $producto->nombre_producto }}</strong></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <!-- Modal -->
+                <div class="modal fade fixed inset-0 z-50 bg-black/50 hidden"
+                     id="modal{{ $producto->id }}"
+                     tabindex="-1"
+                     aria-hidden="true">
+                            
+                    <div class="modal-dialog relative mx-auto mt-24 w-full max-w-sm">
+                        <div class="modal-content bg-white rounded-lg shadow-lg max-h-[80vh] overflow-y-auto">
+                            
+                            <!-- Header -->
+                            <div class="modal-header flex items-center justify-between p-4 border-b">
+                                <h5 class="text-lg font-semibold text-gray-900">{{ $producto->nombre_producto }}</h5>
+                                <button type="button"
+                                        class="text-gray-500 hover:text-gray-700 focus:outline-none text-2xl font-bold"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    &times;
+                                </button>
                             </div>
-                            <div class="modal-body">
-                                <img src="https://placehold.co/500x500" alt=""
-                                    class="aspect-square w-full bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8">
-                                <p><strong>Precio:</strong> ${{ number_format($producto->precio, 0, ',', '.') }}
-                                </p>
+                            
+                            <!-- Body -->
+                            <div class="modal-body p-4 space-y-3 text-gray-800">
+                                <img src="https://placehold.co/500x500"
+                                     alt="Imagen del producto"
+                                     class="aspect-square w-full bg-gray-200 object-cover rounded">
+                                
+                                <p><strong>Precio:</strong> ${{ number_format($producto->precio, 0, ',', '.') }}</p>
                                 <p><strong>Descripción:</strong> {{ $producto->descripcion }}</p>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            
+                            <!-- Footer -->
+                            <div class="modal-footer flex justify-end p-4 border-t">
+                                <button type="button"
+                                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"
+                                        data-bs-dismiss="modal">
+                                    Cerrar
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         @endforeach
-    </div>
+    </div>  
+    
 
 
 </x-layouts.panel>

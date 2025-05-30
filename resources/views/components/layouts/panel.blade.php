@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administracion</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    @vite('resources/css/app.css')
 </head>
+
 <body>
     <div class="flex">
         <!-- Sidebar -->
         <aside class="w-64 bg-white p-6 shadow-md min-h-screen fixed top-0 left-0">
-            <h2 class="text-xl font-bold mb-6">Panel de Administración</h2></h2>
+            <h2 class="text-xl font-bold mb-6">Panel de Administración</h2>
+            </h2>
             <nav class="flex flex-col space-y-4">
                 <a href="/admin/productos/">
                     <button class="w-full text-left bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
@@ -25,7 +25,16 @@
                         Crear Producto
                     </button>
                 </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-red-500 rounded hover:bg-gray-200 hover:cursor-pointer">
+                        <x-iconos.salir />Cerrar sesión
+                    </button>
+                </form>
             </nav>
+
+
         </aside>
 
         <!-- Contenido Principal -->
@@ -38,10 +47,10 @@
     </script>
     <!-- Este script es para colocarle signo peso y puntos a los input precio -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const input = document.getElementById('precio');
-        
-            input.addEventListener('input', function (e) {
+
+            input.addEventListener('input', function(e) {
                 let value = e.target.value.replace(/\D/g, ''); // Solo números
                 if (value) {
                     value = new Intl.NumberFormat('es-CL').format(value);
@@ -51,6 +60,23 @@
                 }
             });
         });
-    </script>        
+    </script>
+    <!-- script para el boton de cerrar sesión -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('userDropdownButton');
+            const menu = document.getElementById('userDropdownMenu');
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
+            document.addEventListener('click', function(e) {
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>

@@ -1,17 +1,40 @@
 <?php
 
 use App\Http\Controllers\ProductoController;
+use App\Livewire\Settings\Appearance;
+use App\Livewire\Settings\Password;
+use App\Livewire\Settings\Profile;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('/inicio');
+Route::view('/', 'inicio')->name('inicio');
+Route::redirect('admin', 'productos');
+
+Route::view('/test', 'test');
+
+Route::middleware(['auth:admin'])->group(function () {
+    Route::resource('admin/productos', ProductoController::class);
 });
 
-Route::redirect('admin', 'admin/productos');
-Route::resource('admin/productos', ProductoController::class);
+// LARAVEL
+Route::get('/home', function () {
+    return view('welcome');
+})->name('home');
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::middleware(['auth:web'])->group(function () {
+    Route::redirect('settings', 'settings/profile');
+
+    Route::get('settings/profile', Profile::class)->name('settings.profile');
+    Route::get('settings/password', Password::class)->name('settings.password');
+    Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+});
+
+require __DIR__.'/auth.php';
 
 Route::get('/{categoria}', function ($categoria, Request $request) {
     // TODO: Estoy reciclando mucho código xd, pendiente encontrar mejor forma de obtener todos los productos
@@ -30,6 +53,9 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
 
     // Ordenamiento
     switch ($request->ordering) {
+        case 'recientes':
+            $query->orderBy('created_at', 'desc');
+            break;
         case 'nombre_asc':
             $query->orderBy('nombre_producto', 'asc');
             break;
@@ -43,7 +69,7 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
             $query->orderBy('precio', 'desc');
             break;
         default:
-            $query->orderBy('nombre_producto', 'asc'); // orden por defecto
+            $query->orderBy('created_at', 'desc');
             break;
     }
 
@@ -54,9 +80,8 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
 });
 
 // Ruta para vista en detalle de cada producto
-/* 
-    NOTA: Para mejorar posicionamiento web y mejor visibilidad de las URL, se recomienda
-    usar slug en vez de id para las rutas.
-*/
+/*
+ *    NOTA: Para mejorar posicionamiento web y mejor visibilidad de las URL, se recomienda
+ *    usar slug en vez de id para las rutas.
+ */
 Route::get('/producto/{id}', [ProductoController::class, 'show'])->name('producto.show');
-
