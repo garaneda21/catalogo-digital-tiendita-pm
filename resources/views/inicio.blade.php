@@ -20,7 +20,7 @@
                 <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
                 <p class="text-[#587A6C] text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de detalles,
                     colores y productos únicos.</p>
-                <a href="/perfumes"
+                <a href="/catalogo"
                     class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">
                     Ver Catálogo
                 </a>

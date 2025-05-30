@@ -17,8 +17,7 @@
         <div class="hidden sm:flex items-center gap-4">
             <!-- Enlaces del menú -->
             <div class="flex items-center font-bold gap-4 text-sm text-melocoton">
-                <a href="#" class="hover:underline">Inicio</a>
-                <a href="#" class="hover:underline">Catálogo</a>
+                <a href="/catalogo" class="hover:underline">Catálogo</a>
                 <a href="#" class="hover:underline">Nosotros</a>
                 <a href="#" class="hover:underline">Contacto</a>
             </div>

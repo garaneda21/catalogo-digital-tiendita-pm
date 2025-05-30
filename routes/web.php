@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProductoUserController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -13,6 +14,8 @@ Route::view('/', 'inicio')->name('inicio');
 Route::redirect('admin', 'productos');
 
 Route::view('/test', 'test');
+
+Route::resource('catalogo', ProductoUserController::class);
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::resource('admin/productos', ProductoController::class);
