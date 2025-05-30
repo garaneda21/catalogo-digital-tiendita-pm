@@ -6,6 +6,7 @@ use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rule;
 
 class ProductoController extends Controller
 {
@@ -63,7 +64,7 @@ class ProductoController extends Controller
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
             'descripcion'     => [],
-            'stock_actual'    => ['gte:0', 'max:9'],
+            'stock_actual'    => ['required', 'gte:0', 'max:9'],
             'precio'          => ['required', 'string', 'max:12'],
             'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
@@ -123,10 +124,10 @@ class ProductoController extends Controller
     public function update(Request $request, Producto $producto)
     {
         $request->validate([
-            'nombre_producto' => ['required', 'max:250', 'unique:productos'],
+            'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
             'categoria'       => ['required'],
             'descripcion'     => [],
-            'stock_actual'    => ['nullable', 'gte:0', 'max:9'],
+            'stock_actual'    => ['required', 'gte:0', 'max:9'],
             'precio'          => ['required', 'string', 'max:12'],  // el maximo es 12 por los puntos y $
             'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
