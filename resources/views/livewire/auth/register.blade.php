@@ -10,35 +10,24 @@
 
     <form wire:submit="register" class="flex flex-col gap-6">
         <!-- Name -->
-        <div>
-            <label class="text-azul-profundo dark:text-white font-bold text-sm">Nombre Completo</label>
-            <flux:input wire:model="name" :label="__('')" type="text" required autofocus autocomplete="name"
-                :placeholder="__('Full name')" />
-        </div>
+        <flux:input wire:model="name" :label="__('Nombre completo')" type="text" required autofocus autocomplete="name"
+            :placeholder="__('Full name')" />
 
         <!-- Email Address -->
-        <div>
-            <label class="text-azul-profundo dark:text-white font-bold text-sm">Dirección de correo</label>
-            <flux:input wire:model="email" :label="__('')" type="email" required autocomplete="email"
-                placeholder="email@ejemplo.com" />
-        </div>
+        <flux:input wire:model="email" :label="__('Correo')" type="email" required autocomplete="email"
+            placeholder="email@ejemplo.com" />
 
         <!-- Password -->
-        <div>
-            <label class="text-azul-profundo dark:text-white font-bold text-sm">Contraseña</label>
-            <flux:input wire:model="password" :label="__('')" type="password" required
-                autocomplete="new-password" viewable />
-        </div>
+        <flux:input wire:model="password" :label="__('Contraseña')" type="password" required autocomplete="new-password"
+            viewable />
 
         <!-- Confirm Password -->
-        <div>
-            <label class="text-azul-profundo dark:text-white font-bold text-sm">Confirmar contraseña</label>
-            <flux:input wire:model="password_confirmation" :label="__('')" type="password" required
-                autocomplete="new-password" viewable />
-        </div>
+        <flux:input wire:model="password_confirmation" :label="__('Confirmar contraseña')" type="password" required
+            autocomplete="new-password" viewable />
 
         <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full text-white bg-verde-oliva hover:bg-verde-oliva/70">
+            <flux:button type="submit" variant="primary"
+                class="w-full text-white bg-verde-oliva hover:bg-verde-oliva/70">
                 {{ __('Crear cuenta') }}
             </flux:button>
         </div>
