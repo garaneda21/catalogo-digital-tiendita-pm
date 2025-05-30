@@ -111,7 +111,7 @@
                 if (value.length > 9) {
                     value = value.substring(0, 9);
                 }
-                e.target.value = value;
+                e.target.value = value ? new Intl.NumberFormat('es-CL').format(value) : '';
             });
         });
     </script>

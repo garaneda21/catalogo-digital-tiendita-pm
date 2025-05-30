@@ -86,7 +86,7 @@ class ProductoController extends Controller
             'nombre_producto' => request('nombre_producto'),
             'categoria_id'    => request('categoria'),
             'descripcion'     => request('descripcion'),
-            'stock_actual'    => request('stock_actual'),
+            'stock_actual'    => $stock,
             'precio'          => $precio,
             'imagen_url'      => $url_imagen ?? null,
         ]);
