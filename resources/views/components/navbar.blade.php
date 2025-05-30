@@ -51,7 +51,7 @@
                                     <a href="{{ route('settings.profile') }}"
                                        class="flex items-center gap-2 px-4 py-2 text-sm text-blanco hover:underline">
                                         <x-iconos.cog />
-                                        {{ __('Configuración') }}
+                                        {{ __('Ajustes') }}
                                     </a>
                                     <!-- Cerrar sesión -->
                                     <form method="POST" action="{{ route('logout') }}">
