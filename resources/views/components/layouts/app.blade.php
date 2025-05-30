@@ -4,4 +4,7 @@
             {{ $slot }}
         </div>
     </flux:main>
+
+    <!-- Bootstrap para los modales de eliminacion y producto -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </x-layouts.app.sidebar>

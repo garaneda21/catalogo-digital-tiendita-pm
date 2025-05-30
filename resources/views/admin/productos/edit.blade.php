@@ -58,7 +58,8 @@
 
                     <!-- Stock Actual -->
                     <x-form-field>
-                        <x-form-label for="stock_actual">Stock Actual</x-form-label>
+                        <x-form-label for="stock_actual">Stock Actual <span
+                                class="text-red-500">(requerido)</span></x-form-label>
                         <div class="mt-2">
                             <x-form-input type="text" name="stock_actual" id="stock_actual"
                                 value="{{ $producto->stock_actual }}"></x-form-input>
