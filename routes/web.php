@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaUserController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
 use App\Livewire\Settings\Appearance;
@@ -15,7 +16,9 @@ Route::redirect('admin', 'productos');
 
 Route::view('/test', 'test');
 
-Route::resource('catalogo', ProductoUserController::class);
+Route::resource('productos', ProductoUserController::class);
+
+Route::get('/productos/categorias/{categoria}', [CategoriaUserController::class, 'index']);
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::resource('admin/productos', ProductoController::class);
@@ -38,6 +41,7 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
 
 Route::get('/{categoria}', function ($categoria, Request $request) {
     // TODO: Estoy reciclando mucho código xd, pendiente encontrar mejor forma de obtener todos los productos

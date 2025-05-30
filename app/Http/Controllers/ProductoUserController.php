@@ -17,7 +17,7 @@ class ProductoUserController extends Controller
         //realiza búsqueda y retorna datos paginados
         $productos = Producto::busqueda($request, $query);
 
-        return view('catalogo.index', compact('productos'));
+        return view('productos.index', compact('productos'));
     }
 
     /**
@@ -27,6 +27,6 @@ class ProductoUserController extends Controller
     {
         $producto = Producto::where('id', $id)->firstOrFail();
 
-        return view('producto.show', compact('producto'));
+        return view('productos.show', compact('producto'));
     }
 }

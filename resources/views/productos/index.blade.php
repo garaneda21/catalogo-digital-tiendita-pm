@@ -1,6 +1,9 @@
 <x-layouts.estructura>
     <div class="mx-auto max-w-6xl p-4">
 
+        <h2 class="text-3xl pb-2 text-azul-profundo">hola</h2>
+        <hr>
+
         <div class="mb-4">
             {{ $productos->links() }}
         </div>
