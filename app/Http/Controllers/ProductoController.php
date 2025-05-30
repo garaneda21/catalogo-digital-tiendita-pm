@@ -64,14 +64,17 @@ class ProductoController extends Controller
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
             'descripcion'     => [],
-            'stock_actual'    => ['required', 'gte:0', 'max:9'],
-            'precio'          => ['required', 'string', 'max:12'],
+            'stock_actual'    => ['required', 'string'],
+            'precio'          => ['required', 'string'],
             'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
 
         // Limpiamos el string de precio y lo dejamos como entero
         $precioRaw = $request->input('precio'); // "$12.345"
         $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
+
+        // Limpiamos el string de stock_actual y lo dejamos como entero
+        $stock = (int) str_replace('.', '', $request->input('stock_actual'));
 
         // para la imágen
         if ($request->imagen) {
@@ -127,14 +130,17 @@ class ProductoController extends Controller
             'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
             'categoria'       => ['required'],
             'descripcion'     => [],
-            'stock_actual'    => ['required', 'gte:0', 'max:9'],
-            'precio'          => ['required', 'string', 'max:12'],  // el maximo es 12 por los puntos y $
+            'stock_actual'    => ['required', 'string'],
+            'precio'          => ['required', 'string'],
             'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
 
         // Limpiamos el string de precio y lo dejamos como entero
         $precioRaw = $request->input('precio'); // "$12.345"
         $precio = (int) str_replace(['$', '.'], '', $precioRaw); // 12345
+
+        // Limpiamos el string de stock_actual y lo dejamos como entero
+        $stock = (int) str_replace('.', '', $request->input('stock_actual'));
 
         // para la imágen
         if ($request->imagen) {
@@ -151,7 +157,7 @@ class ProductoController extends Controller
             'nombre_producto' => $request->input('nombre_producto'),
             'categoria_id'    => $request->input('categoria'),
             'descripcion'     => $request->input('descripcion'),
-            'stock_actual'    => $request->input('stock_actual'),
+            'stock_actual'    => $stock,
             'precio'          => $precio,
             'imagen_url'      => $url_imagen ?? $producto->imagen_url,
         ]);
