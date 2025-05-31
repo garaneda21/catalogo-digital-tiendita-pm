@@ -1,24 +1,32 @@
 <?php
 
+use App\Http\Controllers\CategoriaUserController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProductoUserController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use App\Models\Categoria;
-use App\Models\Producto;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'inicio')->name('inicio');
-Route::redirect('admin', 'productos');
-
+// Vista de prueba
 Route::view('/test', 'test');
 
-Route::middleware(['auth:admin'])->group(function () {
+// Vistas principales
+Route::view('/', 'inicio')->name('inicio');
+Route::redirect('admin', 'admin/productos');
+
+// Vista Productos Clientes
+Route::get('/productos', [ProductoUserController::class, 'index']);
+Route::get('/productos/categorias/{categoria}', [CategoriaUserController::class, 'index']);
+Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
+
+// Rutas a las que solo puede acceder el admin
+Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::resource('admin/productos', ProductoController::class);
 });
 
 // LARAVEL
+
 Route::get('/home', function () {
     return view('welcome');
 })->name('home');
@@ -35,53 +43,3 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-Route::get('/{categoria}', function ($categoria, Request $request) {
-    // TODO: Estoy reciclando mucho código xd, pendiente encontrar mejor forma de obtener todos los productos
-
-    $categorias = Categoria::where('nombre_categoria', $categoria)->first();
-
-    if (! $categorias) {
-        abort(404);
-    }
-
-    $query = Producto::with('categoria')->where('categoria_id', $categorias->id);
-
-    if ($request->has('search')) {
-        $query->where('nombre_producto', 'like', '%'.$request->search.'%');
-    }
-
-    // Ordenamiento
-    switch ($request->ordering) {
-        case 'recientes':
-            $query->orderBy('created_at', 'desc');
-            break;
-        case 'nombre_asc':
-            $query->orderBy('nombre_producto', 'asc');
-            break;
-        case 'nombre_desc':
-            $query->orderBy('nombre_producto', 'desc');
-            break;
-        case 'precio_asc':
-            $query->orderBy('precio', 'asc');
-            break;
-        case 'precio_desc':
-            $query->orderBy('precio', 'desc');
-            break;
-        default:
-            $query->orderBy('created_at', 'desc');
-            break;
-    }
-
-    // Paginación con parámetros persistentes
-    $productos = $query->paginate(24)->appends($request->only(['search', 'ordering']));
-
-    return view('productos', compact('productos'));
-});
-
-// Ruta para vista en detalle de cada producto
-/*
- *    NOTA: Para mejorar posicionamiento web y mejor visibilidad de las URL, se recomienda
- *    usar slug en vez de id para las rutas.
- */
-Route::get('/producto/{id}', [ProductoController::class, 'show'])->name('producto.show');

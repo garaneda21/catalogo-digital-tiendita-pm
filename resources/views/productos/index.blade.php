@@ -1,6 +1,15 @@
 <x-layouts.estructura>
     <div class="mx-auto max-w-6xl p-4">
 
+        @isset($categoria)
+            <div class="flex items-center text-azul-profundo space-x-6">
+                <h2 class="text-4xl pb-4 font-bold">{{ $categoria }}</h2>
+                <p class="text-sm font-semibold text-azul-profundo/90">{{ count($productos) }} productos</p>
+            </div>
+
+            <hr>
+        @endisset
+
         <div class="mb-4">
             {{ $productos->links() }}
         </div>
@@ -20,7 +29,7 @@
         <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4 xl:gap-x-8">
 
             @foreach ($productos as $producto)
-                <a href="{{ route('producto.show', $producto->id) }}" class="group text-center">
+                <a href="/productos/{{ $producto->id }}" class="group text-center">
                     <img src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}"
                         alt="{{ $producto->nombre_producto }}"
                         class="rounded-2xl border aspect-square w-full object-cover group-hover:opacity-75">
