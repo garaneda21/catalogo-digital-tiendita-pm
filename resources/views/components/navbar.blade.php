@@ -41,16 +41,18 @@
                                 <!-- Dropdown -->
                                 <div id="userDropdownMenu"
                                     class="hidden absolute overflow-hidden right-0 mt-2 w-48 bg-azul-profundo rounded-xl shadow-lg z-50">
+                                    <!-- Compras cliente -->
                                     <a href="#"
                                         class="flex items-center gap-2 px-4 py-2 text-sm text-blanco hover:underline">
                                         <x-iconos.bolsita /> Mis Compras
                                     </a>
-
-                                    <a href="#"
-                                        class="flex items-center gap-2 px-4 py-2 text-sm text-blanco hover:underline">
-                                        <x-iconos.cog /> Configuración
+                                    <!-- Configuracion -->
+                                    <a href="{{ route('settings.profile') }}"
+                                       class="flex items-center gap-2 px-4 py-2 text-sm text-blanco hover:underline">
+                                        <x-iconos.cog />
+                                        {{ __('Ajustes') }}
                                     </a>
-
+                                    <!-- Cerrar sesión -->
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit"

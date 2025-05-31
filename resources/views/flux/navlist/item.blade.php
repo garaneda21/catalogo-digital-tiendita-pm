@@ -25,7 +25,7 @@ $classes = Flux::classes()
     ->add('h-12 lg:h-10 relative flex items-center gap-3 rounded-2xl')
     ->add($square ? 'px-2.5!' : '')
     ->add('py-0 text-start w-full px-3 my-px')
-    ->add('text-white dark:text-white')
+    ->add('text-zinc-800 dark:text-white')
     ->add(match ($variant) {
         'outline' => match ($accent) {
             true => [
