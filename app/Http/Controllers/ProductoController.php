@@ -14,7 +14,7 @@ class ProductoController extends Controller
     {
         $query = Producto::with('categoria');
 
-        //realiza búsqueda y retorna datos paginados
+        // realiza búsqueda y retorna datos paginados
         $productos = Producto::busqueda($request, $query);
 
         return view('admin.productos.index', compact('productos'));
@@ -67,20 +67,7 @@ class ProductoController extends Controller
         return redirect('/admin/productos/');
     }
 
-    /**
-     * Display the specified resource.
-     * Usado para vista detallada en pagina de producto
-     * NOTA: A futuro implementar slug en vez de id para mejorar visualizacion
-     * de la url y posicionamiento
-     * ej url con id =   producto/15
-     * ej url con slug = producto/polera-oversize-blanca
-     */
-    public function show($id)
-    {
-        $producto = Producto::where('id', $id)->firstOrFail();
-
-        return view('producto.show', compact('producto'));
-    }
+    public function show() {}
 
     /**
      * Show the form for editing the specified resource.
@@ -146,5 +133,4 @@ class ProductoController extends Controller
 
         return redirect()->route('productos.index');
     }
-
 }
