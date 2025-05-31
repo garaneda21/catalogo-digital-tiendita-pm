@@ -13,13 +13,9 @@
                 </a>
 
                 <flux:navlist class="w-64">
-                    <flux:navlist.item href="#" icon="squares-2x2">Productos</flux:navlist.item>
-
-                    <flux:navlist.group heading="Account" expandable>
-                        <flux:navlist.item href="#">Profile</flux:navlist.item>
-                        <flux:navlist.item href="#">Settings</flux:navlist.item>
-                        <flux:navlist.item href="#">Billing</flux:navlist.item>
-                    </flux:navlist.group>
+                    <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/productos" icon="squares-2x2">Productos</flux:navlist.item>
+                    <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/administradores" icon="key">Administradores</flux:navlist.item>
+                    <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/usuarios" icon="user-group">Usuarios</flux:navlist.item>
                 </flux:navlist>
 
             <flux:spacer />
