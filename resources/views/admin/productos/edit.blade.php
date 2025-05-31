@@ -52,7 +52,7 @@
                         </x-form-label>
                         <div class="mt-2">
                             <x-form-input type="text" name="precio" id="precio"
-                                value="{{ $producto->precio }}"></x-form-input>
+                                value="{{ '$' . number_format($producto->precio, 0, ',', '.') }}"></x-form-input>
                         </div>
                     </x-form-field>
 
@@ -62,7 +62,7 @@
                                 class="text-red-500">(requerido)</span></x-form-label>
                         <div class="mt-2">
                             <x-form-input type="text" name="stock_actual" id="stock_actual"
-                                value="{{ $producto->stock_actual }}"></x-form-input>
+                                value="{{ number_format($producto->stock_actual, 0, ',', '.') }}"></x-form-input>
                         </div>
                     </x-form-field>
 
