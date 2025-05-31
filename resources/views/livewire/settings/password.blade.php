@@ -1,5 +1,5 @@
 <flux:main>
-    <div class="bg-white dark:bg-azul-oscuro shadow-xl rounded-2xl p-8 border dark:border-gray-700 min-h-full">   
+    <div class="bg-white dark:bg-azul-oscuro shadow-xl rounded-2xl p-8 px-20 border dark:border-gray-700 min-h-full">   
         <section class="w-full">
             @include('partials.settings-heading')
         
