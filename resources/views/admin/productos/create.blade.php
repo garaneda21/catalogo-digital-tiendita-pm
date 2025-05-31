@@ -49,7 +49,8 @@
 
                     <!-- Stock Actual -->
                     <x-form-field>
-                        <x-form-label for="stock_actual">Stock Actual</x-form-label>
+                        <x-form-label for="stock_actual">Stock Actual <span
+                                class="text-blue-500">(requerido)</span></x-form-label>
                         <div class="mt-2">
                             <x-form-input type="text" name="stock_actual" id="stock_actual" :value="old('stock_actual')"
                                 min="0"></x-form-input>
@@ -89,5 +90,32 @@
             </div>
         </div>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // ------- Formateo del precio -------
+            const precioInput = document.getElementById('precio');
+        
+            precioInput?.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 9) {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value ? '$' + new Intl.NumberFormat('es-CL').format(value) : '';
+            });
+        
+            // ------- Formateo del stock_actual -------
+            const stockInput = document.getElementById('stock_actual');
+        
+            stockInput?.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 9) {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value ? new Intl.NumberFormat('es-CL').format(value) : '';
+            });
+        });
+    </script>
+
 
 </x-layouts.app>
