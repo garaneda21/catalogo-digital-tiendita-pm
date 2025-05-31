@@ -1,8 +1,14 @@
 <x-layouts.estructura>
     <div class="mx-auto max-w-6xl p-4">
 
-        <h2 class="text-3xl pb-2 text-azul-profundo">hola</h2>
-        <hr>
+        @isset($categoria)
+            <div class="flex items-center text-azul-profundo space-x-6">
+                <h2 class="text-4xl pb-4 font-bold">{{ $categoria }}</h2>
+                <p class="text-sm font-semibold text-azul-profundo/90">{{ count($productos) }} productos</p>
+            </div>
+
+            <hr>
+        @endisset
 
         <div class="mb-4">
             {{ $productos->links() }}

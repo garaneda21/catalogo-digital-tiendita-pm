@@ -12,7 +12,7 @@ class CategoriaUserController extends Controller
     {
         $categorias = Categoria::where('nombre_categoria', $categoria)->first();
 
-        if(! $categorias) {
+        if (! $categorias) {
             abort(404);
         }
 
@@ -20,6 +20,9 @@ class CategoriaUserController extends Controller
 
         $productos = Producto::busqueda($request, $query);
 
-        return view('productos.index', compact('productos'));
+        return view('productos.index', [
+            'productos' => $productos,
+            'categoria' => $categorias->nombre_categoria,
+        ]);
     }
 }
