@@ -39,7 +39,7 @@ class AdministradoresController extends Controller
      */
     public function show(Administrador $administrador)
     {
-        //
+        return view('admin.administradores.show', ['admin' => $administrador]);
     }
 
     public function edit(Administrador $administrador)

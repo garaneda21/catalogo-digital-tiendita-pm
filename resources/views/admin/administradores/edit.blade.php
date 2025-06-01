@@ -1,11 +1,5 @@
-<x-layouts.app :title="__('Dashboard')">
+<x-layouts.navlist-show-admins :admin="$admin">
 
-    <x-panel.header nombre_header='Modificar datos de "{{ $admin->nombre_admin }}"'>
-        <flux:button href="/admin/productos" icon="arrow-left"
-            class="dark:text-black! dark:bg-white! hover:bg-gray-200! rounded-3xl!">
-            Volver
-        </flux:button>
-    </x-panel.header>
 
     <form method="POST" action="{{ route('administradores.update', $admin->id) }}">
         @csrf
@@ -20,8 +14,6 @@
             <flux:input name="correo_admin" label="Correo" type="email" placeholder="email@ejemplo.com"
                 value="{{ $admin->correo_admin }}" />
 
-            <hr>
-
             @if ($errors->any())
                 <x-form-errorcard></x-form-errorcard>
             @endif
@@ -32,4 +24,5 @@
             </div>
         </div>
     </form>
-</x-layouts.app>
+
+</x-layouts.navlist-show-admins>

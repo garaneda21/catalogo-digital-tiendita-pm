@@ -12,5 +12,7 @@ class Accion extends Model
 
     protected $table = 'acciones';
 
+    public $timestamps = false;
+
     protected $fillable = ['nombre_accion'];
 }
