@@ -32,3 +32,6 @@ Route::middleware('auth')->group(function () {
 
 Route::post('logout', App\Livewire\Actions\Logout::class)
     ->name('logout');
+
+Route::post('logout-admin', App\Livewire\Actions\LogoutAdmin::class)
+    ->name('logout-admin');
