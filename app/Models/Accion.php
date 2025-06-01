@@ -15,4 +15,9 @@ class Accion extends Model
     public $timestamps = false;
 
     protected $fillable = ['nombre_accion'];
+
+    public function registros() {
+        return $this->belongsTo(Registro::class);
+    }
+
 }

@@ -17,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('registros', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_entidad_modificada');
-            $table->string('entidad_modificada');
+            $table->bigInteger('id_entidad_modificada')->nullable();
+            $table->string('entidad_modificada')->nullable();
             $table->dateTime('fecha_registro');
             $table->foreignIdFor(Accion::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Administrador::class)->constrained()->cascadeOnDelete();
