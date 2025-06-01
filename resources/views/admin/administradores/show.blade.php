@@ -17,7 +17,7 @@
         </div>
         <div class="bg-gray-50 rounded-lg p-4 border-1">
             <p class="text-gray-500 mb-1">Último acceso</p>
-            <p class="font-medium">31 de mayo, 2025 - 10:43 AM</p>
+            <p class="font-medium">{{ $admin->ultimo_login }}</p>
         </div>
         <div class="bg-gray-50 rounded-lg p-4 border-1">
             <p class="text-gray-500 mb-1">Estado</p>

@@ -16,6 +16,7 @@
                         <th class="px-4 py-2 text-left">ID</th>
                         <th class="px-4 py-2 text-left">Nombre</th>
                         <th class="px-4 py-2 text-left">Correo</th>
+                        <th class="px-4 py-2 text-left">Último Cambio</th>
                         <th class="px-4 py-2 text-left">Creación</th>
                         <th class="px-4 py-2 text-left">Activo</th>
                         <th class="px-4 py-2 text-right">Acciones Rápidas</th>
@@ -27,6 +28,7 @@
                         <td class="px-4 py-2">{{ $admin->id }}</td>
                         <td class="px-4 py-2">{{ $admin->nombre_admin }}</td>
                         <td class="px-4 py-2">{{ $admin->correo_admin }}</td>
+                        <td class="px-4 py-2">{{ $admin->ultimo_cambio ?? 'No ha hecho cambios aún' }}</td>
                         <td class="px-4 py-2">{{ $admin->created_at }}</td>
                         <td class="px-4 py-2">{{ $admin->activo ? 'Si' : 'No' }}</td>
                         <td class="px-4 py-2 text-right space-x-2">

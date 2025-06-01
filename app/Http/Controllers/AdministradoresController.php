@@ -14,6 +14,13 @@ class AdministradoresController extends Controller
     {
         $administradores = Administrador::all();
 
+        foreach ($administradores as $admin) {
+            $admin['ultimo_cambio'] = Registro::where('administrador_id', $admin->id)
+                ->whereNotIn('accion_id', [1, 2])
+                ->latest('fecha_registro')
+                ->first()->fecha_registro;
+        }
+
         return view('admin.administradores.index', compact('administradores'));
     }
 
@@ -48,6 +55,10 @@ class AdministradoresController extends Controller
         foreach ($registros as $registro) {
             $registro['dato_modificado'] = Registro::obtener_modelo_registro($registro->id_entidad_modificada, $registro->entidad_modificada);
         }
+
+        $administrador['ultimo_login'] = $registros->first(function ($registro) {
+            return $registro->accion_id === 1;
+        })->fecha_registro;
 
         return view('admin.administradores.show', [
             'admin'     => $administrador,
