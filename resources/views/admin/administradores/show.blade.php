@@ -33,22 +33,22 @@
 
     <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Ultimas acciones</h2>
 
-    <div class="mt-4 overflow-hidden rounded-lg shadow">
+    <div class="mt-4 overflow-hidden rounded-lg border-1">
         <table class="min-w-full border-separate border-spacing-0 text-sm">
             <thead class="bg-gray-200 text-azul-profundo">
                 <tr>
-                    <th class="px-4 py-2 text-left">Dato</th>
-                    <th class="px-4 py-2 text-left">Entidad Modificada</th>
                     <th class="px-4 py-2 text-left">Acción</th>
+                    <th class="px-4 py-2 text-left">Entidad Modificada</th>
+                    <th class="px-4 py-2 text-left">Datos</th>
                     <th class="px-4 py-2 text-left">Fecha Registro</th>
                 </tr>
             </thead>
             <tbody class="bg-white text-[#3D3C63]">
                 @foreach ($registros as $registro)
                     <tr class="hover:bg-[#FAFAFA]">
-                        <td class="px-4 py-2">{{ $registro->id_entidad_modificada }}</td>
-                        <td class="px-4 py-2">{{ $registro->entidad_modificada }}</td>
                         <td class="px-4 py-2">{{ $registro->accion->nombre_accion }}</td>
+                        <td class="px-4 py-2">{{ $registro->entidad_modificada ?? '---'}}</td>
+                        <td class="px-4 py-2">{{ $registro->id_entidad_modificada ?? '---' }}</td>
                         <td class="px-4 py-2">{{ $registro->fecha_registro }}</td>
                     </tr>
                 @endforeach

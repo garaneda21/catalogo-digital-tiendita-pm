@@ -9,7 +9,7 @@
 
     <div class="py-4 space-y-2 mx-auto">
 
-        <div class="overflow-hidden rounded-lg shadow">
+        <div class="overflow-hidden rounded-lg border-1">
             <table class="min-w-full border-separate border-spacing-0 text-sm">
                 <thead class="bg-gray-200 text-azul-profundo">
                     <tr>

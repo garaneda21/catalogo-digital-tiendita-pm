@@ -9,12 +9,12 @@
     <div class="mt-4 flex items-start max-md:flex-col">
         <div class="me-10 w-full pb-4 md:w-[220px]">
             <flux:navlist.group>
-                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}" class="data-current:bg-gray-200!">Detalles</flux:navlist.item>
-                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit" class="data-current:bg-gray-200!">Editar Datos</flux:navlist.item>
-                <flux:navlist.item href="/admin/administradores/" class="data-current:bg-gray-200!">Editar Permisos </flux:navlist.item>
-                <flux:navlist.item href="/admin/administradores/" class="data-current:bg-gray-200!">Cambiar Contraseña </flux:navlist.item>
-                <flux:navlist.item href="/admin/administradores/" class="data-current:bg-gray-200!">Historial</flux:navlist.item>
-                <flux:navlist.item href="/admin/administradores/" class="data-current:bg-gray-200!">Desactivar Admin</flux:navlist.item>
+                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}" class="data-current:bg-gray-200! hover:underline!">Detalles</flux:navlist.item>
+                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit" class="data-current:bg-gray-200! hover:underline!">Editar Datos</flux:navlist.item>
+                <!-- <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Editar Permisos </flux:navlist.item> -->
+                <!-- <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Cambiar Contraseña </flux:navlist.item> -->
+                <!-- <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/historial" class="data-current:bg-gray-200! hover:underline!">Historial</flux:navlist.item> -->
+                <!-- <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Desactivar Admin</flux:navlist.item> -->
             </flux:navlist.group>
         </div>
 

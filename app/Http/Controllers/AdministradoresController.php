@@ -18,7 +18,7 @@ class AdministradoresController extends Controller
             $admin['ultimo_cambio'] = Registro::where('administrador_id', $admin->id)
                 ->whereNotIn('accion_id', [1, 2])
                 ->latest('fecha_registro')
-                ->first()->fecha_registro;
+                ->first()->fecha_registro ?? null;
         }
 
         return view('admin.administradores.index', compact('administradores'));
@@ -37,7 +37,9 @@ class AdministradoresController extends Controller
             'password'     => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        Administrador::create($atributos);
+        $admin = Administrador::create($atributos);
+
+        Registro::registrar_accion($admin, 'administrador', 5);
 
         return redirect('/admin/administradores');
     }
@@ -82,6 +84,8 @@ class AdministradoresController extends Controller
             'nombre_admin' => request('nombre_admin'),
             'correo_admin' => request('correo_admin'),
         ]);
+
+        Registro::registrar_accion($administrador, 'administrador', 6);
 
         return redirect('/admin/administradores');
     }
