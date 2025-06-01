@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Administrador;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
 class AdministradoresController extends Controller
@@ -12,17 +13,14 @@ class AdministradoresController extends Controller
     {
         $administradores = Administrador::all();
 
-        return view('administradores.index', compact('administradores'));
+        return view('admin.administradores.index', compact('administradores'));
     }
 
     public function create()
     {
-        return view('administradores.create');
+        return view('admin.administradores.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $atributos = request()->validate([
@@ -44,20 +42,24 @@ class AdministradoresController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Administrador $administrador)
     {
-        //
+        return view('admin.administradores.edit', ['admin' => $administrador]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Administrador $administrador)
+    public function update(Administrador $administrador)
     {
-        //
+        request()->validate([
+            'nombre_admin' => ['required', 'string', 'max:255', Rule::unique('administradores')->ignore($administrador->id)],
+            'correo_admin' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('administradores')->ignore($administrador->id)],
+        ]);
+
+        $administrador->update([
+            'nombre_admin' => request('nombre_admin'),
+            'correo_admin' => request('correo_admin')
+        ]);
+
+        return redirect('/admin/administradores');
     }
 
     /**
