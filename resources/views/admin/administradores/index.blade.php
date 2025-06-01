@@ -34,8 +34,6 @@
                         <td class="px-4 py-2 text-right space-x-2">
                             <flux:button href="{{ route('administradores.show', $admin->id) }}" tooltip="Detalles" icon="list-bullet" class="text-blue-600!"></flux:button>
                             <flux:button href="{{ route('administradores.edit', $admin->id) }}" tooltip="Editar Datos" icon="pencil-square" class="text-blue-600!"></flux:button>
-                            <flux:button href="{{ route('administradores.edit', $admin->id) }}" tooltip="Editar Permisos" icon="key" class="text-blue-600!"></flux:button>
-                            <flux:button tooltip="Historial de acciones" icon="clock" class="text-blue-600!"></flux:button>
                             <flux:button tooltip="Desactivar Admin" icon="eye-slash" class="text-red-600!"></flux:button>
                         </td>
                     </tr>
