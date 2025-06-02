@@ -13,9 +13,10 @@ class AdministradorSeeder extends Seeder
     public function run(): void
     {
         Administrador::create([
-            'nombre_admin' => 'Admin',
+            'nombre_admin' => 'SuperAdmin',
             'correo_admin' => 'admin@admin.com',
             'password'     => bcrypt('admin123'),
+            'activo'     => true,
         ]);
     }
 }
