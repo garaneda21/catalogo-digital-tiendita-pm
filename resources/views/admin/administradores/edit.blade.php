@@ -15,7 +15,7 @@
                 value="{{ $admin->correo_admin }}" />
 
             @if ($errors->any())
-                <x-form-errorcard></x-form-errorcard>
+                <x-forms.error-card/>
             @endif
 
             <div class="flex items-center justify-end gap-x-6">
