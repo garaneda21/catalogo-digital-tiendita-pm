@@ -63,7 +63,7 @@
 
         @foreach ($productos as $producto)
             <div
-                class="bg-white shadow-md rounded-xl p-3 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
+                class="bg-white border-2 rounded-xl p-3 flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
 
                 <!-- Imagen -->
                 <div class="w-full md:w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">

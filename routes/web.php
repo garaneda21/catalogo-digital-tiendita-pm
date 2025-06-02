@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
@@ -23,6 +24,7 @@ Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 // Rutas a las que solo puede acceder el admin
 Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::resource('admin/productos', ProductoController::class);
+    Route::resource('admin/administradores', AdministradoresController::class)->parameters(['administradores' => 'administrador']);
 });
 
 // LARAVEL

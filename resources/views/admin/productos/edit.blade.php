@@ -106,7 +106,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             // ------- Formateo del precio -------
             const precioInput = document.getElementById('precio');
-        
+
             precioInput?.addEventListener('input', function (e) {
                 let value = e.target.value.replace(/\D/g, '');
                 if (value.length > 9) {
@@ -114,10 +114,10 @@
                 }
                 e.target.value = value ? '$' + new Intl.NumberFormat('es-CL').format(value) : '';
             });
-        
+
             // ------- Formateo del stock_actual -------
             const stockInput = document.getElementById('stock_actual');
-        
+
             stockInput?.addEventListener('input', function (e) {
                 let value = e.target.value.replace(/\D/g, '');
                 if (value.length > 9) {

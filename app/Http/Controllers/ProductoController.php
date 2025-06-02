@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Models\Registro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
@@ -56,7 +57,7 @@ class ProductoController extends Controller
             $request->imagen->move(public_path('images/productos'), $url_imagen);
         }
 
-        Producto::create([
+        $producto = Producto::create([
             'nombre_producto' => request('nombre_producto'),
             'categoria_id'    => request('categoria'),
             'descripcion'     => request('descripcion'),
@@ -64,6 +65,9 @@ class ProductoController extends Controller
             'precio'          => $precio,
             'imagen_url'      => $url_imagen ?? null,
         ]);
+
+        // registrar acción del admin
+        Registro::registrar_accion($producto, 'productos', 3);
 
         session()->flash('success_create', '¡Producto creado exitosamente!');
 
@@ -122,6 +126,8 @@ class ProductoController extends Controller
             'precio'          => $precio,
             'imagen_url'      => $url_imagen ?? $producto->imagen_url,
         ]);
+
+        Registro::registrar_accion($producto, 'productos', 4);
 
         session()->flash('success_update', '¡Producto actualizado exitosamente!');
 
