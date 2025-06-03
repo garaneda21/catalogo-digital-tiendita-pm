@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
 use App\Http\Controllers\ProductoController;
@@ -25,6 +26,7 @@ Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::resource('admin/productos', ProductoController::class);
     Route::resource('admin/administradores', AdministradoresController::class)->parameters(['administradores' => 'administrador']);
+    Route::resource('admin/usuarios', UsuariosController::class)->parameters(['administradores' => 'administrador']);
 });
 
 // LARAVEL
