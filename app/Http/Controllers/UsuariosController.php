@@ -14,8 +14,8 @@ class UsuariosController extends Controller
     {
         $usuarios = User::all();
 
-        foreach ($usuarios as $usuario) {
-            $usuario['ultimo_cambio'] = Registro::where('user_id', $usuario->id)
+        foreach ($usuarios as $user) {
+            $user['ultimo_cambio'] = Registro::where('user_id', $user->id)
                 ->whereNotIn('accion_id', [1, 2])
                 ->latest('fecha_registro')
                 ->first()->fecha_registro ?? null;
@@ -31,25 +31,27 @@ class UsuariosController extends Controller
 
     public function store(Request $request)
     {
-        $atributos = request()->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
-            'password'     => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+        $atributos = $request->validate([
+            'name'     => ['required', 'string', 'max:255', 'unique:users'],
+            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $usuario = User::create($atributos);
+        $user = User::create([
+            'name'     => $atributos['name'],
+            'email'    => $atributos['email'],
+            'password' => bcrypt($atributos['password']),
+        ]);
 
-        Registro::registrar_accion($usuario, 'user', 5);
+        Registro::registrar_accion_usuario($user, 'users', 5); // acción: creación
 
         return redirect('/admin/usuarios');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(User $usuario)
     {
-        $registros = Registro::with('accion')
+        $registros = Registro::where('user_id', $usuario->id)
+            ->with('accion')
             ->orderBy('fecha_registro', 'desc')
             ->take(10)
             ->get();
@@ -63,7 +65,7 @@ class UsuariosController extends Controller
         })->fecha_registro;
 
         return view('admin.usuarios.show', [
-            'usuario'     => $usuario,
+            'usuario'   => $usuario,
             'registros' => $registros,
         ]);
     }
@@ -73,28 +75,29 @@ class UsuariosController extends Controller
         return view('admin.usuarios.edit', ['usuario' => $usuario]);
     }
 
-    public function update(User $usuario)
+    public function update(Request $request, User $usuario)
     {
-        request()->validate([
-            'name' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($usuario->id)],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('users')->ignore($usuario->id)],
+        $request->validate([
+            'name'  => ['required', 'string', 'max:255', Rule::unique('users')->ignore($usuario->id)],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($usuario->id)],
         ]);
 
         $usuario->update([
-            'name' => request('name'),
-            'email' => request('email'),
+            'name'  => $request->input('name'),
+            'email' => $request->input('email'),
         ]);
 
-        Registro::registrar_accion($usuario, 'user', 6);
+        Registro::registrar_accion_usuario($usuario, 'users', 6); // acción: edición
 
         return redirect('/admin/usuarios');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $usuario)
     {
-        //
+        $usuario->delete();
+
+        Registro::registrar_accion_usuario($usuario, 'users', 7); // acción: eliminación
+
+        return redirect('/admin/usuarios');
     }
 }

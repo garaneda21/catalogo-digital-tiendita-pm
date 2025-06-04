@@ -18,7 +18,6 @@
                         <th class="px-4 py-2 text-left">Correo</th>
                         <th class="px-4 py-2 text-left">Último Cambio</th>
                         <th class="px-4 py-2 text-left">Creación</th>
-                        <th class="px-4 py-2 text-left">Activo</th>
                         <th class="px-4 py-2 text-right">Acciones Rápidas</th>
                     </tr>
                 </thead>
@@ -26,8 +25,8 @@
                 <tbody class="bg-white text-[#3D3C63]">
                     <tr class="hover:bg-[#FAFAFA]">
                         <td class="px-4 py-2">{{ $usuario->id }}</td>
-                        <td class="px-4 py-2">{{ $usuario->nombre_usuario }}</td>
-                        <td class="px-4 py-2">{{ $usuario->correo_usuario }}</td>
+                        <td class="px-4 py-2">{{ $usuario->name }}</td>
+                        <td class="px-4 py-2">{{ $usuario->email }}</td>
                         <td class="px-4 py-2">{{ $usuario->ultimo_cambio ?? 'No ha hecho cambios aún' }}</td>
                         <td class="px-4 py-2">{{ $usuario->created_at }}</td>
                         <td class="px-4 py-2 text-right space-x-2">
