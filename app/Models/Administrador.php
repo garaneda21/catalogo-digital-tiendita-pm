@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
@@ -19,6 +18,16 @@ class Administrador extends Authenticatable
         'correo_admin',
         'password',
     ];
+
+    public function permisos()
+    {
+        return $this->belongsToMany(Permisos::class, 'permisos_admins');
+    }
+
+    public function tienePermiso(string $nombre)
+    {
+        return $this->permisos->contains('nombre_permiso', $nombre);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -39,7 +48,7 @@ class Administrador extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
