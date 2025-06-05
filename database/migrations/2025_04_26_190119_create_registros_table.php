@@ -3,6 +3,7 @@
 use App\Models\Accion;
 use App\Models\Producto;
 use App\Models\Administrador;
+use App\Models\User;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,7 +22,9 @@ return new class extends Migration
             $table->string('entidad_modificada')->nullable();
             $table->dateTime('fecha_registro');
             $table->foreignIdFor(Accion::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Administrador::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Administrador::class)->nullable()->constrained()->cascadeOnDelete();
+            //Añadiendo la relación con User
+            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
         });
     }
 
