@@ -12,6 +12,7 @@ contenido @yield('contenido_catalogo') --}}
         content="Descubre los mejores productos de belleza en Tiendita PM. Perfumes, skincare, maquillaje y más. ¡Compra directo por WhatsApp!">
     <title>@yield('titulo_catalogo')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @fluxAppearance
 </head>
 
 <body>
@@ -19,11 +20,11 @@ contenido @yield('contenido_catalogo') --}}
         <x-navbar />
     </header>
 
-    <div class="bg-[#fefef9] min-h-screen">
+    <div class="bg-blanco min-h-screen">
         {{ $slot }}
     </div>
 
-    <footer id="contacto" class="bg-[#3D3C63] text-white py-12">
+    <footer id="contacto" class="bg-azul-profundo text-white py-12">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6 text-center">
             <!-- Contacto -->
             <div>
@@ -46,11 +47,12 @@ contenido @yield('contenido_catalogo') --}}
                 <p>Pequeño emprendimiento con alma creativa. Diseñamos con pasión para ti.</p>
             </div>
         </div>
-        <div class="text-center mt-8 text-sm text-[#E5B958]">© 2025 Tiendita PM. Todos los derechos reservados.</div>
+        <div class="text-center mt-8 text-sm text-mostaza">© 2025 Tiendita PM. Todos los derechos reservados.</div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
     </script>
+    @fluxScripts
 </body>
 
 </html>

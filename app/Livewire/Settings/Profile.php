@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\Attributes\Layout;
 
 class Profile extends Component
 {
@@ -70,5 +71,13 @@ class Profile extends Component
         $user->sendEmailVerificationNotification();
 
         Session::flash('status', 'verification-link-sent');
+    }
+    /**
+     * Incluye el layout del catalogo a los settings de livewire.
+     */
+    public function render()
+    {
+        return view('livewire.settings.profile')
+            ->layout('components.layouts.estructura');
     }
 }
