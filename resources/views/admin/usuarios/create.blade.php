@@ -13,10 +13,10 @@
             <p class="text-melocoton">Rellena los datos para registrar a un nuevo usuario</p>
 
             <!-- Nombre -->
-            <flux:input name="nombre_usuario" label="Nombre del usuario" type="text" autofocus placeholder="Nombre completo" :value="old('nombre_usuario')"/>
+            <flux:input name="name" label="Nombre del usuario" type="text" autofocus placeholder="Nombre completo" :value="old('name')"/>
 
             <!-- Correo -->
-            <flux:input name="correo_usuario" label="Correo" type="email" placeholder="email@ejemplo.com" :value="old('correo_usuario')"/>
+            <flux:input name="email" label="Correo" type="email" placeholder="email@ejemplo.com" :value="old('email')"/>
 
             <!-- Contraseña -->
             <flux:input name="password" label="Contraseña" type="password" autocomplete="new-password" viewable />

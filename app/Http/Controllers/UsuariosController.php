@@ -37,11 +37,7 @@ class UsuariosController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name'     => $atributos['name'],
-            'email'    => $atributos['email'],
-            'password' => bcrypt($atributos['password']),
-        ]);
+        $user = User::create($atributos);
 
         Registro::registrar_accion($user, 'users', 5); // acción: creación
 

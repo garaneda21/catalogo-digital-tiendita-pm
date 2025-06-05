@@ -8,11 +8,11 @@
         <div class="flex flex-col gap-6 max-w-lg mt-6">
             <!-- Nombre -->
             <flux:input name="nombre_usuario" label="Nombre del usuario" type="text" autofocus
-                placeholder="Nombre completo" value="{{ $usuario->nombre_usuario }}" />
+                placeholder="Nombre completo" value="{{ $usuario->name }}" />
 
             <!-- Correo -->
             <flux:input name="correo_usuario" label="Correo" type="email" placeholder="email@ejemplo.com"
-                value="{{ $usuario->correo_usuario }}" />
+                value="{{ $usuario->email }}" />
 
             @if ($errors->any())
                 <x-forms.error-card/>
