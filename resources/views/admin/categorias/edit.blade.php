@@ -19,7 +19,7 @@
                 value="{{ $categoria->nombre_categoria }}" />
 
             <!-- Descripción -->
-            <flux:textarea label="Descripción de Categoría" name="descripcion" id="descripcion" >
+            <flux:textarea label="Descripción de Categoría" name="descripcion_categoria" id="descripcion" >
                 {{ $categoria->descripcion_categoria }}
             </flux:textarea>
 

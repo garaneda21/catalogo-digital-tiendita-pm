@@ -25,8 +25,8 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_categoria'      => ['required|max:250|unique:categorias'],
-            'descripcion_categoria' => ['nullable'], 
+            'nombre_categoria'      => ['required', 'max:250', 'unique:categorias'],
+            'descripcion_categoria' => [], 
         ]);
 
         $categoria = Categoria::create([
@@ -49,8 +49,8 @@ class CategoriaController extends Controller
     public function update(Request $request, Categoria $categoria)
     {
         $request->validate([
-            'nombre_categoria' => 'required|max:250', Rule::unique('categorias')->ignore($categoria->id),
-            'descripcion_categoria' => 'nullable', 
+            'nombre_categoria' => ['required', 'max:250', Rule::unique('categorias')->ignore($categoria->id)],
+            'descripcion_categoria' => [], 
         ]);
 
         $categoria->update([
