@@ -15,8 +15,6 @@ class Categoria extends Model
         'descripcion_categoria'
     ];
 
-    public $timestamps = false;
-
     public function productos() {
         return $this->hasMany(Producto::class);
     }

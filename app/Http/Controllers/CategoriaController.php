@@ -10,7 +10,6 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-
         return view('admin.categorias.index', compact('categorias'));
     }
 
@@ -22,17 +21,13 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_categoria'      => ['required', 'max:250', 'unique:categorias'],
-            'descripcion_categoria' => [],
+            'nombre_categoria' => 'required|max:250',
+            'descripcion_categoria' => 'nullable', 
         ]);
 
-        Categoria::create([
-            'nombre_categoria' => request('nombre_categoria'),
-            'descripcion_categoria' => request('descripcion_categoria'),
-        ]);
+        Categoria::create($request->all());
 
-        // return redirect()->route('/admin/categorias/'); // implementar después ._.
-        return redirect('/admin/productos/');
+        return redirect()->route('admin.categorias.index');
     }
 
     public function edit(Categoria $categoria)
@@ -43,8 +38,8 @@ class CategoriaController extends Controller
     public function update(Request $request, Categoria $categoria)
     {
         $request->validate([
-            'nombre_categoria'      => 'required|max:250',
-            'descripcion_categoria' => 'nullable',
+            'nombre_categoria' => 'required|max:250',
+            'descripcion_categoria' => 'nullable', 
         ]);
 
         $categoria->update($request->all());
@@ -55,7 +50,6 @@ class CategoriaController extends Controller
     public function destroy(Categoria $categoria)
     {
         $categoria->delete();
-
         return redirect()->route('admin.categorias.index');
     }
 }

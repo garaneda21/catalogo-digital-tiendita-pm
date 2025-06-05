@@ -4,9 +4,11 @@
     <!-- Barra de categorías -->
     <div class="w-full bg-[#f8e9d4] py-2 px-4 overflow-w-auto">
         <div class="flex justify-center space-x-4 whitespace-nowrap">
-            @foreach ($categorias as $categoria)
-                <x-categoria-barra href="/{{$categoria->nombre_categoria}}">{{$categoria->nombre_categoria}}</x-categoria-barra>
-            @endforeach
+            <x-categoria-barra href="/productos/categorias/perfumes">Perfumes</x-categoria-barra>
+            <x-categoria-barra href="/productos/categorias/skincare">Skincare</x-categoria-barra>
+            <x-categoria-barra href="/productos/categorias/maquillaje">Maquillaje</x-categoria-barra>
+            <x-categoria-barra href="/productos/categorias/ropa">Ropa</x-categoria-barra>
+            <x-categoria-barra href="/productos/categorias/carteras">Carteras</x-categoria-barra>
         </div>
     </div>
 
@@ -16,10 +18,9 @@
             <!-- Texto a la izquierda -->
             <div class="md:w-1/2 text-left">
                 <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
-                <p class="text-[#587A6C] text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de
-                    detalles,
+                <p class="text-[#587A6C] text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de detalles,
                     colores y productos únicos.</p>
-                <a href="/perfumes"
+                <a href="/productos"
                     class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">
                     Ver Catálogo
                 </a>
