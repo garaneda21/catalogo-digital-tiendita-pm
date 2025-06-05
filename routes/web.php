@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\ProductoController;
 use App\Models\Categoria;
 use App\Models\Producto;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $categorias = Categoria::all();
@@ -58,9 +58,6 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
 
     // Ordenamiento
     switch ($request->ordering) {
-        case 'recientes':
-            $query->orderBy('created_at', 'desc');
-            break;
         case 'nombre_asc':
             $query->orderBy('nombre_producto', 'asc');
             break;
@@ -74,7 +71,7 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
             $query->orderBy('precio', 'desc');
             break;
         default:
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('nombre_producto', 'asc'); // orden por defecto
             break;
     }
 
@@ -90,3 +87,4 @@ Route::get('/{categoria}', function ($categoria, Request $request) {
  *    usar slug en vez de id para las rutas.
  */
 Route::get('/producto/{id}', [ProductoController::class, 'show'])->name('producto.show');
+
