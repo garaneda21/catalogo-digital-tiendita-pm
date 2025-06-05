@@ -27,6 +27,7 @@ Route::middleware(['auth:admin', 'verified'])->group(function () {
     Route::resource('admin/productos', ProductoController::class);
     Route::resource('admin/administradores', AdministradoresController::class)->parameters(['administradores' => 'administrador']);
     Route::resource('admin/usuarios', UsuariosController::class)->parameters(['administradores' => 'administrador']);
+    Route::delete('admin/usuarios/{usuario}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
 });
 
 // LARAVEL

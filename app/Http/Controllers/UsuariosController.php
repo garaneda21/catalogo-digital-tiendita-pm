@@ -93,7 +93,7 @@ class UsuariosController extends Controller
     {
         $usuario->delete();
 
-        Registro::registrar_accion($usuario, 'users', 7); // acción: eliminación
+        //Registro::registrar_accion($usuario, 'users', 7); // acción: eliminación
 
         return redirect('/admin/usuarios');
     }
