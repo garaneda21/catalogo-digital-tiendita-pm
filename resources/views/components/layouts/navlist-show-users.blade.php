@@ -1,5 +1,5 @@
 <x-layouts.app :title="__('Dashboard')">
-    <x-panel.header nombre_header="{{ $usuario->nombre_usuario }}">
+    <x-panel.header nombre_header="{{ $usuario->name }}">
         <flux:button href="/admin/usuarios" icon="arrow-left"
             class="dark:text-black! dark:bg-white! hover:bg-gray-200! rounded-3xl!">
             Volver
