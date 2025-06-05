@@ -19,6 +19,9 @@ class ProductoController extends Controller
 
         // Ordenamiento
         switch ($request->ordering) {
+            case 'recientes':
+                $query->orderBy('created_at', 'desc');
+                break;
             case 'nombre_asc':
                 $query->orderBy('nombre_producto', 'asc');
                 break;
@@ -32,7 +35,7 @@ class ProductoController extends Controller
                 $query->orderBy('precio', 'desc');
                 break;
             default:
-                $query->orderBy('nombre_producto', 'asc'); // orden por defecto
+                $query->orderBy('created_at', 'desc');
                 break;
         }
 
@@ -54,12 +57,12 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_producto' => ['required', 'max:250'],
+            'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
             'descripcion'     => [],
             'stock_actual'    => ['gte:0', 'max:9'],
             'precio'          => ['required', 'string', 'max:12'],
-            'imagen'          => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
 
         // Limpiamos el string de precio y lo dejamos como entero
@@ -81,6 +84,8 @@ class ProductoController extends Controller
             'imagen_url'      => $url_imagen ?? null,
         ]);
 
+        session()->flash('success_create', '¡Producto creado exitosamente!');
+
         return redirect('/admin/productos/');
     }
 
@@ -95,6 +100,7 @@ class ProductoController extends Controller
     public function show($id)
     {
         $producto = Producto::where('id', $id)->firstOrFail();
+
         return view('producto.show', compact('producto'));
     }
 
@@ -114,12 +120,12 @@ class ProductoController extends Controller
     public function update(Request $request, Producto $producto)
     {
         $request->validate([
-            'nombre_producto' => ['required', 'max:250'],
+            'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
             'descripcion'     => [],
             'stock_actual'    => ['nullable', 'gte:0', 'max:9'],
             'precio'          => ['required', 'string', 'max:12'],  // el maximo es 12 por los puntos y $
-            'imagen'          => ['image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'imagen'          => ['image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
 
         // Limpiamos el string de precio y lo dejamos como entero
@@ -146,7 +152,9 @@ class ProductoController extends Controller
             'imagen_url'      => $url_imagen ?? $producto->imagen_url,
         ]);
 
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado con éxito');
+        session()->flash('success_update', '¡Producto actualizado exitosamente!');
+
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -156,7 +164,8 @@ class ProductoController extends Controller
     {
         $producto->delete();
 
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
-    }
+        session()->flash('success_delete', '¡Producto eliminado exitosamente!');
 
+        return redirect()->route('productos.index');
+    }
 }
