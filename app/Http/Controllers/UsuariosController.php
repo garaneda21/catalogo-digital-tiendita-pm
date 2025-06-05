@@ -43,7 +43,7 @@ class UsuariosController extends Controller
             'password' => bcrypt($atributos['password']),
         ]);
 
-        Registro::registrar_accion_usuario($user, 'users', 5); // acción: creación
+        Registro::registrar_accion($user, 'users', 5); // acción: creación
 
         return redirect('/admin/usuarios');
     }
@@ -60,10 +60,11 @@ class UsuariosController extends Controller
             $registro['dato_modificado'] = Registro::obtener_modelo_registro($registro->id_entidad_modificada, $registro->entidad_modificada);
         }
 
-        $usuario['ultimo_login'] = $registros->first(function ($registro) {
+        $ultimo_login = $registros->first(function ($registro) {
             return $registro->accion_id === 1;
-        })->fecha_registro;
-
+        });
+        $usuario['ultimo_login'] = $ultimo_login ? $ultimo_login->fecha_registro : null;
+        
         return view('admin.usuarios.show', [
             'usuario'   => $usuario,
             'registros' => $registros,
@@ -87,7 +88,7 @@ class UsuariosController extends Controller
             'email' => $request->input('email'),
         ]);
 
-        Registro::registrar_accion_usuario($usuario, 'users', 6); // acción: edición
+        Registro::registrar_accion($usuario, 'users', 6); // acción: edición
 
         return redirect('/admin/usuarios');
     }
@@ -96,7 +97,7 @@ class UsuariosController extends Controller
     {
         $usuario->delete();
 
-        Registro::registrar_accion_usuario($usuario, 'users', 7); // acción: eliminación
+        Registro::registrar_accion($usuario, 'users', 7); // acción: eliminación
 
         return redirect('/admin/usuarios');
     }
