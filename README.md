@@ -23,7 +23,7 @@ Sistema de catálogo digital para emprendimiento Tiendita PM, con visualización
 *Se recomienda clonar el repositorio usando SSH en lugar de URL web*
 
 ```bash
-git clone https://github.com/garaneda21/catalogo-digital-tiendita-pm
+git clone git@github.com:garaneda21/catalogo-digital-tiendita-pm.git
 cd catalogo-digital-tiendita-pm
 ```
 
@@ -41,19 +41,27 @@ composer install && npm install
 cp .env.example .env
 ```
 
-4. Generar clave de aplicación en archivo ´.env´:
+4. En el archivo ´.env´, definir el correo y contraseña del SuperAdmin:
+    
+```bash
+ADMIN_PASSWORD=<contraseña>
+ADMIN_MAIL=admin@test.com
+```
+
+
+5. Generar clave de aplicación en archivo ´.env´:
 
 ```bash
 php artisan key:generate
 ```
 
-5. Correr las migraciones de base de datos:
+6. Correr las migraciones de base de datos:
 
 ```bash
 php artisan migrate
 ```
 
-6. Iniciar servidor de desarrollo:
+7. Iniciar servidor de desarrollo:
 
 ```bash
 composer run dev

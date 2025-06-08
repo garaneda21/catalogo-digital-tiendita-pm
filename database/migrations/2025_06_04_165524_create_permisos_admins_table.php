@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Administrador::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Permisos::class)->constrained()->cascadeOnDelete();
+            $table->boolean('activo');
             $table->timestamps();
         });
     }
