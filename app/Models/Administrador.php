@@ -21,7 +21,7 @@ class Administrador extends Authenticatable
 
     public function permisos()
     {
-        return $this->belongsToMany(Permisos::class, 'permisos_admins')->withPivot('activo');
+        return $this->belongsToMany(Permisos::class, 'permisos_admins');
     }
 
     public function tienePermiso(string $nombre)

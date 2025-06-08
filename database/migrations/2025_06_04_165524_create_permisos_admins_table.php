@@ -14,11 +14,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permisos_admins', function (Blueprint $table) {
-            $table->id();
             $table->foreignIdFor(Administrador::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Permisos::class)->constrained()->cascadeOnDelete();
-            $table->boolean('activo');
-            $table->timestamps();
         });
     }
 

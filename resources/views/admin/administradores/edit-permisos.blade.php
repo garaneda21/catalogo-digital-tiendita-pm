@@ -13,7 +13,6 @@
             @foreach ($permisos as $categoria_permiso => $categorias_permiso)
                 <div class="bg-white border rounded-2xl overflow-hidden">
 
-                    <!-- Header similar al thead -->
                     <div class="bg-gray-50 px-4 py-2 text-azul-profundo font-semibold text-md border-b">
                         {{ $categoria_permiso }}
                     </div>
@@ -22,7 +21,7 @@
                     <div class="space-y-2 px-4 py-3">
                         @foreach ($categorias_permiso as $permiso)
                             <label class="flex items-center border rounded-full px-4 py-2 bg-white text-azul-profundo text-sm cursor-pointer hover:bg-gray-50 transition duration-150">
-                                <input type="checkbox" name="permisos[]" value="{{ $permiso->id }}" {{ $permiso->pivot->activo ? 'checked' : '' }}
+                                <input type="checkbox" name="permisos[]" value="{{ $permiso->id }}" {{ $permisos_asignados->contains($permiso->id) ? 'checked' : '' }}
                                     class="form-checkbox w-4 h-4 mr-2 accent-verde-oliva">
                                 {{ $permiso->nombre_permiso }}
                             </label>

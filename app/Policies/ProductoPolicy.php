@@ -21,7 +21,7 @@ class ProductoPolicy
      */
     public function create(Administrador $admin): bool
     {
-        return $admin->tienePermiso('crear_productos');
+        return $admin->tienePermiso('Crear Productos');
     }
 
     /**

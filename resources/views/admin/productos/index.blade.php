@@ -1,10 +1,17 @@
 <x-layouts.app :title="__('Dashboard')">
 
     <x-panel.header nombre_header="Productos">
-        <flux:button href="/admin/productos/create" icon="plus" variant="primary"
-            class="text-white bg-verde-oliva rounded-3xl! hover:bg-verde-oliva/70">
-            Nuevo Producto
-        </flux:button>
+        @can('create', App\Models\Producto::class)
+            <flux:button href="/admin/productos/create" icon="plus" variant="primary"
+                class="text-white bg-verde-oliva rounded-3xl! hover:bg-verde-oliva/70">
+                Nuevo Producto
+            </flux:button>
+        @else
+            <flux:button disabled icon="plus" variant="primary"
+                class="text-white bg-verde-oliva rounded-3xl! hover:bg-verde-oliva/70">
+                Nuevo Producto
+            </flux:button>
+        @endcan
     </x-panel.header>
 
     <div class="py-4 space-y-2 mx-auto">

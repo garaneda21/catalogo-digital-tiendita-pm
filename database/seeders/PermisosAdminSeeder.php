@@ -22,7 +22,6 @@ class PermisosAdminSeeder extends Seeder
             PermisosAdmin::create([
                 'administrador_id' => $admin->id,
                 'permisos_id'      => $permiso->id,
-                'activo'           => true,
             ]);
         }
     }

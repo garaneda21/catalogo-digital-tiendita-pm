@@ -39,17 +39,7 @@ class AdministradoresController extends Controller
             'password'     => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $permisos = Permisos::all();
-
         $admin = Administrador::create($atributos);
-
-        foreach ($permisos as $permiso) {
-            PermisosAdmin::create([
-                'administrador_id' => $admin->id,
-                'permisos_id'      => $permiso->id,
-                'activo'           => $admin->nombre_admin == 'SuperAdmin' ? true : false,
-            ]);
-        }
 
         Registro::registrar_accion($admin, 'administrador', 5);
 
@@ -112,11 +102,13 @@ class AdministradoresController extends Controller
 
     public function edit_permisos(Administrador $administrador)
     {
-        $permisos = $administrador->permisos()->get()->groupBy('categoria_permiso');
+        $permisos_asignados = $administrador->permisos()->pluck('id');
+        $permisos = Permisos::all()->groupBy('categoria_permiso');
 
         return view('admin.administradores.edit-permisos', [
             'admin'    => $administrador,
             'permisos' => $permisos,
+            'permisos_asignados' => $permisos_asignados,
         ]);
     }
 
@@ -124,23 +116,14 @@ class AdministradoresController extends Controller
     {
         request()->validate([
             'permisos'   => ['nullable', 'array'], // los permisos recibidos vienen en un array
-            'permisos.*' => ['integer', 'exists:permisos_admins,id'], // los permisos deben existir
+            'permisos.*' => ['integer', 'exists:permisos,id'], // los permisos deben existir
         ]);
 
-        $permisosActivos = collect(request()->input('permisos', []))->mapWithKeys(function ($value) {
-            return [(int) $value => ['activo' => true]];
-        });
+        // Obtenemos solo los IDs de los permisos activos desde el form (los checkboxes marcados)
+        $permisosActivos = request()->input('permisos', []); // si no hay ninguno, será un array vacío
 
-        // recibe id's de la tabla Permisos (no permisos_admins)
-        $todos_los_permisos = $administrador->permisos()->get()->pluck('id');
-
-        $permisosSincronizados = $todos_los_permisos->mapWithKeys(function ($id) use ($permisosActivos) {
-            return [
-                $id => ['activo' => $permisosActivos->has($id)],
-            ];
-        });
-
-        $administrador->permisos()->sync($permisosSincronizados);
+        // Actualizamos la tabla pivote: se eliminan los que no estén, se agregan los nuevos
+        $administrador->permisos()->sync($permisosActivos);
 
         // Registro::registrar_accion($administrador, 'administrador', 6);
 

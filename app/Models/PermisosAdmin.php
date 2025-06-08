@@ -9,6 +9,7 @@ class PermisosAdmin extends Model
     protected $fillable = [
         'administrador_id',
         'permisos_id',
-        'activo',
     ];
+
+    public $timestamps = false;
 }
