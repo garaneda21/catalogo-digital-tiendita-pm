@@ -11,7 +11,7 @@
             <flux:navlist.group>
                 <flux:navlist.item href="/admin/administradores/{{ $admin->id }}" class="data-current:bg-gray-200! hover:underline!">Detalles</flux:navlist.item>
                 <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit" class="data-current:bg-gray-200! hover:underline!">Editar Datos</flux:navlist.item>
-                <!-- <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Editar Permisos </flux:navlist.item> -->
+                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit-permisos" class="data-current:bg-gray-200! hover:underline!">Editar Permisos </flux:navlist.item>
                 <!-- <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Cambiar Contraseña </flux:navlist.item> -->
                 <!-- <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/historial" class="data-current:bg-gray-200! hover:underline!">Historial</flux:navlist.item> -->
                 <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Desactivar Admin</flux:navlist.item>

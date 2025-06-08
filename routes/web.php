@@ -22,9 +22,14 @@ Route::get('/productos/categorias/{categoria}', [CategoriaUserController::class,
 Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 
 // Rutas a las que solo puede acceder el admin
-Route::middleware(['auth:admin', 'verified'])->group(function () {
-    Route::resource('admin/productos', ProductoController::class);
-    Route::resource('admin/administradores', AdministradoresController::class)->parameters(['administradores' => 'administrador']);
+Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function () {
+    Route::resource('/productos', ProductoController::class);
+
+    Route::get('/administradores/{administrador}/edit-permisos', [AdministradoresController::class, 'edit_permisos']);
+    Route::put('/administradores/{administrador}/update-permisos', [AdministradoresController::class, 'update_permisos'])
+        ->name('administradores.update-permisos');
+    Route::resource('/administradores', AdministradoresController::class)
+        ->parameters(['administradores' => 'administrador']);
 });
 
 // LARAVEL

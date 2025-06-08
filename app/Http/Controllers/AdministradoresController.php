@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Administrador;
+use App\Models\Permisos;
+use App\Models\PermisosAdmin;
 use App\Models\Registro;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -37,7 +39,17 @@ class AdministradoresController extends Controller
             'password'     => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $permisos = Permisos::all();
+
         $admin = Administrador::create($atributos);
+
+        foreach ($permisos as $permiso) {
+            PermisosAdmin::create([
+                'administrador_id' => $admin->id,
+                'permisos_id'      => $permiso->id,
+                'activo'           => $admin->nombre_admin == 'SuperAdmin' ? true : false,
+            ]);
+        }
 
         Registro::registrar_accion($admin, 'administrador', 5);
 
@@ -96,5 +108,42 @@ class AdministradoresController extends Controller
     public function destroy(Administrador $administrador)
     {
         //
+    }
+
+    public function edit_permisos(Administrador $administrador)
+    {
+        $permisos = $administrador->permisos()->get()->groupBy('categoria_permiso');
+
+        return view('admin.administradores.edit-permisos', [
+            'admin'    => $administrador,
+            'permisos' => $permisos,
+        ]);
+    }
+
+    public function update_permisos(Administrador $administrador)
+    {
+        request()->validate([
+            'permisos'   => ['nullable', 'array'], // los permisos recibidos vienen en un array
+            'permisos.*' => ['integer', 'exists:permisos_admins,id'], // los permisos deben existir
+        ]);
+
+        $permisosActivos = collect(request()->input('permisos', []))->mapWithKeys(function ($value) {
+            return [(int) $value => ['activo' => true]];
+        });
+
+        // recibe id's de la tabla Permisos (no permisos_admins)
+        $todos_los_permisos = $administrador->permisos()->get()->pluck('id');
+
+        $permisosSincronizados = $todos_los_permisos->mapWithKeys(function ($id) use ($permisosActivos) {
+            return [
+                $id => ['activo' => $permisosActivos->has($id)],
+            ];
+        });
+
+        $administrador->permisos()->sync($permisosSincronizados);
+
+        // Registro::registrar_accion($administrador, 'administrador', 6);
+
+        return redirect()->back();
     }
 }
