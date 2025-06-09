@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Administrador;
 use App\Models\Permisos;
-use App\Models\PermisosAdmin;
 use App\Models\Registro;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -14,6 +13,10 @@ class AdministradoresController extends Controller
 {
     public function index()
     {
+        if (request()->user('admin')->cannot('viewAny', Administrador::class)) {
+            return view('admin.administradores.index'); // salir sin enviar datos
+        }
+
         $administradores = Administrador::all();
 
         foreach ($administradores as $admin) {
@@ -26,8 +29,10 @@ class AdministradoresController extends Controller
         return view('admin.administradores.index', compact('administradores'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        if (request()->user('admin')->cannot('create', Administrador::class)) { abort(403); }
+
         return view('admin.administradores.create');
     }
 
@@ -51,7 +56,12 @@ class AdministradoresController extends Controller
      */
     public function show(Administrador $administrador)
     {
+        if (request()->user('admin')->cannot('view', Administrador::class)) {
+            return view('admin.administradores.show', ['admin' => $administrador]); // salir sin enviar datos
+        }
+
         $registros = Registro::with('accion')
+            ->where('administrador_id', $administrador->id)
             ->orderBy('fecha_registro', 'desc')
             ->take(10)
             ->get();
@@ -62,7 +72,7 @@ class AdministradoresController extends Controller
 
         $administrador['ultimo_login'] = $registros->first(function ($registro) {
             return $registro->accion_id === 1;
-        })->fecha_registro;
+        })->fecha_registro ?? 'No ha accedido aún';
 
         return view('admin.administradores.show', [
             'admin'     => $administrador,
@@ -72,11 +82,15 @@ class AdministradoresController extends Controller
 
     public function edit(Administrador $administrador)
     {
+        if (request()->user('admin')->cannot('update', Administrador::class)) { abort(403); }
+
         return view('admin.administradores.edit', ['admin' => $administrador]);
     }
 
     public function update(Administrador $administrador)
     {
+        if (request()->user('admin')->cannot('update', Administrador::class)) { abort(403); }
+
         request()->validate([
             'nombre_admin' => ['required', 'string', 'max:255', Rule::unique('administradores')->ignore($administrador->id)],
             'correo_admin' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique('administradores')->ignore($administrador->id)],
@@ -102,18 +116,22 @@ class AdministradoresController extends Controller
 
     public function edit_permisos(Administrador $administrador)
     {
+        if (request()->user('admin')->cannot('update_permisos', Administrador::class)) { abort(403); }
+
         $permisos_asignados = $administrador->permisos()->pluck('id');
         $permisos = Permisos::all()->groupBy('categoria_permiso');
 
         return view('admin.administradores.edit-permisos', [
-            'admin'    => $administrador,
-            'permisos' => $permisos,
+            'admin'              => $administrador,
+            'permisos'           => $permisos,
             'permisos_asignados' => $permisos_asignados,
         ]);
     }
 
     public function update_permisos(Administrador $administrador)
     {
+        if (request()->user('admin')->cannot('update_permisos', Administrador::class)) { abort(403); }
+
         request()->validate([
             'permisos'   => ['nullable', 'array'], // los permisos recibidos vienen en un array
             'permisos.*' => ['integer', 'exists:permisos,id'], // los permisos deben existir

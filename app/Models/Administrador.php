@@ -17,6 +17,8 @@ class Administrador extends Authenticatable
         'nombre_admin',
         'correo_admin',
         'password',
+        'activo',
+        'superadmin',
     ];
 
     public function permisos()
@@ -24,9 +26,14 @@ class Administrador extends Authenticatable
         return $this->belongsToMany(Permisos::class, 'permisos_admins');
     }
 
-    public function tienePermiso(string $nombre)
+    public function tiene_permiso(string $nombre)
     {
         return $this->permisos->contains('nombre_permiso', $nombre);
+    }
+
+    public function acciones()
+    {
+        return $this->belongsToMany(Accion::class, 'registros');
     }
 
     /**

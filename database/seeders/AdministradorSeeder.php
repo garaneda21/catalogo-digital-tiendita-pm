@@ -16,7 +16,8 @@ class AdministradorSeeder extends Seeder
             'nombre_admin' => 'SuperAdmin',
             'correo_admin' => env('ADMIN_MAIL'),
             'password'     => bcrypt(env('ADMIN_PASSWORD')),
-            'activo'     => true,
+            'activo'       => true,
+            'superadmin'   => true,
         ]);
     }
 }

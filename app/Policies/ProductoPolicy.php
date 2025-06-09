@@ -2,57 +2,41 @@
 
 namespace App\Policies;
 
-use App\Models\Producto;
 use App\Models\Administrador;
+use App\Models\Producto;
 use Illuminate\Auth\Access\Response;
 
 class ProductoPolicy
 {
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the admin can view any models.
      */
-    public function view(Administrador $admin, Producto $producto): bool
+    public function viewAny(Administrador $admin): bool
     {
-        return false;
+        return $admin->tiene_permiso('Ver Todos Los Productos');
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the admin can create models.
      */
     public function create(Administrador $admin): bool
     {
-        return $admin->tienePermiso('Crear Productos');
+        return $admin->tiene_permiso('Crear Productos');
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the admin can update the model.
      */
-    public function update(Administrador $admin, Producto $producto): bool
+    public function update(Administrador $admin): bool
     {
-        return false;
+        return $admin->tiene_permiso('Editar Productos');
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Determine whether the admin can delete the model.
      */
-    public function delete(Administrador $admin, Producto $producto): bool
+    public function delete(Administrador $admin): bool
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(Administrador $admin, Producto $producto): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(Administrador $admin, Producto $producto): bool
-    {
-        return false;
+        return $admin->tiene_permiso('Eliminar Productos');
     }
 }

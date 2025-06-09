@@ -9,12 +9,23 @@
     <div class="mt-4 flex items-start max-md:flex-col">
         <div class="me-10 w-full pb-4 md:w-[220px]">
             <flux:navlist.group>
-                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}" class="data-current:bg-gray-200! hover:underline!">Detalles</flux:navlist.item>
-                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit" class="data-current:bg-gray-200! hover:underline!">Editar Datos</flux:navlist.item>
-                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit-permisos" class="data-current:bg-gray-200! hover:underline!">Editar Permisos </flux:navlist.item>
+                <flux:navlist.item href="/admin/administradores/{{ $admin->id }}"
+                    class="data-current:bg-gray-200! hover:underline!">Detalles</flux:navlist.item>
+
+                @can('update', App\Models\Administrador::class)
+                    <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit"
+                        class="data-current:bg-gray-200! hover:underline!">Editar Datos</flux:navlist.item>
+                @endcan
+                @can('update_permisos', App\Models\Administrador::class)
+                    <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit-permisos"
+                        class="data-current:bg-gray-200! hover:underline!">Editar Permisos </flux:navlist.item>
+                @endcan
+                @can('disable', App\Models\Administrador::class)
+                    <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Desactivar Admin
+                    </flux:navlist.item>
+                @endcan
                 <!-- <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Cambiar Contraseña </flux:navlist.item> -->
                 <!-- <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/historial" class="data-current:bg-gray-200! hover:underline!">Historial</flux:navlist.item> -->
-                <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Desactivar Admin</flux:navlist.item>
             </flux:navlist.group>
         </div>
 

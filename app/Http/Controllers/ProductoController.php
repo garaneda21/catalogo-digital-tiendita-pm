@@ -13,6 +13,10 @@ class ProductoController extends Controller
 {
     public function index(Request $request)
     {
+        if (request()->user('admin')->cannot('create', Producto::class)) {
+            return view('admin.productos.index'); // salir sin enviar datos
+        }
+
         $query = Producto::with('categoria');
 
         // realiza búsqueda y retorna datos paginados
@@ -23,6 +27,8 @@ class ProductoController extends Controller
 
     public function create()
     {
+        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
+
         $categorias = Categoria::all();
 
         return view('admin.productos.create', [
@@ -32,6 +38,8 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
+        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
+
         // TODO: Implementar las siguientes validaciones
         // - Producto ya existe
 
@@ -81,6 +89,8 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
+        if (request()->user('admin')->cannot('update', Producto::class)) { abort(403); }
+
         $categorias = Categoria::all();
 
         return view('admin.productos.edit', compact('producto', 'categorias'));
@@ -91,6 +101,8 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
+        if (request()->user('admin')->cannot('update', Producto::class)) { abort(403); }
+
         $request->validate([
             'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
             'categoria'       => ['required'],
@@ -139,6 +151,8 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
+        if (request()->user('admin')->cannot('delete', Producto::class)) { abort(403); }
+
         $producto->delete();
 
         session()->flash('success_delete', '¡Producto eliminado exitosamente!');
