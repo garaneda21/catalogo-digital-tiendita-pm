@@ -2,13 +2,14 @@
     <div class="max-w-6xl mx-auto p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <!-- Imagen del producto -->
-            <div class="w-full">
-                <img src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}" alt="{{ $producto->nombre_producto }}" class="rounded-2xl shadow-lg w-full object-cover">
+            <{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }div class="w-full">
+                <img src="{{ $producto->imagen_url ? asset('storage/'.$producto->imagen_url) : '/images/placeholder-product.jpg' }}" alt="{{ $producto->nombre_producto }}" class="rounded-2xl shadow-lg w-full object-cover">
             </div>
 
             <!-- Información del producto -->
             <div class="space-y-6">
-                <h1 class="text-3xl font-bold text-gray-800">{{ $producto->nombre_producto }}</h1>
+                <h1 class="text-3xl font-bold text-gray-800">{{ $producto->nombre_produc<F12>}
+                    <Select>o }}</h1>
 
                 <p class="text-2xl text-green-600 font-semibold">${{ number_format($producto->precio, 0, ',', '.') }}</p>
 

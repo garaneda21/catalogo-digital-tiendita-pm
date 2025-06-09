@@ -52,10 +52,8 @@ class ProductoController extends Controller
         $stock = (int) str_replace('.', '', $request->input('stock_actual'));
 
         // para la imágen
-        if ($request->imagen) {
-            $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
-            $request->imagen->move(public_path('images/productos'), $url_imagen);
-        }
+        if ($request->imagen)
+            $imagen_url = $request->imagen->store('images/productos');
 
         $producto = Producto::create([
             'nombre_producto' => request('nombre_producto'),
@@ -63,7 +61,7 @@ class ProductoController extends Controller
             'descripcion'     => request('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,
-            'imagen_url'      => $url_imagen ?? null,
+            'imagen_url'      => $imagen_url ?? null,
         ]);
 
         // registrar acción del admin
@@ -109,8 +107,7 @@ class ProductoController extends Controller
 
         // para la imágen
         if ($request->imagen) {
-            $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
-            $request->imagen->move(public_path('images/productos'), $url_imagen);
+            $imagen_url = $request->imagen->store('images/productos');
 
             // TODO: eliminar imagen anterior
             /* if ($producto->imagen_url && File::exists($producto->imagen_url)) { */
@@ -124,7 +121,7 @@ class ProductoController extends Controller
             'descripcion'     => $request->input('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,
-            'imagen_url'      => $url_imagen ?? $producto->imagen_url,
+            'imagen_url'      => $imagen_url ?? $producto->imagen_url,
         ]);
 
         Registro::registrar_accion($producto, 'productos', 4);

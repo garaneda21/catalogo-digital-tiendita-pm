@@ -3,7 +3,7 @@
 <flux:input type="file" id="imagen" name="imagen" accept="image/*" label="Imagen del Producto" onchange="previewDeImagen(event)" />
 
 @if ($imagen_actual)
-   <img id="preview" src="{{ asset($imagen_actual) }}" alt="Vista previa"
+   <img id="preview" src="{{ asset('storage/'.$imagen_actual) }}" alt="Vista previa"
         class="w-40 h-40 object-cover border rounded-lg">
 @else
     <img id="preview" src="{{ asset('images/placeholder.png') }}" alt="Vista previa"
