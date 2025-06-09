@@ -7,6 +7,7 @@ use App\Models\Producto;
 use App\Models\Registro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProductoController extends Controller
@@ -109,10 +110,8 @@ class ProductoController extends Controller
         if ($request->imagen) {
             $imagen_url = $request->imagen->store('images/productos');
 
-            // TODO: eliminar imagen anterior
-            /* if ($producto->imagen_url && File::exists($producto->imagen_url)) { */
-            /*     File::delete($producto->imagen_url); */
-            /* } */
+            if (Storage::exists($producto->imagen_url))
+                Storage::delete($producto->imagen_url);
         }
 
         $producto->update([
