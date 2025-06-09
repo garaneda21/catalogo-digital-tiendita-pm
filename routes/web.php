@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
 use App\Http\Controllers\ProductoController;
@@ -30,6 +31,11 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
         ->name('administradores.update-permisos');
     Route::resource('/administradores', AdministradoresController::class)
         ->parameters(['administradores' => 'administrador']);
+  
+    Route::resource('/usuarios', UsuariosController::class)
+        ->parameters(['administradores' => 'administrador']);
+    Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])
+        ->name('usuarios.destroy');
 });
 
 // LARAVEL
