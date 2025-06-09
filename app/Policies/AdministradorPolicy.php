@@ -13,7 +13,7 @@ class AdministradorPolicy
 
     public function view(Administrador $admin): bool
     {
-        return $admin->tiene_permiso('Ver Datos De Un Admin');
+        return $admin->tiene_permiso('Ver Detalles De Un Admin');
     }
 
     public function create(Administrador $admin): bool

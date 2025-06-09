@@ -59,7 +59,8 @@
     @else
         <div class="flex items-center justify-center h-64">
             <div class="text-center">
-                <p class="text-lg font-semibold text-gray-600">No tienes permiso para ver los detalles de un administrador.</p>
+                <p class="text-lg font-semibold text-gray-600">No tienes permiso para ver los detalles de un administrador.
+                </p>
             </div>
         </div>
     @endcan
