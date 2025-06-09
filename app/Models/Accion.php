@@ -17,7 +17,7 @@ class Accion extends Model
     protected $fillable = ['nombre_accion'];
 
     public function registros() {
-        return $this->belongsTo(Registro::class);
+        return $this->hasMany(Registro::class);
     }
 
 }

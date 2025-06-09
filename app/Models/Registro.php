@@ -26,6 +26,17 @@ class Registro extends Model
         return $this->belongsTo(Accion::class);
     }
 
+    public function admin()
+    {
+        return $this->belongsTo(Administrador::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
     /**
      * Registra la acción realizada por el usuario en la base de datos.
      * - modelo: datos entrantes de la tabla que se está modificando
@@ -35,6 +46,7 @@ class Registro extends Model
     public static function registrar_accion($modelo, string|null $nombre_modelo, int $id_accion)
     {
         $admin = Auth::guard('admin')->user();
+        $user = Auth::guard('web')->user();
 
         // registrar acción del admin
         Registro::create([
@@ -42,7 +54,8 @@ class Registro extends Model
             'entidad_modificada'    => $nombre_modelo,
             'fecha_registro'        => now(),
             'accion_id'             => $id_accion,
-            'administrador_id'      => $admin->id,
+            'administrador_id'      => $admin?->id,
+            'user_id'               => $user?->id,
         ]);
     }
 
@@ -51,6 +64,8 @@ class Registro extends Model
         $mapa_modelos = [
             'productos' => Producto::class,
             'admins'    => Administrador::class,
+            'users'    => User::class,
+            'categorias' => Categoria::class,
             // agrega más entidades aquí si las necesitas
         ];
 
