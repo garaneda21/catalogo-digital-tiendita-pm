@@ -16,10 +16,10 @@
                     <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit"
                         class="data-current:bg-gray-200! hover:underline!">Editar Datos</flux:navlist.item>
                 @endcan
-                @can('update_permisos', App\Models\Administrador::class)
+                @if (!$admin->superadmin && Auth::user('admin')->can('update_permisos', App\Models\Administrador::class))
                     <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/edit-permisos"
                         class="data-current:bg-gray-200! hover:underline!">Editar Permisos </flux:navlist.item>
-                @endcan
+                @endif
                 @can('disable', App\Models\Administrador::class)
                     <flux:navlist.item href="#" class="data-current:bg-gray-200! hover:underline!">Desactivar Admin
                     </flux:navlist.item>

@@ -116,6 +116,8 @@ class AdministradoresController extends Controller
 
     public function edit_permisos(Administrador $administrador)
     {
+        if ($administrador->superadmin) { abort(403, 'No se pueden editar los permisos de un SuperAdmin'); }
+
         if (request()->user('admin')->cannot('update_permisos', Administrador::class)) { abort(403); }
 
         $permisos_asignados = $administrador->permisos()->pluck('id');
