@@ -32,9 +32,6 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: Implementar las siguientes validaciones
-        // - Producto ya existe
-
         $request->validate([
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['required'],
