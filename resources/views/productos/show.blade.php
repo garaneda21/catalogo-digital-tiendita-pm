@@ -2,7 +2,7 @@
     <div class="max-w-6xl mx-auto p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <!-- Imagen del producto -->
-            <{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }div class="w-full">
+            <div class="w-full">
                 <img src="{{ $producto->imagen_url ? asset('storage/'.$producto->imagen_url) : '/images/placeholder-product.jpg' }}" alt="{{ $producto->nombre_producto }}" class="rounded-2xl shadow-lg w-full object-cover">
             </div>
 
