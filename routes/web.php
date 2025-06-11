@@ -3,6 +3,7 @@
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
+use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
 use App\Livewire\Settings\Appearance;
@@ -36,6 +37,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
         ->parameters(['administradores' => 'administrador']);
     Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])
         ->name('usuarios.destroy');
+
+    Route::get('/movimientos/salida/{producto}/create-venta', [MovimientosController::class, 'create_venta']);
+    Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
+
 });
 
 // LARAVEL

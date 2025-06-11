@@ -91,26 +91,23 @@
                         </div>
                     </div>
 
-                    <!-- Botón editar -->
-                    @can('update', App\Models\Producto::class)
-                        <div class="w-full md:w-auto">
-                            <a href="{{ route('productos.edit', $producto->id) }}">
-                                <button
-                                    class="inline-block px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition">
-                                    Editar
-                                </button>
-                            </a>
-                        </div>
-                    @endcan
+                    <flux:button href="/admin/movimientos/salida/{{ $producto->id }}/create-venta"
+                        icon="banknotes" class="text-green-700!">
+                        Venta Rápida
+                    </flux:button>
 
-                    <!-- Botón eliminar -->
+                    @can('update', App\Models\Producto::class)
+                        <!-- Botón editar -->
+                        <flux:button href="{{ route('productos.edit', $producto->id) }}"
+                            icon="pencil-square" class="text-blue-700!">
+                            Editar
+                        </flux:button>
+                    @endcan
                     @can('delete', App\Models\Producto::class)
-                        <div class="w-full md:w-auto">
-                            <button data-bs-toggle="modal" data-bs-target="#confirmDelete{{ $producto->id }}"
-                                class="inline-block px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition">
-                                Eliminar
-                            </button>
-                        </div>
+                        <flux:button data-bs-toggle="modal" data-bs-target="#confirmDelete{{ $producto->id }}"
+                            icon="trash" class="text-red-500!">
+                            Eliminar
+                        </flux:button>
                     @endcan
 
                     <!-- Modal de confirmación de eliminación -->

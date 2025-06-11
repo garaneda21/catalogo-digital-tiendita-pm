@@ -24,6 +24,12 @@ class Producto extends Model
         return $this->belongsTo(Categoria::class);
     }
 
+    public function movimiento()
+    {
+        return $this->hasMany(Movimiento::class);
+    }
+
+
     // Método de búsqueda y ordenamiento
     static public function busqueda($request, $query) {
         if ($request->has('search')) {

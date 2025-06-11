@@ -38,10 +38,8 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
 
-        // TODO: Implementar las siguientes validaciones
-        // - Producto ya existe
+        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
 
         $request->validate([
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],

@@ -26,5 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermisosAdminSeeder::class);
         $this->call(ProductoSeeder::class);
         $this->call(AccionSeeder::class);
+        $this->call(TipoMovimientoSeeder::class);
+        $this->call(MotivoMovimientoSeeder::class);
     }
 }
