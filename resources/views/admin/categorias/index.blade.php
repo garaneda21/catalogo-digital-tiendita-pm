@@ -27,8 +27,6 @@
             @endif
         @endforeach
 
-        <x-ordenamiento-y-busqueda></x-ordenamiento-y-busqueda>
-
         @foreach ($categorias as $categoria)
             <div
                 class="bg-white border-2 rounded-xl p-3 flex flex-col md:flex-row items-center justify-between gap-4">
