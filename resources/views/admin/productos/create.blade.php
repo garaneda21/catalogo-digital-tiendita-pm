@@ -18,6 +18,8 @@
 
             <!-- Categoría -->
             <flux:select name="categoria" label="Categoría (*)">
+                <option value="">Sin categoría</option>
+
                 @foreach ($categorias->all() as $categoria)
                     <option value="{{ $categoria->id }}" {{ old('categoria') == $categoria->id ? 'selected' : '' }}>
                         {{ $categoria->nombre_categoria }}
@@ -34,11 +36,11 @@
                 :value="old('stock_actual')" />
 
             <!-- Descripción -->
-            <flux:textarea label="Descripción del Producto" name="descripcion" id="descripcion" >
+            <flux:textarea label="Descripción del Producto" name="descripcion" id="descripcion">
                 {{ old('descripcion') }}
             </flux:textarea>
 
-            <x-forms.input-imagen/>
+            <x-forms.input-imagen />
 
             @if ($errors->any())
                 <x-forms.error-card></x-forms.error-card>

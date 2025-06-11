@@ -20,6 +20,8 @@
 
             <!-- Categoría -->
             <flux:select name="categoria" label="Categoría (*)">
+                <option value="">Sin categoría</option>
+
                 @foreach ($categorias->all() as $categoria)
                     {{ $esta_seleccionado = $producto->categoria_id == $categoria->id ? true : false }}
                     <option value="{{ $categoria->id }}" {{ $esta_seleccionado ? 'selected' : '' }}>
