@@ -26,13 +26,21 @@ Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 // Rutas a las que solo puede acceder el admin
 Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/productos', ProductoController::class);
-    Route::resource('/administradores', AdministradoresController::class)->parameters(['administradores' => 'administrador']);
-    Route::resource('/usuarios', UsuariosController::class)->parameters(['administradores' => 'administrador']);
-    Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
 
-    // Rutas de movimientos
+    Route::get('/administradores/{administrador}/edit-permisos', [AdministradoresController::class, 'edit_permisos']);
+    Route::put('/administradores/{administrador}/update-permisos', [AdministradoresController::class, 'update_permisos'])
+        ->name('administradores.update-permisos');
+    Route::resource('/administradores', AdministradoresController::class)
+        ->parameters(['administradores' => 'administrador']);
+  
+    Route::resource('/usuarios', UsuariosController::class)
+        ->parameters(['administradores' => 'administrador']);
+    Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])
+        ->name('usuarios.destroy');
+
     Route::get('/movimientos/salida/{producto}/create-venta', [MovimientosController::class, 'create_venta']);
     Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
+
 });
 
 // LARAVEL

@@ -21,8 +21,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $this->call(ProductoSeeder::class);
+        $this->call(PermisoSeeder::class);
         $this->call(AdministradorSeeder::class);
+        $this->call(PermisosAdminSeeder::class);
+        $this->call(ProductoSeeder::class);
         $this->call(AccionSeeder::class);
         $this->call(TipoMovimientoSeeder::class);
         $this->call(MotivoMovimientoSeeder::class);
