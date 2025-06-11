@@ -3,8 +3,9 @@
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
-use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\MovimientosController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -24,12 +25,24 @@ Route::get('/productos/categorias/{categoria}', [CategoriaUserController::class,
 Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 
 // Rutas a las que solo puede acceder el admin
-Route::middleware(['auth:admin', 'verified'])->group(function () {
-    Route::resource('admin/productos', ProductoController::class);
-    Route::resource('admin/categorias', CategoriaController::class);
-    Route::resource('admin/administradores', AdministradoresController::class)->parameters(['administradores' => 'administrador']);
-    Route::resource('admin/usuarios', UsuariosController::class)->parameters(['administradores' => 'administrador']);
-    Route::delete('admin/usuarios/{usuario}', [UsuariosController::class, 'destroy'])->name('usuarios.destroy');
+Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function () {
+    Route::resource('/productos', ProductoController::class);
+    Route::resource('/categorias', CategoriaController::class);
+
+    Route::get('/administradores/{administrador}/edit-permisos', [AdministradoresController::class, 'edit_permisos']);
+    Route::put('/administradores/{administrador}/update-permisos', [AdministradoresController::class, 'update_permisos'])
+        ->name('administradores.update-permisos');
+    Route::resource('/administradores', AdministradoresController::class)
+        ->parameters(['administradores' => 'administrador']);
+  
+    Route::resource('/usuarios', UsuariosController::class)
+        ->parameters(['administradores' => 'administrador']);
+    Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])
+        ->name('usuarios.destroy');
+
+    Route::get('/movimientos/salida/{producto}/create-venta', [MovimientosController::class, 'create_venta']);
+    Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
+
 });
 
 // LARAVEL

@@ -7,12 +7,17 @@ use App\Models\Producto;
 use App\Models\Registro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProductoController extends Controller
 {
     public function index(Request $request)
     {
+        if (request()->user('admin')->cannot('create', Producto::class)) {
+            return view('admin.productos.index'); // salir sin enviar datos
+        }
+
         $query = Producto::with('categoria');
 
         // realiza búsqueda y retorna datos paginados
@@ -23,6 +28,8 @@ class ProductoController extends Controller
 
     public function create()
     {
+        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
+
         $categorias = Categoria::all();
 
         return view('admin.productos.create', [
@@ -32,8 +39,8 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        // TODO: Implementar las siguientes validaciones
-        // - Producto ya existe
+
+        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
 
         $request->validate([
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],
@@ -52,10 +59,8 @@ class ProductoController extends Controller
         $stock = (int) str_replace('.', '', $request->input('stock_actual'));
 
         // para la imágen
-        if ($request->imagen) {
-            $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
-            $request->imagen->move(public_path('images/productos'), $url_imagen);
-        }
+        if ($request->imagen)
+            $imagen_url = $request->imagen->store('images/productos');
 
         $producto = Producto::create([
             'nombre_producto' => request('nombre_producto'),
@@ -63,7 +68,7 @@ class ProductoController extends Controller
             'descripcion'     => request('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,
-            'imagen_url'      => $url_imagen ?? null,
+            'imagen_url'      => $imagen_url ?? null,
         ]);
 
         // registrar acción del admin
@@ -81,6 +86,8 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
+        if (request()->user('admin')->cannot('update', Producto::class)) { abort(403); }
+
         $categorias = Categoria::all();
 
         return view('admin.productos.edit', compact('producto', 'categorias'));
@@ -91,6 +98,8 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
+        if (request()->user('admin')->cannot('update', Producto::class)) { abort(403); }
+
         $request->validate([
             'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
             'categoria'       => ['required'],
@@ -109,13 +118,10 @@ class ProductoController extends Controller
 
         // para la imágen
         if ($request->imagen) {
-            $url_imagen = '/images/productos/'.time().'.'.$request->imagen->extension();
-            $request->imagen->move(public_path('images/productos'), $url_imagen);
+            $imagen_url = $request->imagen->store('images/productos');
 
-            // TODO: eliminar imagen anterior
-            /* if ($producto->imagen_url && File::exists($producto->imagen_url)) { */
-            /*     File::delete($producto->imagen_url); */
-            /* } */
+            if (Storage::exists($producto->imagen_url))
+                Storage::delete($producto->imagen_url);
         }
 
         $producto->update([
@@ -124,7 +130,7 @@ class ProductoController extends Controller
             'descripcion'     => $request->input('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,
-            'imagen_url'      => $url_imagen ?? $producto->imagen_url,
+            'imagen_url'      => $imagen_url ?? $producto->imagen_url,
         ]);
 
         Registro::registrar_accion($producto, 'productos', 4);
@@ -139,6 +145,8 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
+        if (request()->user('admin')->cannot('delete', Producto::class)) { abort(403); }
+
         $producto->delete();
 
         session()->flash('success_delete', '¡Producto eliminado exitosamente!');

@@ -18,7 +18,24 @@ class Administrador extends Authenticatable
         'nombre_admin',
         'correo_admin',
         'password',
+        'activo',
+        'superadmin',
     ];
+
+    public function permisos()
+    {
+        return $this->belongsToMany(Permisos::class, 'permisos_admins');
+    }
+
+    public function tiene_permiso(string $nombre)
+    {
+        return $this->permisos->contains('nombre_permiso', $nombre);
+    }
+
+    public function acciones()
+    {
+        return $this->belongsToMany(Accion::class, 'registros');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -39,7 +56,7 @@ class Administrador extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 
