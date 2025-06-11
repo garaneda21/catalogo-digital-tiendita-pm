@@ -67,6 +67,11 @@
                 {{ $productos->appends(['search' => request('search')])->links() }}
             </div>
 
+                <!-- Imagen -->
+                <div class="w-full md:w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <img src="{{ $producto->imagen_url ? asset('storage/'.$producto->imagen_url) : '/images/placeholder-product.jpg' }}"
+                        alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
+                </div>
             <x-ordenamiento-y-busqueda></x-ordenamiento-y-busqueda>
 
             @foreach ($productos as $producto)
