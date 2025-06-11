@@ -44,7 +44,7 @@ class ProductoController extends Controller
 
         $request->validate([
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],
-            'categoria'       => ['required'],
+            'categoria'       => ['nullable'],
             'descripcion'     => [],
             'stock_actual'    => ['required', 'string'],
             'precio'          => ['required', 'string'],
@@ -64,7 +64,7 @@ class ProductoController extends Controller
 
         $producto = Producto::create([
             'nombre_producto' => request('nombre_producto'),
-            'categoria_id'    => request('categoria'),
+            'categoria_id'    => request('categoria') ?? null,
             'descripcion'     => request('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,
@@ -102,7 +102,7 @@ class ProductoController extends Controller
 
         $request->validate([
             'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
-            'categoria'       => ['required'],
+            'categoria'       => ['nullable'],
             'descripcion'     => [],
             'stock_actual'    => ['required', 'string'],
             'precio'          => ['required', 'string'],
@@ -126,7 +126,7 @@ class ProductoController extends Controller
 
         $producto->update([
             'nombre_producto' => $request->input('nombre_producto'),
-            'categoria_id'    => $request->input('categoria'),
+            'categoria_id'    => $request->input('categoria') ?? null,
             'descripcion'     => $request->input('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,

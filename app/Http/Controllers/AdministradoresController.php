@@ -29,6 +29,7 @@ class AdministradoresController extends Controller
         return view('admin.administradores.index', compact('administradores'));
     }
 
+
     public function create(Request $request)
     {
         if (request()->user('admin')->cannot('create', Administrador::class)) { abort(403); }

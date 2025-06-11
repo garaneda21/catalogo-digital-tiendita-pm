@@ -3,6 +3,7 @@
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
@@ -26,6 +27,7 @@ Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 // Rutas a las que solo puede acceder el admin
 Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function () {
     Route::resource('/productos', ProductoController::class);
+    Route::resource('/categorias', CategoriaController::class);
 
     Route::get('/administradores/{administrador}/edit-permisos', [AdministradoresController::class, 'edit_permisos']);
     Route::put('/administradores/{administrador}/update-permisos', [AdministradoresController::class, 'update_permisos'])

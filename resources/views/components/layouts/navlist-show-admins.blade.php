@@ -8,7 +8,7 @@
 
     <div class="mt-4 flex items-start max-md:flex-col">
         <div class="me-10 w-full pb-4 md:w-[220px]">
-            <flux:navlist.group>
+            <flux:navlist.group>routes/web.php
                 <flux:navlist.item href="/admin/administradores/{{ $admin->id }}"
                     class="data-current:bg-gray-200! hover:underline!">Detalles</flux:navlist.item>
 

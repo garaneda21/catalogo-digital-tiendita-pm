@@ -37,7 +37,7 @@
                         <h2 class="text-lg font-semibold text-[#3D3C63]">
                             {{ $producto->nombre_producto }}
                         </h2>
-                        <p class="text-md text-gray-500 mt-1">{{ $producto->categoria->nombre_categoria }}</p>
+                        <p class="text-md text-gray-500 mt-1">{{ $producto->categoria->nombre_categoria ?? '' }}</p>
                         <p class="text-xl font-bold text-[#587A6C] mt-2">
                             ${{ number_format($producto->precio, 0, ',', '.') }}</p>
                     </div>
