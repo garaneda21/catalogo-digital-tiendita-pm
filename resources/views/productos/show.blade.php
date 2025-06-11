@@ -9,8 +9,7 @@
             <!-- Información del producto -->
             <div class="space-y-6">
 
-                <h1 class="text-3xl font-bold text-gray-800">{{ $producto->nombre_produc<F12>}
-                    <Select>o }}</h1>
+                <h1 class="text-3xl font-bold text-gray-800">{{ $producto->nombre_producto }}</h1>
 
                 <p class="text-2xl text-green-600 font-semibold">${{ number_format($producto->precio, 0, ',', '.') }}</p>
 
@@ -40,4 +39,4 @@
             </div>
         </div>
     </div>
-</x-components.layouts.estructura>
+</x-layouts.estructura>

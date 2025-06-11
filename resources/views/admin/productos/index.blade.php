@@ -83,7 +83,7 @@
                         <div class="text-sm text-gray-600">
                             <span class="font-medium">Precio:</span> ${{ $producto->precio }}<br>
                             <span class="font-medium">Stock:</span> {{ $producto->stock_actual }} unidades<br>
-                            <span class="font-medium">Categoría:</span> {{ $producto->categoria->nombre_categoria }}
+                            <span class="font-medium">Categoría:</span> {{ $producto->categoria->nombre_categoria ?? 'SIN CATEGORÍA' }}
                         </div>
                     </div>
 

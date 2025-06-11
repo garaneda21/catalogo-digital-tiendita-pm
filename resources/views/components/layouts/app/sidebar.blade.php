@@ -14,7 +14,7 @@
 
                 <flux:navlist class="w-auto">
                     <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/productos" icon="squares-2x2">Productos</flux:navlist.item>
-                    <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/categorias" icon="squares-2x2">Categorías</flux:navlist.item>
+                    <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/categorias" icon="tag">Categorías</flux:navlist.item>
                     <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/administradores" icon="key">Administradores</flux:navlist.item>
                     <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/usuarios" icon="user-group">Usuarios</flux:navlist.item>
                 </flux:navlist>
