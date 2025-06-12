@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Movimiento;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -35,10 +36,12 @@ class DashboardController extends Controller
 
         $total_productos = Producto::all()->count();
 
-        $top_productos = Producto::withCount('movimiento as ventas_count')
-            ->whereHas('movimiento', fn ($q) => $q->where('tipo_movimiento_id', 1))
-            ->orderByDesc('ventas_count')
-            ->take(6)
+        $top_productos = Movimiento::select('producto_id', DB::raw('SUM(cantidad) as total'))
+            ->where('tipo_movimiento_id', 1)
+            ->groupBy('producto_id')
+            ->orderByDesc('total')
+            ->take(5)
+            ->with('producto') // para obtener nombre
             ->get();
 
         return view('admin.dashboard', compact(

@@ -33,28 +33,31 @@
 
     <div class="mt-6 overflow-x-auto">
         <div class="flex space-x-4 min-w-full px-1">
-            @foreach ($top_productos as $producto)
-                <div class="w-[350px] bg-gray-50 border shadow rounded-xl p-4 flex-shrink-0 hover:shadow-lg transition">
+            @foreach ($top_productos as $i => $top_producto)
+                <div class="w-[350px] bg-gray-50 border rounded-xl p-4 flex-shrink-0">
                     <div class="flex items-start space-x-4 mb-4">
                         <!-- Imagen -->
-                        <img class="w-16 h-16 object-cover rounded-md shrink-0" src="{{ $producto->imagen_url ?? '/images/placeholder-product.jpg' }}"
-                            alt="Imagen de {{ $producto->nombre_producto }}">
+                        <img class="w-16 h-16 object-cover rounded-md shrink-0"
+                            src="{{ $top_producto->imagen_url ?? '/images/placeholder-product.jpg' }}"
+                            alt="Imagen de {{ $top_producto->nombre_producto }}">
 
                         <!-- Contenido textual -->
                         <div class="min-w-0">
-                            <h3 class="text-lg font-semibold text-[#3D3C63] truncate">
-                                {{ $producto->nombre_producto }}
+                            <h3 class="font-sans! text-lg font-semibold text-[#3D3C63] truncate">
+                                {{ $i + 1 }}. {{ $top_producto->producto->nombre_producto }}
                             </h3>
                             <div class="text-sm text-gray-500">Categoría:
-                                {{ $producto->categoria->nombre_categoria ?? 'N/A' }}</div>
-                            <div class="text-sm text-gray-500 mb-1">Stock actual: {{ $producto->stock_actual }}</div>
+                                {{ $top_producto->producto->categoria->nombre_categoria ?? 'N/A' }}</div>
+                            <div class="text-sm text-gray-500 mb-1">
+                                Stock actual: {{ $top_producto->producto->stock_actual }}
+                            </div>
                         </div>
                     </div>
 
                     <div class="flex justify-between items-center">
                         <span
-                            class="text-sm font-bold bg-verde-oliva/20 text-verde-oliva px-2 py-1 rounded-full whitespace-nowrap">
-                            {{ $producto->total_vendido }} vendidas
+                            class="text-sm font-bold bg-verde-oliva/10 text-verde-oliva px-2 py-1 rounded-full whitespace-nowrap">
+                            {{ $top_producto->total }} vendidas
                         </span>
                         <a href="#" class="text-sm text-melocoton hover:underline">Ver detalles</a>
                     </div>
@@ -97,7 +100,9 @@
                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
                             {{ $movimiento->motivo_movimiento->nombre_motivo }}
                         </td>
-                        <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{ $movimiento->created_at }}</td>
+                        <td class="p-3 text-rig text-sm text-gray-700 whitespace-nowrap">
+                            {{ $movimiento->created_at }}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

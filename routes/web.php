@@ -18,7 +18,7 @@ Route::view('/test', 'test');
 
 // Vistas principales
 Route::view('/', 'inicio')->name('inicio');
-Route::redirect('admin', 'admin/productos');
+Route::redirect('admin', 'admin/dashboard');
 
 // Vista Productos Clientes
 Route::get('/productos', [ProductoUserController::class, 'index']);
