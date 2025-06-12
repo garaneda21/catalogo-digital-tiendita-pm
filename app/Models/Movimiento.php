@@ -18,10 +18,10 @@ class Movimiento extends Model
     }
 
     public function tipo_movimiento() {
-        return $this->hasOne(TipoMovimiento::class);
+        return $this->belongsTo(TipoMovimiento::class);
     }
 
     public function motivo_movimiento() {
-        return $this->hasOne(MotivoMovimiento::class);
+        return $this->belongsTo(MotivoMovimiento::class);
     }
 }

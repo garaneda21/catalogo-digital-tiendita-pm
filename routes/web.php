@@ -4,6 +4,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
@@ -17,7 +18,7 @@ Route::view('/test', 'test');
 
 // Vistas principales
 Route::view('/', 'inicio')->name('inicio');
-Route::redirect('admin', 'admin/productos');
+Route::redirect('admin', 'admin/dashboard');
 
 // Vista Productos Clientes
 Route::get('/productos', [ProductoUserController::class, 'index']);
@@ -26,6 +27,8 @@ Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 
 // Rutas a las que solo puede acceder el admin
 Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', DashboardController::class);
+
     Route::resource('/productos', ProductoController::class);
     Route::resource('/categorias', CategoriaController::class);
 
@@ -34,7 +37,7 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
         ->name('administradores.update-permisos');
     Route::resource('/administradores', AdministradoresController::class)
         ->parameters(['administradores' => 'administrador']);
-  
+
     Route::resource('/usuarios', UsuariosController::class)
         ->parameters(['administradores' => 'administrador']);
     Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])
