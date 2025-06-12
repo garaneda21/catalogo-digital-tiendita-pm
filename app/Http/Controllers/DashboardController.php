@@ -34,7 +34,7 @@ class DashboardController extends Controller
             ->where('stock_actual', '<', 5)
             ->count();
 
-        $total_productos = Producto::all()->count();
+        $stock_total = Producto::all()->sum('stock_actual');
 
         $top_productos = Movimiento::select('producto_id', DB::raw('SUM(cantidad) as total'))
             ->where('tipo_movimiento_id', 1)
@@ -49,7 +49,7 @@ class DashboardController extends Controller
             'ventas_mes',
             'entradas_mes',
             'bajo_stock',
-            'total_productos',
+            'stock_total',
             'top_productos'
         ));
     }

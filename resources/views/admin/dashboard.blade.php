@@ -22,9 +22,9 @@
             </p>
         </div>
         <div class="bg-gray-50 p-4 rounded-lg border">
-            <span class="text-md text-gray-500">Total productos</span>
+            <span class="text-md text-gray-500">Stock total</span>
             <p class="text-xl font-bold text-azul-profundo">
-                <span class="text-2xl">{{ $total_productos }}</span> unidades
+                <span class="text-2xl">{{ $stock_total }}</span> unidades
             </p>
         </div>
     </div>
