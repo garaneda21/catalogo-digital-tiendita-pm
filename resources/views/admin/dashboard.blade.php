@@ -89,7 +89,7 @@
                             </a>
                         </td>
                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap">$
-                            {{ number_format($movimiento->producto->precio, 0, ',', '.') }}
+                            {{ number_format($movimiento->producto->precio * $movimiento->cantidad, 0, ',', '.') }}
                         </td>
                         <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
                             {{ $movimiento->cantidad }}
