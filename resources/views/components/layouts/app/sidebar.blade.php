@@ -13,6 +13,10 @@
                 </a>
 
                 <flux:navlist class="w-auto">
+                    <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/dashboard" icon="presentation-chart-bar">Dashboard</flux:navlist.item>
+
+                    <flux:separator class="my-2"/>
+
                     <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/productos" icon="squares-2x2">Productos</flux:navlist.item>
                     <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/categorias" icon="tag">Categorías</flux:navlist.item>
                     <flux:navlist.item class="text-white! hover:text-black! data-current:bg-black/25! data-current:hover:bg-white!" href="/admin/administradores" icon="key">Administradores</flux:navlist.item>
