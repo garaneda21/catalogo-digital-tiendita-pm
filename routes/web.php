@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
 use App\Http\Controllers\CategoriaUserController;
@@ -47,6 +48,13 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
 
 });
+
+// Rutas de carrito de compras
+Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
+Route::post('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
+Route::post('/carrito/actualizar/{id}', [CarritoController::class, 'actualizar'])->name('carrito.actualizar');
+Route::delete('/carrito/eliminar/{id}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
+
 
 // LARAVEL
 
