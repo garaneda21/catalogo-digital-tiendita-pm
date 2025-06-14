@@ -16,10 +16,10 @@
                 <!-- Botones -->
                 <div class="flex gap-4 mt-4">
                     <!-- Botón carrito -->
-                    <form method="POST" action="">
+                    <form action="{{ route('carrito.agregar', $producto->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl shadow">
-                            Añadir al carrito
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            Agregar al carrito
                         </button>
                     </form>
 
