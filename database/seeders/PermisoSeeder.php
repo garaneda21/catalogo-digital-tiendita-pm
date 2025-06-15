@@ -28,6 +28,12 @@ class PermisoSeeder extends Seeder
             ['nombre_permiso' => 'Editar Permisos Admin', 'categoria_permiso' => 'Admin'],
             ['nombre_permiso' => 'Desactivar Admin', 'categoria_permiso' => 'Admin'],
             ['nombre_permiso' => 'Eliminar Admin', 'categoria_permiso' => 'Admin'],
+
+            // Permisos de Categorias
+            ['nombre_permiso' => 'Ver Todas Las Categorias', 'categoria_permiso' => 'Categorias'],
+            ['nombre_permiso' => 'Crear Categorias', 'categoria_permiso' => 'Categorias'],
+            ['nombre_permiso' => 'Editar Categorias', 'categoria_permiso' => 'Categorias'],
+            ['nombre_permiso' => 'Eliminar Categorias', 'categoria_permiso' => 'Categorias'],
         ];
 
         foreach ($permisos as $permiso) {
