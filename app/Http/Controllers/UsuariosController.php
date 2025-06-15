@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Registro;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
@@ -12,6 +12,10 @@ class UsuariosController extends Controller
 {
     public function index()
     {
+        if (request()->user('admin')->cannot('viewAny', User::class)) {
+            return view('admin.usuarios.index'); // salir sin enviar datos
+        }
+
         $usuarios = User::all();
 
         foreach ($usuarios as $user) {
@@ -26,11 +30,19 @@ class UsuariosController extends Controller
 
     public function create()
     {
+        if (request()->user('admin')->cannot('create', User::class)) {
+            abort(403);
+        }
+
         return view('admin.usuarios.create');
     }
 
     public function store(Request $request)
     {
+        if (request()->user('admin')->cannot('create', User::class)) {
+            abort(403);
+        }
+
         $atributos = $request->validate([
             'name'     => ['required', 'string', 'max:255', 'unique:users'],
             'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -48,6 +60,12 @@ class UsuariosController extends Controller
 
     public function show(User $usuario)
     {
+        if (request()->user('admin')->cannot('view', User::class)) {
+            return view('admin.usuarios.show', [
+                'usuario' => $usuario,
+            ]);
+        }
+
         $registros = Registro::where('user_id', $usuario->id)
             ->with('accion')
             ->orderBy('fecha_registro', 'desc')
@@ -71,11 +89,15 @@ class UsuariosController extends Controller
 
     public function edit(User $usuario)
     {
+        if (request()->user('admin')->cannot('update', User::class)) { abort(403); }
+
         return view('admin.usuarios.edit', ['usuario' => $usuario]);
     }
 
     public function update(Request $request, User $usuario)
     {
+        if (request()->user('admin')->cannot('update', User::class)) { abort(403); }
+
         $request->validate([
             'name'  => ['required', 'string', 'max:255', Rule::unique('users')->ignore($usuario->id)],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($usuario->id)],
@@ -95,6 +117,8 @@ class UsuariosController extends Controller
 
     public function destroy(User $usuario)
     {
+        if (request()->user('admin')->cannot('delete', User::class)) { abort(403); }
+
         $usuario->delete();
 
         Registro::registrar_accion($usuario, 'Elimina un usuario cliente'); // acción: eliminación

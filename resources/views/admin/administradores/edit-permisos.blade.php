@@ -1,19 +1,29 @@
 <x-layouts.navlist-show-admins :admin="$admin">
-
-    @if (session('success_update'))
-        <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success_update') }}"/>
-    @endif
-    @if (session('warning'))
-        <x-mensaje-accion icon="exclamation-triangle" variant="warning" heading="{{ session('warning') }}"/>
-    @endif
-
-    <h2 class="text-2xl font-bold text-[#3D3C63] mb-2">Editor de permisos</h2>
-    <p class="text-melocoton mb-4">Seleccione los permisos que tendrá el administrador y confirme los cambios</p>
-
     <form method="POST" action="{{ route('administradores.update-permisos', $admin->id) }}">
         @csrf
         @method('PUT')
 
+        @if (session('success'))
+            <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success_update') }}" />
+        @endif
+        @if (session('warning'))
+            <x-mensaje-accion icon="exclamation-triangle" variant="warning" heading="{{ session('warning') }}" />
+        @endif
+        @if ($errors->any())
+            <x-forms.error-card />
+        @endif
+
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="text-2xl font-bold text-[#3D3C63] mb-2">Editor de permisos</h2>
+                <p class="text-melocoton mb-4">Seleccione los permisos que tendrá el administrador y confirme los
+                    cambios</p>
+            </div>
+            <flux:button type="submit" variant="primary" icon="arrow-path"
+                class="bg-verde-oliva hover:bg-verde-oliva/70! dark:text-black! dark:bg-white! rounded-3xl!">
+                Aplicar Permisos
+            </flux:button>
+        </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             @foreach ($permisos as $categoria_permiso => $categorias_permiso)
@@ -37,19 +47,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-
-        <div class="flex flex-col gap-6 mt-6">
-
-            @if ($errors->any())
-                <x-forms.error-card />
-            @endif
-
-            <div class="flex items-center justify-end gap-x-6">
-                <flux:button type="submit" variant="primary" icon="arrow-path"
-                    class="bg-verde-oliva hover:bg-verde-oliva/70! dark:text-black! dark:bg-white! rounded-3xl!">Editar
-                    Permisos</flux:button>
-            </div>
         </div>
 
     </form>

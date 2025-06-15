@@ -34,6 +34,14 @@ class PermisoSeeder extends Seeder
             ['nombre_permiso' => 'Crear Categorias', 'categoria_permiso' => 'Categorias'],
             ['nombre_permiso' => 'Editar Categorias', 'categoria_permiso' => 'Categorias'],
             ['nombre_permiso' => 'Eliminar Categorias', 'categoria_permiso' => 'Categorias'],
+
+            // Permisos Edición de Usuarios
+            ['nombre_permiso' => 'Ver Todos Los Usuarios', 'categoria_permiso' => 'Usuarios'],
+            ['nombre_permiso' => 'Ver Detalles De Un Usuario', 'categoria_permiso' => 'Usuarios'],
+            ['nombre_permiso' => 'Crear Usuarios', 'categoria_permiso' => 'Usuarios'],
+            ['nombre_permiso' => 'Editar Usuarios', 'categoria_permiso' => 'Usuarios'],
+            ['nombre_permiso' => 'Desactivar Usuarios', 'categoria_permiso' => 'Usuarios'],
+            ['nombre_permiso' => 'Eliminar Usuarios', 'categoria_permiso' => 'Usuarios'],
         ];
 
         foreach ($permisos as $permiso) {
