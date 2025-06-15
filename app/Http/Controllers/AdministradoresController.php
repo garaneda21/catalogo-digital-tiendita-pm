@@ -29,10 +29,11 @@ class AdministradoresController extends Controller
         return view('admin.administradores.index', compact('administradores'));
     }
 
-
     public function create(Request $request)
     {
-        if (request()->user('admin')->cannot('create', Administrador::class)) { abort(403); }
+        if (request()->user('admin')->cannot('create', Administrador::class)) {
+            abort(403);
+        }
 
         return view('admin.administradores.create');
     }
@@ -85,14 +86,18 @@ class AdministradoresController extends Controller
 
     public function edit(Administrador $administrador)
     {
-        if (request()->user('admin')->cannot('update', Administrador::class)) { abort(403); }
+        if (request()->user('admin')->cannot('update', Administrador::class)) {
+            abort(403);
+        }
 
         return view('admin.administradores.edit', ['admin' => $administrador]);
     }
 
     public function update(Administrador $administrador)
     {
-        if (request()->user('admin')->cannot('update', Administrador::class)) { abort(403); }
+        if (request()->user('admin')->cannot('update', Administrador::class)) {
+            abort(403);
+        }
 
         request()->validate([
             'nombre_admin' => ['required', 'string', 'max:255', Rule::unique('administradores')->ignore($administrador->id)],
@@ -121,9 +126,13 @@ class AdministradoresController extends Controller
 
     public function edit_permisos(Administrador $administrador)
     {
-        if ($administrador->superadmin) { abort(403, 'No se pueden editar los permisos de un SuperAdmin'); }
+        if ($administrador->superadmin) {
+            abort(403, 'No se pueden editar los permisos de un SuperAdmin');
+        }
 
-        if (request()->user('admin')->cannot('update_permisos', Administrador::class)) { abort(403); }
+        if (request()->user('admin')->cannot('update_permisos', Administrador::class)) {
+            abort(403);
+        }
 
         $permisos_asignados = $administrador->permisos()->pluck('id');
         $permisos = Permisos::all()->groupBy('categoria_permiso');
@@ -137,7 +146,9 @@ class AdministradoresController extends Controller
 
     public function update_permisos(Administrador $administrador)
     {
-        if (request()->user('admin')->cannot('update_permisos', Administrador::class)) { abort(403); }
+        if (request()->user('admin')->cannot('update_permisos', Administrador::class)) {
+            abort(403);
+        }
 
         request()->validate([
             'permisos'   => ['nullable', 'array'], // los permisos recibidos vienen en un array
@@ -145,7 +156,15 @@ class AdministradoresController extends Controller
         ]);
 
         // Obtenemos solo los IDs de los permisos activos desde el form (los checkboxes marcados)
-        $permisosActivos = request()->input('permisos', []); // si no hay ninguno, será un array vacío
+        $permisosActivos = array_map('intval', request()->input('permisos', [])); // si no hay ninguno, será un array vacío
+
+        if ( !in_array(1, $permisosActivos) && collect($permisosActivos)->intersect([2, 3, 4, 5])->isNotEmpty()) {
+            session()->flash('warning', 'El permiso [Ver Todos Los Productos] está desactivado, pero tienes permisos específicos habilitados, por lo que el administrador no podrá acceder a algunas funciones normalmente.');
+        }
+        if ( !in_array(6, $permisosActivos) && collect($permisosActivos)->intersect([7,8,9,10,11,12])->isNotEmpty()) {
+            session()->flash('warning', 'El permiso [Ver Todos Los Admin] está desactivado, pero tienes permisos específicos habilitados, por lo que el administrador no podrá acceder a algunas funciones normalmente.');
+        }
+
 
         // Actualizamos la tabla pivote: se eliminan los que no estén, se agregan los nuevos
         $administrador->permisos()->sync($permisosActivos);

@@ -3,6 +3,9 @@
     @if (session('success_update'))
         <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success_update') }}"/>
     @endif
+    @if (session('warning'))
+        <x-mensaje-accion icon="exclamation-triangle" variant="warning" heading="{{ session('warning') }}"/>
+    @endif
 
     <h2 class="text-2xl font-bold text-[#3D3C63] mb-2">Editor de permisos</h2>
     <p class="text-melocoton mb-4">Seleccione los permisos que tendrá el administrador y confirme los cambios</p>
