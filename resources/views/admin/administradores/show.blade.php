@@ -32,6 +32,24 @@
 
         <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Permisos Actuales</h2>
 
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach ($permisos_actuales as $categoria => $permisos)
+                <div class="bg-white border rounded-xl overflow-hidden">
+                    <div class="bg-gray-100 px-4 py-2 font-semibold text-azul-profundo text-sm border-b">
+                        {{ $categoria }}
+                    </div>
+                    <div class="flex flex-wrap gap-2 px-4 py-3">
+                        @foreach ($permisos as $permiso)
+                            <span
+                                class="inline-block text-xs bg-verde-oliva/10 text-verde-oliva font-medium px-3 py-1 rounded-full">
+                                {{ $permiso->nombre_permiso }}
+                            </span>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
         <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Ultimas acciones</h2>
 
         <div class="mt-4 overflow-hidden rounded-lg border-1">

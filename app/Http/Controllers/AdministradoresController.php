@@ -78,9 +78,12 @@ class AdministradoresController extends Controller
             return $registro->accion_id === 1;
         })->fecha_registro ?? 'No ha accedido aún';
 
+        $permisos_actuales = $administrador->permisos()->get()->groupBy('categoria_permiso');
+
         return view('admin.administradores.show', [
-            'admin'     => $administrador,
-            'registros' => $registros,
+            'admin'             => $administrador,
+            'permisos_actuales' => $permisos_actuales,
+            'registros'         => $registros,
         ]);
     }
 
@@ -158,13 +161,12 @@ class AdministradoresController extends Controller
         // Obtenemos solo los IDs de los permisos activos desde el form (los checkboxes marcados)
         $permisosActivos = array_map('intval', request()->input('permisos', [])); // si no hay ninguno, será un array vacío
 
-        if ( !in_array(1, $permisosActivos) && collect($permisosActivos)->intersect([2, 3, 4, 5])->isNotEmpty()) {
+        if (! in_array(1, $permisosActivos) && collect($permisosActivos)->intersect([2, 3, 4, 5])->isNotEmpty()) {
             session()->flash('warning', 'El permiso [Ver Todos Los Productos] está desactivado, pero tienes permisos específicos habilitados, por lo que el administrador no podrá acceder a algunas funciones normalmente.');
         }
-        if ( !in_array(6, $permisosActivos) && collect($permisosActivos)->intersect([7,8,9,10,11,12])->isNotEmpty()) {
+        if (! in_array(6, $permisosActivos) && collect($permisosActivos)->intersect([7, 8, 9, 10, 11, 12])->isNotEmpty()) {
             session()->flash('warning', 'El permiso [Ver Todos Los Admin] está desactivado, pero tienes permisos específicos habilitados, por lo que el administrador no podrá acceder a algunas funciones normalmente.');
         }
-
 
         // Actualizamos la tabla pivote: se eliminan los que no estén, se agregan los nuevos
         $administrador->permisos()->sync($permisosActivos);
