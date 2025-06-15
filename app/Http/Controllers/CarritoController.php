@@ -84,4 +84,32 @@ class CarritoController extends Controller
             ['token' => session()->getId()]
         );
     }
+
+    public function apiAgregar(Request $request, Producto $producto)
+    {
+        $carrito = $this->obtenerOCrearCarrito();
+        $item = $carrito->items()->firstOrCreate(
+            ['producto_id' => $producto->id],
+            ['precio_unitario' => $producto->precio, 'cantidad' => 0]
+        );
+        $item->increment('cantidad', $request->input('cantidad', 1));
+        $item->load('producto');
+
+        return response()->json(['carrito' => $carrito->load('items.producto')]);
+    }
+
+    public function apiActualizarCantidad(Request $request, ItemCarrito $item)
+    {
+        $delta = $request->input('delta', 1);
+        $item->increment('cantidad', $delta);
+        if ($item->cantidad < 1) $item->delete();
+        return response()->json(['carrito' => $item->carrito->load('items.producto')]);
+    }
+
+    public function apiEliminar(ItemCarrito $item)
+    {
+        $item->delete();
+        return response()->json(['carrito' => $item->carrito->load('items.producto')]);
+    }
+
 }

@@ -76,7 +76,7 @@
             <!-- Linea separadora -->
             <div class="h-5 w-[1px] bg-[#D9CBB6] mx-1"></div>
 
-            <!-- Icono del carrito -->
+            <!-- Icono del carrito con cantidad de productos -->
 
             @php
                 use App\Models\Carrito;

@@ -16,12 +16,9 @@
                 <!-- Botones -->
                 <div class="flex gap-4 mt-4">
                     <!-- Botón carrito -->
-                    <form action="{{ route('carrito.agregar', $producto->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-                            Agregar al carrito
-                        </button>
-                    </form>
+                    <button onclick="agregarAlCarrito({{ $producto->id }})" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                        Agregar al carrito
+                    </button>
 
                     <!-- Botón WhatsApp -->
                     <a
