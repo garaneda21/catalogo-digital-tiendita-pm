@@ -7,10 +7,14 @@
                 Nuevo Producto
             </flux:button>
         @else
-            <flux:button disabled icon="plus" variant="primary"
-                class="text-white bg-verde-oliva rounded-3xl! hover:bg-verde-oliva/70">
-                Nuevo Producto
-            </flux:button>
+            <flux:tooltip content="No tienes permiso para esta acción">
+                <div>
+                    <flux:button disabled icon="plus"
+                        class="text-black bg-verde-oliva rounded-3xl! hover:bg-verde-oliva/70">
+                        Nuevo Producto
+                    </flux:button>
+                </div>
+            </flux:tooltip>
         @endcan
     </x-panel.header>
 

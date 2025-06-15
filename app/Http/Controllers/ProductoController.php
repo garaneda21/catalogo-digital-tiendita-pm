@@ -14,7 +14,7 @@ class ProductoController extends Controller
 {
     public function index(Request $request)
     {
-        if (request()->user('admin')->cannot('create', Producto::class)) {
+        if (request()->user('admin')->cannot('viewAny', Producto::class)) {
             return view('admin.productos.index'); // salir sin enviar datos
         }
 

@@ -7,10 +7,14 @@
                 Nuevo Administrador
             </flux:button>
         @else
-            <flux:button disabled icon="plus" variant="primary"
-                class="text-white bg-verde-oliva rounded-3xl! hover:bg-verde-oliva/70">
-                Nuevo Administrador
-            </flux:button>
+            <flux:tooltip content="No tienes permiso para realizar esta acción">
+                <div>
+                    <flux:button disabled icon="plus"
+                        class="text-black rounded-3xl! hover:bg-verde-oliva/70">
+                        Nuevo Administrador
+                    </flux:button>
+                </div>
+            </flux:tooltip>
         @endcan
     </x-panel.header>
 
