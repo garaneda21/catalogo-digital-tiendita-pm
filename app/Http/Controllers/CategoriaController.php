@@ -26,7 +26,7 @@ class CategoriaController extends Controller
     {
         $request->validate([
             'nombre_categoria'      => ['required', 'max:250', 'unique:categorias'],
-            'descripcion_categoria' => [], 
+            'descripcion_categoria' => [],
         ]);
 
         $categoria = Categoria::create([
@@ -34,9 +34,9 @@ class CategoriaController extends Controller
             'descripcion_categoria' => request('descripcion_categoria'),
         ]);
 
-        Registro::registrar_accion($categoria, 'categorias', 3);
+        Registro::registrar_accion($categoria, 'Crea nueva categoría');
 
-        session()->flash('success_create', 'Categoría creada exitosamente!');
+        session()->flash('success', 'Categoría creada exitosamente!');
 
         return redirect('/admin/categorias/');
     }
@@ -50,7 +50,7 @@ class CategoriaController extends Controller
     {
         $request->validate([
             'nombre_categoria' => ['required', 'max:250', Rule::unique('categorias')->ignore($categoria->id)],
-            'descripcion_categoria' => [], 
+            'descripcion_categoria' => [],
         ]);
 
         $categoria->update([
@@ -58,8 +58,9 @@ class CategoriaController extends Controller
             'descripcion_categoria' => $request->input('descripcion_categoria'),
         ]);
 
-        Registro::registrar_accion($categoria, 'categorias', 4);
-        session()->flash('success_update', 'Categoría actualizada exitosamente!');
+        Registro::registrar_accion($categoria, 'Edita una categoría');
+
+        session()->flash('success', 'Categoría actualizada exitosamente!');
 
         return redirect()->route('categorias.index');
     }
@@ -67,7 +68,11 @@ class CategoriaController extends Controller
     public function destroy(Categoria $categoria)
     {
         $categoria->delete();
-        session()->flash('success_delete', '¡Categoría eliminada exitosamente!');
+
+        Registro::registrar_accion($categoria, 'Elimina una categoría');
+
+        session()->flash('success', '¡Categoría eliminada exitosamente!');
+
         return redirect()->route('categorias.index');
     }
 }

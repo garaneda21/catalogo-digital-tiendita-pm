@@ -47,7 +47,9 @@ class AdministradoresController extends Controller
 
         $admin = Administrador::create($atributos);
 
-        Registro::registrar_accion($admin, 'administrador', 5);
+        Registro::registrar_accion($admin, 'Crea un nuevo admin');
+
+        session()->flash('success', 'Nuevo admin creado');
 
         return redirect('/admin/administradores');
     }
@@ -102,7 +104,9 @@ class AdministradoresController extends Controller
             'correo_admin' => request('correo_admin'),
         ]);
 
-        Registro::registrar_accion($administrador, 'administrador', 6);
+        Registro::registrar_accion($administrador, 'Edita los datos de un admin');
+
+        session()->flash('success', 'Datos actualizados');
 
         return redirect('/admin/administradores');
     }
@@ -146,7 +150,9 @@ class AdministradoresController extends Controller
         // Actualizamos la tabla pivote: se eliminan los que no estén, se agregan los nuevos
         $administrador->permisos()->sync($permisosActivos);
 
-        // Registro::registrar_accion($administrador, 'administrador', 6);
+        Registro::registrar_accion($administrador, 'Edita los permisos de un admin');
+
+        session()->flash('success', 'Permisos Actualizados');
 
         return redirect()->back();
     }

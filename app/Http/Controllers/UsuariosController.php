@@ -39,7 +39,9 @@ class UsuariosController extends Controller
 
         $user = User::create($atributos);
 
-        Registro::registrar_accion($user, 'users', 5); // acción: creación
+        Registro::registrar_accion($user, 'Crea un nuevo usuario cliente'); // acción: creación
+
+        session()->flash('success', 'Usuario creado exitosamente!');
 
         return redirect('/admin/usuarios');
     }
@@ -60,7 +62,7 @@ class UsuariosController extends Controller
             return $registro->accion_id === 1;
         });
         $usuario['ultimo_login'] = $ultimo_login ? $ultimo_login->fecha_registro : null;
-        
+
         return view('admin.usuarios.show', [
             'usuario'   => $usuario,
             'registros' => $registros,
@@ -84,7 +86,9 @@ class UsuariosController extends Controller
             'email' => $request->input('email'),
         ]);
 
-        Registro::registrar_accion($usuario, 'users', 6); // acción: edición
+        Registro::registrar_accion($usuario, 'Edita un usuario cliente'); // acción: edición
+
+        session()->flash('success', 'Usuario actualizado exitosamente!');
 
         return redirect('/admin/usuarios');
     }
@@ -93,7 +97,9 @@ class UsuariosController extends Controller
     {
         $usuario->delete();
 
-        //Registro::registrar_accion($usuario, 'users', 7); // acción: eliminación
+        Registro::registrar_accion($usuario, 'Elimina un usuario cliente'); // acción: eliminación
+
+        session()->flash('success', 'Usuario Eliminado exitosamente!');
 
         return redirect('/admin/usuarios');
     }
