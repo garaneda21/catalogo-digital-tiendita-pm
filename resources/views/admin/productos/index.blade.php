@@ -17,50 +17,8 @@
     @can('viewAny', App\Models\Producto::class)
         <div class="py-4 space-y-2 mx-auto">
 
-            @if (session('success_create'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                    role="alert">
-                    <strong class="font-bold">¡Éxito!</strong>
-                    <span class="block sm:inline">{{ session('success_create') }}</span>
-                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                        <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
-                            <title>Cerrar</title>
-                            <path
-                                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 2.65a1.2 1.2 0 1 1-1.697-1.697L8.303 10l-2.651-2.651a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-2.651a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.651a1.2 1.2 0 0 1 0 1.697z" />
-                        </svg>
-                    </span>
-                </div>
-            @endif
-            @if (session('success_update'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                    role="alert">
-                    <strong class="font-bold">¡Éxito!</strong>
-                    <span class="block sm:inline">{{ session('success_update') }}</span>
-                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                        <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
-                            <title>Cerrar</title>
-                            <path
-                                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 2.65a1.2 1.2 0 1 1-1.697-1.697L8.303 10l-2.651-2.651a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-2.651a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.651a1.2 1.2 0 0 1 0 1.697z" />
-                        </svg>
-                    </span>
-                </div>
-            @endif
-            @if (session('success_delete'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                    role="alert">
-                    <strong class="font-bold">¡Éxito!</strong>
-                    <span class="block sm:inline">{{ session('success_delete') }}</span>
-                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                        <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
-                            <title>Cerrar</title>
-                            <path
-                                d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 2.65a1.2 1.2 0 1 1-1.697-1.697L8.303 10l-2.651-2.651a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-2.651a1.2 1.2 0 1 1 1.697 1.697L11.697 10l2.651 2.651a1.2 1.2 0 0 1 0 1.697z" />
-                        </svg>
-                    </span>
-                </div>
+            @if (session('success'))
+                <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success') }}" />
             @endif
 
             <x-ordenamiento-y-busqueda></x-ordenamiento-y-busqueda>
@@ -71,7 +29,7 @@
 
                     <!-- Imagen -->
                     <div class="w-full md:w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                        <img src="{{ $producto->imagen_url ? asset('storage/'.$producto->imagen_url) : '/images/placeholder-product.jpg' }}"
+                        <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
                             alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
                     </div>
 
@@ -83,25 +41,26 @@
                         <div class="text-sm text-gray-600">
                             <span class="font-medium">Precio:</span> ${{ $producto->precio }}<br>
                             <span class="font-medium">Stock:</span> {{ $producto->stock_actual }} unidades<br>
-                            <span class="font-medium">Categoría:</span> {{ $producto->categoria->nombre_categoria ?? 'SIN CATEGORÍA' }}
+                            <span class="font-medium">Categoría:</span>
+                            {{ $producto->categoria->nombre_categoria ?? 'SIN CATEGORÍA' }}
                         </div>
                     </div>
 
-                    <flux:button href="/admin/movimientos/salida/{{ $producto->id }}/create-venta"
-                        icon="banknotes" class="text-green-700!">
+                    <flux:button href="/admin/movimientos/salida/{{ $producto->id }}/create-venta" icon="banknotes"
+                        class="text-green-700!">
                         Venta Rápida
                     </flux:button>
 
                     @can('update', App\Models\Producto::class)
                         <!-- Botón editar -->
-                        <flux:button href="{{ route('productos.edit', $producto->id) }}"
-                            icon="pencil-square" class="text-blue-700!">
+                        <flux:button href="{{ route('productos.edit', $producto->id) }}" icon="pencil-square"
+                            class="text-blue-700!">
                             Editar
                         </flux:button>
                     @endcan
                     @can('delete', App\Models\Producto::class)
-                        <flux:button data-bs-toggle="modal" data-bs-target="#confirmDelete{{ $producto->id }}"
-                            icon="trash" class="text-red-500!">
+                        <flux:button data-bs-toggle="modal" data-bs-target="#confirmDelete{{ $producto->id }}" icon="trash"
+                            class="text-red-500!">
                             Eliminar
                         </flux:button>
                     @endcan

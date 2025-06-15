@@ -9,6 +9,10 @@
 
     <div class="py-4 space-y-2 mx-auto">
 
+        @if (session('success'))
+            <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success') }}" />
+        @endif
+
         <div class="overflow-hidden rounded-lg border-1">
             <table class="min-w-full border-separate border-spacing-0 text-sm">
                 <thead class="bg-gray-200 text-azul-profundo">
@@ -56,7 +60,7 @@
                                 <flux:modal.close>
                                     <flux:button variant="filled">{{ __('Cancelar') }}</flux:button>
                                 </flux:modal.close>
-                            
+
                                 <flux:button variant="danger" type="submit">{{ __('Eliminar cuenta') }}</flux:button>
                             </div>
                         </div>
