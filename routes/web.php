@@ -35,6 +35,8 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     Route::get('/administradores/{administrador}/edit-permisos', [AdministradoresController::class, 'edit_permisos']);
     Route::put('/administradores/{administrador}/update-permisos', [AdministradoresController::class, 'update_permisos'])
         ->name('administradores.update-permisos');
+    Route::get('/administradores/{administrador}/historial', [AdministradoresController::class, 'index_historial'])
+        ->name('administradores.historial');
     Route::resource('/administradores', AdministradoresController::class)
         ->parameters(['administradores' => 'administrador']);
 

@@ -32,7 +32,7 @@
 
         <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Permisos Actuales</h2>
 
-        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             @foreach ($permisos_actuales as $categoria => $permisos)
                 <div class="bg-white border rounded-xl overflow-hidden">
                     <div class="bg-gray-100 px-4 py-2 font-semibold text-azul-profundo text-sm border-b">

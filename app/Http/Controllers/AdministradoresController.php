@@ -6,6 +6,7 @@ use App\Models\Administrador;
 use App\Models\Permisos;
 use App\Models\Registro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 
@@ -176,5 +177,54 @@ class AdministradoresController extends Controller
         session()->flash('success', 'Permisos Actualizados');
 
         return redirect()->back();
+    }
+
+    public function index_historial(Administrador $administrador)
+    {
+        $query = Registro::with('accion')
+            ->where('administrador_id', $administrador->id);
+
+        // Filtro por acción
+        if ($accion = request('accion')) {
+            $query->whereHas('accion', fn ($q) => $q->where('nombre_accion', $accion));
+        }
+
+        // Filtro por entidad modificada
+        if ($entidad = request('entidad')) {
+            if ($entidad === 'sin_entidad') {
+                $query->whereNull('entidad_modificada');
+            } else {
+                $query->where('entidad_modificada', $entidad);
+            }
+        }
+
+        // Filtro por fecha (desde)
+        if ($desde = request('desde')) {
+            $query->whereDate('fecha_registro', '>=', $desde);
+        }
+
+        // Filtro por fecha (hasta)
+        if ($hasta = request('hasta')) {
+            $query->whereDate('fecha_registro', '<=', $hasta);
+        }
+
+        $registros = $query->orderBy('fecha_registro', 'desc')->paginate(20);
+
+        foreach ($registros as $registro) {
+            $registro['dato_modificado'] = Registro::obtener_modelo_registro($registro->id_entidad_modificada, $registro->entidad_modificada);
+        }
+
+        // Para los selects del filtro
+        $acciones = DB::table('acciones')->pluck('nombre_accion');
+        $entidades = Registro::distinct()
+            ->whereNotNull('entidad_modificada')
+            ->pluck('entidad_modificada');
+
+        return view('admin.administradores.index-historial', [
+            'admin'     => $administrador,
+            'registros' => $registros,
+            'acciones'  => $acciones,
+            'entidades' => $entidades,
+        ]);
     }
 }
