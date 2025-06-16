@@ -22,11 +22,19 @@
             </div>
             <div class="bg-gray-50 rounded-lg p-4 border-1">
                 <p class="text-gray-500 mb-1">Estado</p>
-                @if ($admin->activo)
-                    <p class="font-medium text-green-600">Activo</p>
-                @else
-                    <p class="font-medium text-red-600">Inactivo</p>
-                @endif
+                <span
+                    class="px-6 py-1 text-sm font-bold rounded-full
+                        {{ $admin->activo ? 'bg-green-200 text-green-800 border border-green-300' : 'bg-red-100 text-red-600 border border-red-300' }}">
+                    {{ $admin->activo ? 'Activo' : 'Inactivo' }}
+                </span>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 border-1">
+                <p class="text-gray-500 mb-1">Rol</p>
+                <span
+                    class="px-6 py-1 text-sm font-bold rounded-full
+                        {{ $admin->superadmin ? 'bg-amber-200 text-amber-800 border border-amber-300' : 'bg-gray-200 border border-gray-300' }}">
+                    {{ $admin->superadmin ? 'Super Admin' : 'Admin Común' }}
+                </span>
             </div>
         </div>
 

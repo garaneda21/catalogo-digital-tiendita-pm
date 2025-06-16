@@ -120,12 +120,17 @@ class AdministradoresController extends Controller
         return redirect('/admin/administradores');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Administrador $administrador)
+    public function disable(Administrador $administrador)
     {
-        //
+        if (request()->user('admin')->cannot('disable', Administrador::class)) { abort(403); }
+
+        if ($administrador->activo) {
+            $administrador->update(['activo' => false]);
+        } else {
+            $administrador->update(['activo' => true]);
+        }
+
+        return redirect('/admin/administradores');
     }
 
     public function edit_permisos(Administrador $administrador)

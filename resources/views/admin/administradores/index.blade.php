@@ -34,6 +34,7 @@
                             <th class="p-2 font-semibold tracking-wide text-left">Último Cambio</th>
                             <th class="p-2 font-semibold tracking-wide text-left">Creación</th>
                             <th class="p-2 font-semibold tracking-wide text-left">Activo</th>
+                            <th class="p-2 font-semibold tracking-wide text-left">Super Admin</th>
                             <th class="p-2 font-semibold tracking-wide text-right">Acciones Rápidas</th>
                         </tr>
                     </thead>
@@ -47,6 +48,7 @@
                                     {{ $admin->ultimo_cambio ?? 'No ha hecho cambios aún' }}</td>
                                 <td class="p-3 text-gray-700 whitespace-nowrap">{{ $admin->created_at }}</td>
                                 <td class="p-3 text-gray-700 whitespace-nowrap">{{ $admin->activo ? 'Si' : 'No' }}</td>
+                                <td class="p-3 text-gray-700 whitespace-nowrap">{{ $admin->superadmin ? 'Si' : 'No' }}</td>
                                 <td class="p-3 text-gray-700 whitespace-nowrap text-right space-x-2">
                                     <flux:button href="{{ route('administradores.show', $admin->id) }}" tooltip="Detalles"
                                         icon="list-bullet" class="text-blue-600!" />
@@ -55,8 +57,9 @@
                                         <flux:button href="{{ route('administradores.edit', $admin->id) }}"
                                             tooltip="Editar Datos" icon="pencil-square" class="text-blue-600!" />
                                     @endcan
-                                    @can('disable', App\Models\Administrador::class)
-                                        <flux:button tooltip="Desactivar Admin" icon="eye-slash" class="text-red-600!" />
+                                    @can('view', App\Models\Administrador::class)
+                                        <flux:button href="{{ route('administradores.historial', $admin->id) }}"
+                                            tooltip="Historial de Acciones" icon="clock" class="text-blue-600!" />
                                     @endcan
                                 </td>
                             </tr>
@@ -75,11 +78,16 @@
                                     {{ $admin->nombre_admin }}</h2>
                                 <p class="text-sm text-gray-500">{{ $admin->correo_admin }}</p>
                             </div>
+                        </div>
+
+                        <div class="space-x-2">
                             <span
-                                class="px-2 py-1 text-sm rounded-full
-                    {{ $admin->activo ? 'bg-green-200 text-green-800' : 'bg-red-100 text-red-600' }}">
+                                class="px-2 py-1 text-sm rounded-full {{ $admin->activo ? 'bg-green-200 text-green-800' : 'bg-red-100 text-red-600' }}">
                                 {{ $admin->activo ? 'Activo' : 'Inactivo' }}
                             </span>
+                            @if ($admin->superadmin)
+                                <span class="px-2 py-1 text-sm rounded-full bg-amber-200 text-amber-800">SuperAdmin </span>
+                            @endif
                         </div>
 
                         <div class="text-sm text-gray-600 space-y-1">
