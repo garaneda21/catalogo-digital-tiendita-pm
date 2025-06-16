@@ -120,15 +120,59 @@ class AdministradoresController extends Controller
         return redirect('/admin/administradores');
     }
 
+    public function delete(Administrador $administrador)
+    {
+        if ($administrador->superadmin) {
+            abort(403, 'No se puede eliminar a un Super Admin');
+        }
+        if (request()->user('admin')->cannot('delete', Administrador::class)) {
+            abort(403);
+        }
+
+        return view('admin.administradores.delete', ['admin' => $administrador]);
+    }
+
+    public function destroy(Administrador $administrador)
+    {
+        if ($administrador->superadmin) {
+            abort(403, 'No se puede eliminar a un Super Admin');
+        }
+        if (request()->user('admin')->cannot('delete', Administrador::class)) {
+            abort(403);
+        }
+
+        $nombre_admin = request('nombre_admin');
+
+        if (!$nombre_admin || $nombre_admin !== $administrador->nombre_admin) {
+            session()->flash('failure', 'El nombre ingresado no es exacto');
+            return redirect()->back();
+        }
+
+        Registro::registrar_accion($administrador, 'Elimina un admin');
+
+        $administrador->delete();
+
+        session()->flash('success', 'Administrador eliminado exitosamente!');
+
+        return redirect('/admin/administradores');
+    }
+
     public function disable(Administrador $administrador)
     {
-        if (request()->user('admin')->cannot('disable', Administrador::class)) { abort(403); }
+        if ($administrador->superadmin) {
+            abort(403, 'No se puede desactivar a un Super Admin');
+        }
+        if (request()->user('admin')->cannot('disable', Administrador::class)) {
+            abort(403);
+        }
 
         if ($administrador->activo) {
             $administrador->update(['activo' => false]);
         } else {
             $administrador->update(['activo' => true]);
         }
+
+        Registro::registrar_accion($administrador, 'Desactiva un admin');
 
         return redirect('/admin/administradores');
     }
@@ -155,6 +199,9 @@ class AdministradoresController extends Controller
 
     public function update_permisos(Administrador $administrador)
     {
+        if ($administrador->superadmin) {
+            abort(403, 'No se pueden editar los permisos de un SuperAdmin');
+        }
         if (request()->user('admin')->cannot('update_permisos', Administrador::class)) {
             abort(403);
         }

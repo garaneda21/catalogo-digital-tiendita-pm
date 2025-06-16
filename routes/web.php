@@ -41,6 +41,8 @@ Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin
         ->name('administradores.historial');
     Route::get('/administradores/{administrador}/disable', [AdministradoresController::class, 'disable'])
         ->name('administradores.disable');
+    Route::get('/administradores/{administrador}/delete', [AdministradoresController::class, 'delete'])
+        ->name('administradores.delete');
     Route::resource('/administradores', AdministradoresController::class)
         ->parameters(['administradores' => 'administrador']);
 

@@ -24,11 +24,16 @@
                 </flux:navlist.item>
                 <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/historial"
                     class="data-current:bg-gray-200! hover:underline!">Historial de Acciones</flux:navlist.item>
-
-                <flux:separator class="my-2" />
+                @if (!$admin->superadmin)
+                    <flux:navlist.item href="/admin/administradores/{{ $admin->id }}/delete"
+                        class="data-current:bg-gray-200! hover:underline!">Eliminar Admin</flux:navlist.item>
+                @endif
 
                 <!-- Botón y Modal para desactivar un admin -->
                 @if (!$admin->superadmin && Auth::user('admin')->can('disable', App\Models\Administrador::class))
+
+                    <flux:separator class="my-2" />
+
                     @if ($admin->activo)
                         <flux:modal.trigger name="disable-admin">
                             <flux:navlist.item class="text-red-500! hover:underline!">
