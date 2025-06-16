@@ -1,1 +1,1 @@
-<h3>Aqui ira el modulo de checkout xdd</h3>
+<h3>Aqui ira el modulo de checkout</h3>

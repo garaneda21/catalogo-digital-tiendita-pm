@@ -27,14 +27,14 @@ contenido @yield('contenido_catalogo') --}}
         <div id="carritoSidebar" class="fixed right-0 top-0 w-full max-w-md h-full bg-white shadow-lg z-50 transform translate-x-full transition duration-300 ease-in-out overflow-y-auto">
             <div class="p-4 border-b flex justify-between items-center">
                 <h2 class="text-lg font-semibold">Mi Carro (<span id="total-items">0</span> productos)</h2>
-                <button onclick="cerrarCarrito()" class="text-gray-600 hover:text-black">&times;</button>
+                <button onclick="cerrarCarrito()" class="text-gray-600 hover:text-black cursor-pointer">&times;</button>
             </div>
         
-            <div id="contenido-carrito" class="p-4 space-y-4">
+            <div id="contenido-carrito" class="p-4 space-y-4 overflow-y-auto" style="max-height: calc(100vh - 150px);">
                 {{-- Aquí se inyectan dinámicamente los productos con JS --}}
             </div>
         
-            <div class="p-4 border-t text-sm space-y-1">
+            <div class="p-4 border-t text-sm space-y-1 fixed bottom-0 w-full bg-white">
                 <p>Subtotal: <strong id="subtotal" class="float-right">$0</strong></p>
                 <p><a href="{{ route('carrito.index') }}" class="text-blue-600 hover:underline">Ir al carrito de compras</a></p>
                 <a href="{{ route('checkout') }}" class="block text-center bg-red-600 text-white py-2 rounded mt-2 hover:bg-red-700 transition">
@@ -113,7 +113,8 @@ contenido @yield('contenido_catalogo') --}}
         
             contenedor.innerHTML += `
                 <div class="flex gap-4 border-b pb-4">
-                    <img src="${item.producto.imagen_url}" alt="${item.producto.nombre_producto}" class="w-20 h-20 object-cover">
+                    <!-- Aquí puedes usar una imagen del producto -->
+                    <img src="/images/placeholder-product.jpg" alt="${item.producto.nombre_producto}" class="w-20 h-20 object-cover">
                     <div class="flex-1">
                         <h4 class="font-semibold">${item.producto.nombre_producto}</h4>
                         <p class="text-sm text-gray-600">Precio: $${item.precio_unitario.toLocaleString()}</p>

@@ -16,8 +16,25 @@ class CarritoController extends Controller
     public function index()
     {
         $carrito = $this->obtenerOCrearCarrito();
-        return view('carrito.index', compact('carrito'));
+        $total = $carrito->items->sum(fn($item) => $item->precio_unitario * $item->cantidad);
+
+        $descuentoTotal = $carrito->items->sum(function ($item) {
+            return $item->producto->precio_normal
+                ? ($item->producto->precio_normal - $item->precio_unitario) * $item->cantidad
+                : 0;
+        });
+
+        $totalConCencoPay = $total - $descuentoTotal;
+        $totalConCencosud = $totalConCencoPay - 50000; // ejemplo de descuento
+        $totalConOtros = $totalConCencoPay;
+
+        return view('carrito.index', compact(
+            'carrito',
+            'total',
+            'descuentoTotal',
+        ));
     }
+
 
     /**
      * Agrega un producto al carrito
