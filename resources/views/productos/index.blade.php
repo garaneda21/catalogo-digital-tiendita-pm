@@ -29,19 +29,25 @@
         <div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4 xl:gap-x-8">
 
             @foreach ($productos as $producto)
-                <a href="/productos/{{ $producto->id }}" class="group text-center">
-                    <img src="{{ $producto->imagen_url ? asset('storage/'.$producto->imagen_url) : '/images/placeholder-product.jpg' }}"
-                        alt="{{ $producto->nombre_producto }}"
-                        class="rounded-2xl border aspect-square w-full object-cover group-hover:opacity-75">
-                    <div class="p-2">
-                        <h2 class="text-lg font-semibold text-[#3D3C63]">
-                            {{ $producto->nombre_producto }}
-                        </h2>
-                        <p class="text-md text-gray-500 mt-1">{{ $producto->categoria->nombre_categoria ?? '' }}</p>
-                        <p class="text-xl font-bold text-[#587A6C] mt-2">
-                            ${{ number_format($producto->precio, 0, ',', '.') }}</p>
-                    </div>
-                </a>
+                <div class="group relative flex flex-col items-center justify-between bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
+                    <a href="/productos/{{ $producto->id }}" class="group text-center">
+                        <img src="{{ $producto->imagen_url ? asset('storage/'.$producto->imagen_url) : '/images/placeholder-product.jpg' }}"
+                            alt="{{ $producto->nombre_producto }}"
+                            class="rounded-2xl border aspect-square w-full object-cover group-hover:opacity-75">
+                        <div class="p-2">
+                            <h2 class="text-lg font-semibold text-[#3D3C63]">
+                                {{ $producto->nombre_producto }}
+                            </h2>
+                            <p class="text-md text-gray-500 mt-1">{{ $producto->categoria->nombre_categoria ?? '' }}</p>
+                            <p class="text-xl font-bold text-[#587A6C] mt-2">
+                                ${{ number_format($producto->precio, 0, ',', '.') }}</p>
+                        </div>
+                    </a>
+                    <!-- Botón carrito -->
+                    <button onclick="agregarAlCarrito({{ $producto->id }})" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                        Agregar al carrito
+                    </button>
+                </div>
             @endforeach
         </div>
     </div>
