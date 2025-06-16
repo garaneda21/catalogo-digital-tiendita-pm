@@ -36,35 +36,36 @@ class Registro extends Model
         return $this->belongsTo(User::class);
     }
 
-
     /**
      * Registra la acción realizada por el usuario en la base de datos.
      * - modelo: datos entrantes de la tabla que se está modificando
-     * - nombre_modelo: nombre de la tabla (string)
-     * - id_acción: revisar tabla de acciones para ver disponibles (id int)
+     * - nombre_acción: nombre de la acción a realizar, si no existe, se crea una nueva acción
      */
-    public static function registrar_accion($modelo, string|null $nombre_modelo, int $id_accion)
+    public static function registrar_accion(Model|null $modelo, string $nombre_accion)
     {
         $admin = Auth::guard('admin')->user();
         $user = Auth::guard('web')->user();
 
+        // Buscar o crear la acción
+        $accion = Accion::firstOrCreate(['nombre_accion' => $nombre_accion]);
+
         // registrar acción del admin
         Registro::create([
             'id_entidad_modificada' => $modelo->id ?? null,
-            'entidad_modificada'    => $nombre_modelo,
+            'entidad_modificada'    => $modelo?->getTable(),
             'fecha_registro'        => now(),
-            'accion_id'             => $id_accion,
+            'accion_id'             => $accion->id,
             'administrador_id'      => $admin?->id,
             'user_id'               => $user?->id,
         ]);
     }
 
-    public static function obtener_modelo_registro(int|null $id_modelo, string|null $nombre_modelo)
+    public static function obtener_modelo_registro(?int $id_modelo, ?string $nombre_modelo)
     {
         $mapa_modelos = [
-            'productos' => Producto::class,
-            'admins'    => Administrador::class,
-            'users'    => User::class,
+            'productos'  => Producto::class,
+            'admins'     => Administrador::class,
+            'users'      => User::class,
             'categorias' => Categoria::class,
             // agrega más entidades aquí si las necesitas
         ];
@@ -73,7 +74,7 @@ class Registro extends Model
             $modelo = $mapa_modelos[$nombre_modelo];
             $dato_modificado = $modelo::find($id_modelo);
 
-            if (!$dato_modificado) {
+            if (! $dato_modificado) {
                 return response()->json(['error' => 'Registro no encontrado'], 404);
             }
 

@@ -13,7 +13,7 @@ class LogoutAdmin
      */
     public function __invoke()
     {
-        Registro::registrar_accion(null, null, 2);
+        Registro::registrar_accion(null, 'Cierra sesión');
 
         Auth::guard('admin')->logout();
 
