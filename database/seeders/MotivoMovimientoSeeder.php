@@ -21,6 +21,15 @@ class MotivoMovimientoSeeder extends Seeder
                 'nombre_motivo' => 'Compra proveedor',
                 'tipo_movimiento_id' => 2
             ],
+            [
+                'nombre_motivo' => 'Devolución de cliente',
+                'tipo_movimiento_id' => 2
+            ],
+            [
+                'nombre_motivo' => 'Ingreso general',
+                'tipo_movimiento_id' => 2
+            ],
+            
             // ...
         ];
 
