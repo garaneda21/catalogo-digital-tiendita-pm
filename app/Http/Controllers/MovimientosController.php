@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MotivoMovimiento;
 use App\Models\Movimiento;
 use App\Models\Producto;
+use App\Models\Registro;
 use Illuminate\Http\Request;
 
 class MovimientosController extends Controller
@@ -44,6 +45,8 @@ class MovimientosController extends Controller
         ]);
 
         $producto->update(['stock_actual' => $producto->stock_actual - $cantidad]);
+
+        Registro::registrar_accion($producto, 'Vende un producto');
 
         return redirect('/admin/productos/');
     }

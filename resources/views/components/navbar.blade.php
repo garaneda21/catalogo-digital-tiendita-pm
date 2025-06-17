@@ -72,6 +72,32 @@
                     </nav>
                 </div>
             @endif
+
+            <!-- Linea separadora -->
+            <div class="h-5 w-[1px] bg-[#D9CBB6] mx-1"></div>
+
+            <!-- Icono del carrito con cantidad de productos -->
+
+            @php
+                use App\Models\Carrito;
+                        
+                $carrito = Auth::guard('web')->check()
+                    ? Carrito::where('user_id', Auth::guard('web')->id())->first()
+                    : Carrito::where('token', session()->getId())->first();
+                $total = $carrito ? $carrito->items->sum('cantidad') : 0;
+            @endphp
+                        
+            <a href="{{ route('carrito.index') }}" class="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                </svg>
+                @if ($total >= 0)
+                    <span class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                        {{ $total }}
+                    </span>
+                @endif
+            </a>
+
         </div>
     </div>
 

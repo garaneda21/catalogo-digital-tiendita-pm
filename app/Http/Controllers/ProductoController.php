@@ -14,7 +14,7 @@ class ProductoController extends Controller
 {
     public function index(Request $request)
     {
-        if (request()->user('admin')->cannot('create', Producto::class)) {
+        if (request()->user('admin')->cannot('viewAny', Producto::class)) {
             return view('admin.productos.index'); // salir sin enviar datos
         }
 
@@ -72,9 +72,9 @@ class ProductoController extends Controller
         ]);
 
         // registrar acción del admin
-        Registro::registrar_accion($producto, 'productos', 3);
+        Registro::registrar_accion($producto, 'Crea nuevo producto');
 
-        session()->flash('success_create', '¡Producto creado exitosamente!');
+        session()->flash('success', '¡Producto creado exitosamente!');
 
         return redirect('/admin/productos/');
     }
@@ -120,7 +120,7 @@ class ProductoController extends Controller
         if ($request->imagen) {
             $imagen_url = $request->imagen->store('images/productos');
 
-            if (Storage::exists($producto->imagen_url))
+            if ($producto->imagen_url && Storage::exists($producto->imagen_url))
                 Storage::delete($producto->imagen_url);
         }
 
@@ -133,9 +133,9 @@ class ProductoController extends Controller
             'imagen_url'      => $imagen_url ?? $producto->imagen_url,
         ]);
 
-        Registro::registrar_accion($producto, 'productos', 4);
+        Registro::registrar_accion($producto, 'Edita un producto');
 
-        session()->flash('success_update', '¡Producto actualizado exitosamente!');
+        session()->flash('success', '¡Producto actualizado exitosamente!');
 
         return redirect()->route('productos.index');
     }
@@ -149,7 +149,9 @@ class ProductoController extends Controller
 
         $producto->delete();
 
-        session()->flash('success_delete', '¡Producto eliminado exitosamente!');
+        Registro::registrar_accion($producto, 'Elimina un producto');
+
+        session()->flash('success', '¡Producto eliminado exitosamente!');
 
         return redirect()->route('productos.index');
     }

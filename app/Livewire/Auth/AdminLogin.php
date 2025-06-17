@@ -41,7 +41,7 @@ class AdminLogin extends Component
         Session::regenerate();
 
         // registrar login del usuario
-        Registro::registrar_accion(null, null, 1);
+        Registro::registrar_accion(null, 'Inicia sesión');
 
         $this->redirectIntended(default: route('login-admin', absolute: false), navigate: false);
     }

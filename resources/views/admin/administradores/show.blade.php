@@ -22,15 +22,41 @@
             </div>
             <div class="bg-gray-50 rounded-lg p-4 border-1">
                 <p class="text-gray-500 mb-1">Estado</p>
-                @if ($admin->activo)
-                    <p class="font-medium text-green-600">Activo</p>
-                @else
-                    <p class="font-medium text-red-600">Inactivo</p>
-                @endif
+                <span
+                    class="px-6 py-1 text-sm font-bold rounded-full
+                        {{ $admin->activo ? 'bg-green-200 text-green-800 border border-green-300' : 'bg-red-100 text-red-600 border border-red-300' }}">
+                    {{ $admin->activo ? 'Activo' : 'Inactivo' }}
+                </span>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4 border-1">
+                <p class="text-gray-500 mb-1">Rol</p>
+                <span
+                    class="px-6 py-1 text-sm font-bold rounded-full
+                        {{ $admin->superadmin ? 'bg-amber-200 text-amber-800 border border-amber-300' : 'bg-gray-200 border border-gray-300' }}">
+                    {{ $admin->superadmin ? 'Super Admin' : 'Admin Común' }}
+                </span>
             </div>
         </div>
 
         <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Permisos Actuales</h2>
+
+        <div class="mb-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+            @foreach ($permisos_actuales as $categoria => $permisos)
+                <div class="bg-white border rounded-xl overflow-hidden">
+                    <div class="bg-gray-100 px-4 py-2 font-semibold text-azul-profundo text-sm border-b">
+                        {{ $categoria }}
+                    </div>
+                    <div class="flex flex-wrap gap-2 px-4 py-3">
+                        @foreach ($permisos as $permiso)
+                            <span
+                                class="inline-block text-xs bg-verde-oliva/10 text-verde-oliva font-medium px-3 py-1 rounded-full">
+                                {{ $permiso->nombre_permiso }}
+                            </span>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
         <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Ultimas acciones</h2>
 
