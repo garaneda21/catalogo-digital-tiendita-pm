@@ -87,6 +87,11 @@
                         </div>
                     </div>
 
+                    <flux:button href="/admin/movimientos/entrada/{{ $producto->id }}/create-stock"
+                        icon="plus-circle" class="text-blue-700!">
+                        Ingreso Stock
+                    </flux:button>
+
                     <flux:button href="/admin/movimientos/salida/{{ $producto->id }}/create-venta"
                         icon="banknotes" class="text-green-700!">
                         Venta Rápida
