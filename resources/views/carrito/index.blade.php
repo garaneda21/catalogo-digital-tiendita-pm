@@ -15,11 +15,11 @@
                             <p class="text-xs text-gray-400">SKU {{ $item->producto->descripcion }}</p>
 
                             <div class="mt-3 flex items-center gap-2">
-                                <form action="{{ route('carrito.actualizar', $item->id) }}" method="POST" class="border rounded p-1 text-sm">
-                                    @csrf
-                                    <input type="number" name="cantidad" value="{{ $item->cantidad }}" min="1" class="w-16 p-1 border rounded">
-                                    <button class="text-blue-500">Actualizar</button>
-                                </form>
+                                <div class="flex items-center mt-2 gap-2">
+                                    <button onclick="actualizarCantidad({{ $item->id }}, -1)" class="bg-gray-300 px-2">-</button>
+                                    <span>{{ $item->cantidad }}</span>
+                                    <button onclick="actualizarCantidad({{ $item->id }}, 1)" class="bg-gray-300 px-2">+</button>
+                                </div>
 
                                 <form action="{{ route('carrito.eliminar', $item->id) }}" method="POST" onsubmit="return confirm('¿Eliminar producto?')">
                                     @csrf

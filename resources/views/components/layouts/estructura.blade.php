@@ -93,11 +93,25 @@ contenido @yield('contenido_catalogo') --}}
             },
             body: JSON.stringify({ cantidad: 1 })
         })
-        .then(response => response.json())
+        .then(response => {
+            // Si la respuesta no es exitosa, lanzar error para ser atrapado en catch
+            if (!response.ok) {
+                return response.json().then(err => { throw err });
+            }
+            return response.json();
+        })
         .then(data => {
             actualizarCarritoSidebar(data.carrito);
             abrirCarrito();
-        });
+        })
+        .catch(error => {
+            if (error?.stock_disponible !== undefined) {
+                alert(`No puedes agregar más unidades. Stock disponible: ${error.stock_disponible}.`);
+            } else {
+                alert('Ocurrió un error al agregar el producto al carrito.');
+                console.error(error);
+            }
+        }); 
     }
     
     function actualizarCarritoSidebar(carrito) {
@@ -136,11 +150,29 @@ contenido @yield('contenido_catalogo') --}}
     function actualizarCantidad(itemId, delta) {
         fetch(`/api/carrito/actualizar/${itemId}`, {
             method: 'PUT',
-            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Content-Type': 'application/json' },
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({ delta })
         })
-        .then(response => response.json())
-        .then(data => actualizarCarritoSidebar(data.carrito));
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err });
+            }
+            return response.json();
+        })
+        .then(data => {
+            actualizarCarritoSidebar(data.carrito);
+        })
+        .catch(error => {
+            if (error?.stock_disponible !== undefined) {
+                alert(`No puedes agregar más unidades. Stock disponible: ${error.stock_disponible}.`);
+            } else {
+                alert('Ocurrió un error al actualizar la cantidad.');
+                console.error(error);
+            }
+        });
     }
     
     function eliminarItem(itemId) {
