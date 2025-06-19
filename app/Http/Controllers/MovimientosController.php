@@ -50,4 +50,36 @@ class MovimientosController extends Controller
 
         return redirect('/admin/productos/');
     }
+
+    public function create_stock(Producto $producto)
+    {
+        $motivos = MotivoMovimiento::all()->where('tipo_movimiento_id', 2);
+
+        return view('admin.movimientos.create-stock', compact('producto', 'motivos'));
+    }
+
+    public function store_stock(Request $request, Producto $producto)
+    {
+        $data = $request->validate([
+            'cantidad' => ['required', 'integer', 'gt:0'],
+            'motivo'   => ['required'],
+        ]);
+
+        $cantidad = (int) str_replace('.', '', $request->input('cantidad'));
+
+        if ($cantidad <= 0) {
+            return back()->withErrors(['cantidad' => 'La cantidad debe ser mayor a cero'])->withInput();
+        }
+
+        Movimiento::create([
+            'cantidad' => $cantidad,
+            'producto_id' => $producto->id,
+            'tipo_movimiento_id' => 2,                  // 2 -> entrada
+            'motivo_movimiento_id'   => $data['motivo'],
+        ]);
+
+        $producto->increment('stock_actual', $data['cantidad']);
+
+        return redirect('/admin/productos/')->with('success', 'Movimiento registrado correctamente.');
+    }
 }

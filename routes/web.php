@@ -56,6 +56,8 @@ Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin
     Route::get('/movimientos/salida/{producto}/create-venta', [MovimientosController::class, 'create_venta']);
     Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
 
+    Route::get('/movimientos/entrada/{producto}/create-stock', [MovimientosController::class, 'create_stock']);
+    Route::post('/movimientos/entrada/{producto}', [MovimientosController::class, 'store_stock']);
 });
 
 // Rutas de carrito de compras, parece que estas no se usaran xddd
