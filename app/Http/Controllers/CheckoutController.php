@@ -15,8 +15,33 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        //$carrito = $this->obtenerOCrearCarrito();
-        return view('checkout.index');
+        $carrito = Carrito::with('items.producto')
+            ->where(function ($query) {
+                $query->when(Auth::check(), fn($q) => $q->where('user_id', Auth::id()))
+                      ->when(!Auth::check(), fn($q) => $q->where('token', session()->getId()));
+            })
+            ->first();
+
+        if (!$carrito || $carrito->items->isEmpty()) {
+            return redirect()->route('carrito.index')->with('error', 'El carrito está vacío.');
+        }
+
+        $totalSinDescuento = $carrito->items->sum(function ($item) {
+            return $item->producto->precio * $item->cantidad;
+        });
+        $totalConDescuento = $carrito->items->sum(function ($item) {
+            $producto = $item->producto;
+            $descuento = $producto->descuento ? ($producto->precio * $producto->descuento / 100) : 0;
+            return ($producto->precio - $descuento) * $item->cantidad;
+        });
+        $descuentoTotal = $totalSinDescuento - $totalConDescuento;
+
+        return view('checkout.index', [
+            'carrito' => $carrito,
+            'totalSinDescuento' => $totalSinDescuento,
+            'totalConDescuento' => $totalConDescuento,
+            'descuentoTotal' => $descuentoTotal,
+        ]);
     }
 
     /**
