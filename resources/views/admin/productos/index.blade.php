@@ -31,7 +31,7 @@
                 {{ $productos->links() }}
             </div>
 
-            <div class="overflow-auto rounded-lg border">
+            <div class="hidden md:block overflow-auto rounded-lg border">
                 <table class="min-w-full border-separate border-spacing-0 text-sm">
                     <thead class="bg-gray-200 text-azul-profundo">
                         <tr>
@@ -48,14 +48,15 @@
                         @foreach ($productos as $producto)
                             <tr class="odd:bg-white even:bg-gray-100"">
                                 <td class="px-4 py-2">
-                                    <div class="w-15 h-15 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                                    <div class="w-15 h-15 bg-gray-100 border rounded-lg overflow-hidden flex-shrink-0">
                                         <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
                                             alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
                                     </div>
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->nombre_producto }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap">{{ $producto->categoria->nombre_categoria }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap">{{ '$' . number_format($producto->precio, 0, ',', '.') }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                    {{ '$' . number_format($producto->precio, 0, ',', '.') }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->stock_actual }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap">
                                     @if ($producto->stock_actual >= 6)
@@ -87,6 +88,59 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Lista productos versión movil -->
+            <div class="flex md:hidden flex-col gap-2">
+                @foreach ($productos as $producto)
+                    <div class="w-full bg-gray-50 border rounded-xl p-4 flex-shrink-0">
+                        <div class="flex items-start space-x-4 mb-2">
+                            <!-- Imagen -->
+                            <img class="w-16 h-16 object-cover rounded-md shrink-0"
+                                src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
+                                alt="Imagen de {{ $producto->nombre_producto }}">
+
+                            <!-- Contenido textual -->
+                            <div class="min-w-0">
+                                <h3 class="font-sans! font-semibold text-[#3D3C63] truncate">
+                                    {{ $producto->nombre_producto }}
+                                </h3>
+                                <div class="text-sm text-gray-500">Categoría: {{ $producto->categoria->nombre_categoria }}
+                                </div>
+                                <div class="text-sm text-gray-500 mb-1">
+                                    Stock actual: {{ $producto->stock_actual }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            @if ($producto->stock_actual >= 6)
+                                <flux:badge variant="pill" color="zinc">Normal</flux:badge>
+                            @elseif ($producto->stock_actual > 0)
+                                <flux:badge variant="pill" color="yellow">Bajo</flux:badge>
+                            @else
+                                <flux:badge variant="pill" color="red">Agotado</flux:badge>
+                            @endif
+                            <div class="text-right">
+                                <flux:button href="/admin/movimientos/entrada/{{ $producto->id }}/create-stock"
+                                    icon="plus-circle" class="text-amber-700!" tooltip="Ingresar Stock" />
+
+                                <flux:button href="/admin/movimientos/salida/{{ $producto->id }}/create-venta"
+                                    icon="banknotes" class="text-green-700!" tooltip="Venta rápida" />
+
+                                @can('view', App\Models\Producto::class)
+                                    <flux:button href="{{ route('productos.edit', $producto->id) }}" icon="list-bullet"
+                                        class="text-blue-700!" tooltip="Ver detalles" />
+                                @endcan
+
+                                @can('update', App\Models\Producto::class)
+                                    <flux:button href="{{ route('productos.edit', $producto->id) }}" icon="pencil-square"
+                                        class="text-blue-700!" tooltip="Editar Datos" />
+                                @endcan
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     @else
