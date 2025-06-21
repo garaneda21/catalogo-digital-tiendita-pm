@@ -23,6 +23,18 @@
                 @endforeach
             </div>
 
+            @guest
+                <div class="bg-[#fef9c3] border border-yellow-300 rounded-lg p-4 text-sm text-gray-800">
+                    <p class="fonr-semibold">¿Ya tienes una cuenta?</p>
+                    <p class="mt-1">Te recomendamos iniciar sesión o registrarte.</p>
+                    <div class="mt-3 flex gap-2">
+                        <a href="{{ route('login') }}" class="text-blue-600 hover:underline font-medium">Iniciar sesión</a>
+                        <span>|</span>
+                        <a href="{{ route('register') }}" class="text-green-600 hover:underline font-medium">Crear cuenta</a>
+                    </div>
+                </div>
+            @endguest
+
             {{-- Confirmacion y pago --}}
             <div class="bg-white p-4 rounded-lg shadow space-y-4 h-fit">
                 <h2 class="text-lg font-bold">Resumen del pago</h2>
@@ -46,6 +58,15 @@
                     </div>
                 </div>
 
+                <div class="text-sm text-gray-500 border-t pt-2">
+                    <p class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l1.6 8M17 13l-1.6 8M9 21h6" />
+                        </svg>
+                        El costo de envío se calculará en el siguiente paso
+                    </p>
+                </div>
+
                 <form method="POST" action="{{ route('webpay.iniciar') }}">
                     @csrf
                     <button type="submit"
@@ -57,6 +78,7 @@
                 <p class="text-sm text-gray-500 border-t pt-2">
                     Serás redirigido a Webpay para completar tu compra. Asegúrate de que la información de tu carrito es correcta antes de proceder.
                 </p>
+                
             </div>
         </div>
     </div>

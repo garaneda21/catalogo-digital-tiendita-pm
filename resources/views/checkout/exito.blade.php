@@ -13,9 +13,10 @@
             </div>
 
             <div class="text-left bg-[#fcf6ed] p-6 rounded-xl">
-                <p class="text-sm text-gray-500 mb-1">Número de pedido</p>
-                <p class="text-[#3D3C63] font-semibold mb-4">{{ $response->getBuyOrder() }}</p>
-
+                <div class="text-center">
+                    <p class="text-sm text-gray-500 mb-1">Número de pedido:</p>
+                    <p class="text-[#3D3C63] font-semibold mb-6">{{ $response->getBuyOrder() }}</p>
+                </div>
                 <div class="grid grid-cols-2 gap-4 text-sm text-gray-700">
                     <div>
                         <p class="font-semibold text-[#D88C4B]">Fecha</p>
