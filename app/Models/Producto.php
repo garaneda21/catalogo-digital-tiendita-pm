@@ -66,6 +66,6 @@ class Producto extends Model
         }
 
         // Paginación con parámetros persistentes
-        return $query->paginate(10)->appends($request->only(['search', 'ordering']));
+        return $query->paginate(20)->appends($request->only(['search', 'ordering']));
     }
 }
