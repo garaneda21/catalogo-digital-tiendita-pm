@@ -57,7 +57,7 @@
                 <div class="flex justify-between items-center">
                     <span
                         class="text-sm font-bold bg-verde-oliva/10 text-verde-oliva px-2 py-1 rounded-full whitespace-nowrap">
-                        {{ $top_producto->producto->total }} vendidas
+                        {{ $top_producto->total }} vendidas
                     </span>
                     <a href="/admin/productos/{{ $top_producto->producto->id }}" class="text-sm text-melocoton hover:underline">Ver detalles</a>
                 </div>
