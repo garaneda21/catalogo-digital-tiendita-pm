@@ -54,6 +54,12 @@ class Producto extends Model
             case 'precio_desc':
                 $query->orderBy('precio', 'desc');
                 break;
+            case 'stock_asc':
+                $query->orderBy('stock_actual', 'asc');
+                break;
+            case 'stock_desc':
+                $query->orderBy('stock_actual', 'desc');
+                break;
             default:
                 $query->orderBy('created_at', 'desc');
                 break;

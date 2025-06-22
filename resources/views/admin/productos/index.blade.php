@@ -25,7 +25,52 @@
                 <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success') }}" />
             @endif
 
-            <x-ordenamiento-y-busqueda></x-ordenamiento-y-busqueda>
+            <form method="GET">
+                <div class="mb-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
+                    <flux:input label="Buscar Producto" name="search" value="{{ request('search') }}"
+                        icon="magnifying-glass" placeholder="Buscar por nombre..." />
+
+                    {{-- Selector de ordenamiento --}}
+                    <flux:select name="ordering" id="ordering" onchange="this.form.submit()" label="Ordenar por">
+                        <option value="">-- Seleccionar --</option>
+                        <option value="recientes" @selected(request('ordering') == 'recientes')>Añadidos Recientemente</option>
+                        <option value="nombre_asc" @selected(request('ordering') == 'nombre_asc')>Nombre (A-Z)</option>
+                        <option value="nombre_desc" @selected(request('ordering') == 'nombre_desc')>Nombre (Z-A)</option>
+                        <option value="precio_asc" @selected(request('ordering') == 'precio_asc')>Precio (menor a mayor)</option>
+                        <option value="precio_desc" @selected(request('ordering') == 'precio:desc')>Precio (mayor a menor)</option>
+                        <option value="stock_asc" @selected(request('ordering') == 'stock_asc')>Stock (menor a mayor)</option>
+                        <option value="stock_desc" @selected(request('ordering') == 'stock_desc')>Stock (mayor a menor)</option>
+                    </flux:select>
+
+                    <flux:select name="categoria" onchange="this.form.submit()" label="Categorías">
+                        <option value="">Todas las categorías</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}" @selected(request('categoria') == $categoria->id)>
+                                {{ $categoria->nombre_categoria }}
+                            </option>
+                        @endforeach
+                    </flux:select>
+
+                    <flux:select name="estado_stock" onchange="this.form.submit()" label="Estado Stock">
+                        <option value="">Todo el stock</option>
+                        <option value="agotado" @selected(request('estado_stock') == 'agotado')>Agotado</option>
+                        <option value="bajo" @selected(request('estado_stock') == 'bajo')>Stock Bajo (1-5)</option>
+                        <option value="normal" @selected(request('estado_stock') == 'normal')>Stock Normal (&gt; 5)</option>
+                    </flux:select>
+
+                    <flux:select name="activo" onchange="this.form.submit()" label="Productos Activos">
+                        <option value="">Todos los estados</option>
+                        <option value="1" @selected(request('activo') === '1')>Activos</option>
+                        <option value="0" @selected(request('activo') === '0')>Inactivos</option>
+                    </flux:select>
+                </div>
+
+                <div class="space-x-2 flex items-center">
+                    <flux:button icon="funnel" type="submit" class="bg-verde-oliva!" variant="primary">Filtrar
+                    </flux:button>
+                    <flux:button href="{{ route('productos.index') }}">Limpiar</flux:button>
+                </div>
+            </form>
 
             <div class="mb-4">
                 {{ $productos->links() }}
@@ -51,7 +96,8 @@
                                 <td class="px-4 py-1">
                                     <div class="w-15 h-15 bg-gray-100 border rounded-lg overflow-hidden flex-shrink-0">
                                         <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
-                                            alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover {{ $producto->activo ? '' : 'grayscale-75' }}">
+                                            alt="{{ $producto->nombre_producto }}"
+                                            class="w-full h-full object-cover {{ $producto->activo ? '' : 'grayscale-75' }}">
                                     </div>
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->nombre_producto }}</td>

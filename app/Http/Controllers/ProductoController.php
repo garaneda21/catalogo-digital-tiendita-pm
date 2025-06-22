@@ -20,12 +20,30 @@ class ProductoController extends Controller
             return view('admin.productos.index'); // salir sin enviar datos
         }
 
-        $query = Producto::with('categoria');
+        $query = Producto::query()->with('categoria');
+
+        // Filtro por categoría
+        if ($categoria_id = request('categoria')) {
+            $query->where('categoria_id', $categoria_id);
+        }
+
+        // Filtro por estado de stock
+        if ($estado = request('estado_stock')) {
+            $query->when($estado === 'agotado', fn ($q) => $q->where('stock_actual', 0))
+                ->when($estado === 'bajo', fn ($q) => $q->whereBetween('stock_actual', [1, 5]))
+                ->when($estado === 'normal', fn ($q) => $q->where('stock_actual', '>', 5));
+        }
+
+        // Filtro por estado activo/inactivo
+        if (! is_null(request('activo'))) {
+            $query->where('activo', request('activo') === '1');
+        }
 
         // realiza búsqueda y retorna datos paginados
         $productos = Producto::busqueda($request, $query);
+        $categorias = Categoria::all();
 
-        return view('admin.productos.index', compact('productos'));
+        return view('admin.productos.index', compact('productos', 'categorias'));
     }
 
     public function create()
