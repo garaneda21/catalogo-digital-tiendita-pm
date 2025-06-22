@@ -4,7 +4,7 @@
         @method('PUT')
 
         @if (session('success'))
-            <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success_update') }}" />
+            <x-mensaje-accion icon="check-circle" variant="success" heading="{{ session('success') }}" />
         @endif
         @if (session('warning'))
             <x-mensaje-accion icon="exclamation-triangle" variant="warning" heading="{{ session('warning') }}" />

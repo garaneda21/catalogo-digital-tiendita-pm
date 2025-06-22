@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\MotivoMovimiento;
+use App\Models\Movimiento;
 use App\Models\Producto;
 use App\Models\Registro;
+use App\Models\TipoMovimiento;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +30,9 @@ class ProductoController extends Controller
 
     public function create()
     {
-        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
+        if (request()->user('admin')->cannot('create', Producto::class)) {
+            abort(403);
+        }
 
         $categorias = Categoria::all();
 
@@ -40,7 +44,9 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
 
-        if (request()->user('admin')->cannot('create', Producto::class)) { abort(403); }
+        if (request()->user('admin')->cannot('create', Producto::class)) {
+            abort(403);
+        }
 
         $request->validate([
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],
@@ -59,8 +65,9 @@ class ProductoController extends Controller
         $stock = (int) str_replace('.', '', $request->input('stock_actual'));
 
         // para la imágen
-        if ($request->imagen)
+        if ($request->imagen) {
             $imagen_url = $request->imagen->store('images/productos');
+        }
 
         $producto = Producto::create([
             'nombre_producto' => request('nombre_producto'),
@@ -79,14 +86,69 @@ class ProductoController extends Controller
         return redirect('/admin/productos/');
     }
 
-    public function show() {}
+    public function show(Producto $producto)
+    {
+        $tipos = TipoMovimiento::all();
+        $motivos = MotivoMovimiento::all();
+
+        // Validamos los filtros
+        request()->validate([
+            'tipo'    => 'nullable|integer|exists:tipo_movimientos,id',
+            'motivo'  => 'nullable|integer|exists:motivo_movimientos,id',
+            'ordenar' => 'nullable|in:fecha_asc,fecha_desc,cantidad_asc,cantidad_desc',
+        ]);
+
+        $movimientos = Movimiento::query()
+            ->with('producto')
+            ->where('producto_id', $producto->id);
+
+        // Aplicar filtro por tipo
+        if ($tipo_id = request('tipo')) {
+            $movimientos->where('tipo_movimiento_id', $tipo_id);
+        }
+
+        // Aplicar filtro por motivo
+        if ($motivo_id = request('motivo')) {
+            $movimientos->where('motivo_movimiento_id', $motivo_id);
+        }
+
+        // Ordenar por cantidad o fecha
+        switch (request('ordenar')) {
+            case 'fecha_asc':
+                $movimientos->orderBy('created_at', 'asc');
+                break;
+            case 'fecha_desc':
+                $movimientos->orderBy('created_at', 'desc');
+                break;
+            case 'cantidad_asc':
+                $movimientos->orderBy('cantidad', 'asc');
+                break;
+            case 'cantidad_desc':
+                $movimientos->orderBy('cantidad', 'desc');
+                break;
+            default:
+                $movimientos->orderBy('created_at', 'desc');
+                break;
+        }
+
+        $movimientos = $movimientos->paginate(20);
+
+        return view('admin.productos.show', compact(
+            'producto',
+            'movimientos',
+            'tipos',
+            'motivos',
+        ));
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Producto $producto)
     {
-        if (request()->user('admin')->cannot('update', Producto::class)) { abort(403); }
+        if (request()->user('admin')->cannot('update', Producto::class)) {
+            abort(403);
+        }
 
         $categorias = Categoria::all();
 
@@ -98,7 +160,9 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        if (request()->user('admin')->cannot('update', Producto::class)) { abort(403); }
+        if (request()->user('admin')->cannot('update', Producto::class)) {
+            abort(403);
+        }
 
         $request->validate([
             'nombre_producto' => ['required', 'max:250', Rule::unique('productos')->ignore($producto->id)],
@@ -120,8 +184,9 @@ class ProductoController extends Controller
         if ($request->imagen) {
             $imagen_url = $request->imagen->store('images/productos');
 
-            if ($producto->imagen_url && Storage::exists($producto->imagen_url))
+            if ($producto->imagen_url && Storage::exists($producto->imagen_url)) {
                 Storage::delete($producto->imagen_url);
+            }
         }
 
         $producto->update([
@@ -137,7 +202,7 @@ class ProductoController extends Controller
 
         session()->flash('success', '¡Producto actualizado exitosamente!');
 
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.show', $producto);
     }
 
     /**
@@ -145,7 +210,9 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        if (request()->user('admin')->cannot('delete', Producto::class)) { abort(403); }
+        if (request()->user('admin')->cannot('delete', Producto::class)) {
+            abort(403);
+        }
 
         $producto->delete();
 

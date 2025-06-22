@@ -47,7 +47,7 @@
                     <tbody class="bg-white text-[#3D3C63]">
                         @foreach ($productos as $producto)
                             <tr class="odd:bg-white even:bg-gray-100"">
-                                <td class="px-4 py-2">
+                                <td class="px-4 py-1">
                                     <div class="w-15 h-15 bg-gray-100 border rounded-lg overflow-hidden flex-shrink-0">
                                         <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
                                             alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
@@ -68,16 +68,16 @@
                                     @endif
                                 </td>
                                 <td class="space-x-2 px-4 py-2 whitespace-nowrap font-bold text-right ">
-                                    <flux:button href="/admin/movimientos/entrada/{{ $producto->id }}/create-stock"
-                                        icon="plus-circle" class="text-amber-700!" tooltip="Ingresar Stock" />
+                                    @can('update', App\Models\Producto::class)
+                                        <flux:button href="/admin/movimientos/entrada/{{ $producto->id }}/create-stock"
+                                            icon="plus-circle" class="text-amber-700!" tooltip="Ingresar Stock" />
 
-                                    <flux:button href="/admin/movimientos/salida/{{ $producto->id }}/create-venta"
-                                        icon="banknotes" class="text-green-700!" tooltip="Venta rápida" />
-
-                                    @can('view', App\Models\Producto::class)
-                                        <flux:button href="{{ route('productos.edit', $producto->id) }}" icon="list-bullet"
-                                            class="text-blue-700!" tooltip="Ver detalles" />
+                                        <flux:button href="/admin/movimientos/salida/{{ $producto->id }}/create-venta"
+                                            icon="banknotes" class="text-green-700!" tooltip="Venta rápida" />
                                     @endcan
+
+                                    <flux:button href="{{ route('productos.show', $producto->id) }}" icon="list-bullet"
+                                        class="text-blue-700!" tooltip="Ver detalles" />
 
                                     @can('update', App\Models\Producto::class)
                                         <flux:button href="{{ route('productos.edit', $producto->id) }}" icon="pencil-square"
@@ -129,7 +129,7 @@
                                     icon="banknotes" class="text-green-700!" tooltip="Venta rápida" />
 
                                 @can('view', App\Models\Producto::class)
-                                    <flux:button href="{{ route('productos.edit', $producto->id) }}" icon="list-bullet"
+                                    <flux:button href="{{ route('productos.show', $producto->id) }}" icon="list-bullet"
                                         class="text-blue-700!" tooltip="Ver detalles" />
                                 @endcan
 

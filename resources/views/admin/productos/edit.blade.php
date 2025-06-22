@@ -1,17 +1,12 @@
-<x-layouts.app :title="__('Dashboard')">
+<x-layouts.navlist-productos :producto="$producto">
 
-    <x-panel.header nombre_header="Editar producto">
-        <flux:button href="/admin/productos" icon="arrow-left"
-            class="dark:text-black! dark:bg-white! hover:bg-gray-200! rounded-3xl!">
-            Volver
-        </flux:button>
-    </x-panel.header>
+    <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Editar Datos</h2>
 
     <form method="POST" enctype="multipart/form-data" action="{{ route('productos.update', $producto->id) }}">
         @csrf
         @method('PUT')
 
-        <div class="flex flex-col gap-6 max-w-lg mt-6">
+        <div class="flex flex-col gap-6 max-w-lg">
             <p class="text-melocoton">Edita los campos que quieras modificar</p>
 
             <!-- Nombre Producto -->
@@ -87,4 +82,4 @@
     </script>
 
 
-</x-layouts.app>
+</x-layouts.navlist-productos>
