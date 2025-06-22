@@ -59,6 +59,8 @@ Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin
         ->name('usuarios.destroy');
 
 
+    Route::get('/movimientos', [MovimientosController::class, 'index']);
+
     Route::get('/movimientos/salida/{producto}/create-venta', [MovimientosController::class, 'create_venta']);
     Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
 
