@@ -13,6 +13,11 @@ class ProductoPolicy
         return $admin->tiene_permiso('Ver Todos Los Productos');
     }
 
+    public function view(Administrador $admin): bool
+    {
+        return $admin->tiene_permiso('Ver Un Producto');
+    }
+
     public function create(Administrador $admin): bool
     {
         return $admin->tiene_permiso('Crear Productos');

@@ -64,7 +64,7 @@ class Registro extends Model
     {
         $mapa_modelos = [
             'productos'  => Producto::class,
-            'admins'     => Administrador::class,
+            'administradores'     => Administrador::class,
             'users'      => User::class,
             'categorias' => Categoria::class,
             // agrega más entidades aquí si las necesitas

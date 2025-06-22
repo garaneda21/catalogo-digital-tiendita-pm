@@ -33,9 +33,13 @@ Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
 Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin')->group(function () {
     Route::get('/dashboard', DashboardController::class);
 
+    // Rutas de Productos
     Route::resource('/productos', ProductoController::class);
+    Route::get('/productos/{producto}/disable', [ProductoController::class, 'disable']);
     Route::resource('/categorias', CategoriaController::class);
 
+
+    // Rutas de Admins
     Route::get('/administradores/{administrador}/edit-permisos', [AdministradoresController::class, 'edit_permisos']);
     Route::put('/administradores/{administrador}/update-permisos', [AdministradoresController::class, 'update_permisos'])
         ->name('administradores.update-permisos');
@@ -48,13 +52,16 @@ Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin
     Route::resource('/administradores', AdministradoresController::class)
         ->parameters(['administradores' => 'administrador']);
 
+
     Route::resource('/usuarios', UsuariosController::class)
         ->parameters(['administradores' => 'administrador']);
     Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])
         ->name('usuarios.destroy');
 
+
     Route::get('/movimientos/salida/{producto}/create-venta', [MovimientosController::class, 'create_venta']);
     Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
+
 
     Route::get('/movimientos/entrada/{producto}/create-stock', [MovimientosController::class, 'create_stock']);
     Route::post('/movimientos/entrada/{producto}', [MovimientosController::class, 'store_stock']);

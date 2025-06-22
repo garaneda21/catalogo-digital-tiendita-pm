@@ -19,7 +19,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 15,
                 'precio'          => 25990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 1,
             ],
             [
@@ -28,7 +28,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 10,
                 'precio'          => 29990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 1,
             ],
             [
@@ -37,7 +37,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 25,
                 'precio'          => 14990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 2,
             ],
             [
@@ -46,7 +46,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 18,
                 'precio'          => 17990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 2,
             ],
             [
@@ -55,7 +55,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 12,
                 'precio'          => 10990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 3,
             ],
             [
@@ -64,7 +64,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 20,
                 'precio'          => 8990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 3,
             ],
             [
@@ -73,7 +73,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 30,
                 'precio'          => 12990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 4,
             ],
             [
@@ -82,7 +82,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 14,
                 'precio'          => 19990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 4,
             ],
             [
@@ -91,7 +91,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 10,
                 'precio'          => 24990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 5,
             ],
             [
@@ -100,7 +100,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 8,
                 'precio'          => 26990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 5,
             ],
             // 10 productos más con variedad para completar los 20
@@ -110,7 +110,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 11,
                 'precio'          => 23990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 1,
             ],
             [
@@ -119,7 +119,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 17,
                 'precio'          => 21990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 1,
             ],
             [
@@ -128,7 +128,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 22,
                 'precio'          => 8990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 2,
             ],
             [
@@ -137,7 +137,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 19,
                 'precio'          => 7990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 2,
             ],
             [
@@ -146,7 +146,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 16,
                 'precio'          => 6990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 3,
             ],
             [
@@ -155,7 +155,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 18,
                 'precio'          => 5990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 3,
             ],
             [
@@ -164,7 +164,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 12,
                 'precio'          => 22990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 4,
             ],
             [
@@ -173,7 +173,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 9,
                 'precio'          => 19990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 4,
             ],
             [
@@ -182,7 +182,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 13,
                 'precio'          => 18990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 5,
             ],
             [
@@ -191,7 +191,7 @@ class ProductoSeeder extends Seeder
                 'stock_actual'    => 6,
                 'precio'          => 15990,
                 'imagen_url'      => null,
-                'estado_producto' => 1,
+                'activo' => 1,
                 'categoria_id'    => 5,
             ],
         ];
