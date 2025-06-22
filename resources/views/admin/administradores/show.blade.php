@@ -66,7 +66,7 @@
                     <tr>
                         <th class="px-4 py-2 text-left">Acción</th>
                         <th class="px-4 py-2 text-left">Entidad Modificada</th>
-                        <th class="px-4 py-2 text-left">Datos</th>
+                        <th class="px-4 py-2 text-left">Dato Modificado</th>
                         <th class="px-4 py-2 text-left">Fecha Registro</th>
                     </tr>
                 </thead>
@@ -75,7 +75,35 @@
                         <tr class="hover:bg-[#FAFAFA]">
                             <td class="px-4 py-2">{{ $registro->accion->nombre_accion }}</td>
                             <td class="px-4 py-2">{{ $registro->entidad_modificada ?? '---' }}</td>
-                            <td class="px-4 py-2">{{ $registro->id_entidad_modificada ?? '---' }}</td>
+                            <td class="px-4 py-2">
+                                @if ($registro->id_entidad_modificada)
+                                    @switch($registro->dato_modificado->getTable())
+                                        @case('productos')
+                                            <a href="/admin/productos/{{ $registro->dato_modificado->id }}"
+                                                class="text-melocoton hover:underline">
+                                                {{ $registro->dato_modificado->nombre_producto }}
+                                            </a>
+                                        @break
+
+                                        @case('categorias')
+                                            {{ $registro->dato_modificado->nombre_categoria }}
+                                        @break
+
+                                        @case('users')
+                                            {{ $registro->dato_modificado->name }}
+                                        @break
+
+                                        @case('administradores')
+                                            <a href="/admin/administradores/{{ $registro->dato_modificado->id }}"
+                                                class="text-melocoton hover:underline">
+                                                {{ $registro->dato_modificado->nombre_admin }}
+                                            </a>
+                                        @break
+                                    @endswitch
+                                @else
+                                    ---
+                                @endif
+                            </td>
                             <td class="px-4 py-2">{{ $registro->fecha_registro }}</td>
                         </tr>
                     @endforeach

@@ -57,9 +57,9 @@
                 <div class="flex justify-between items-center">
                     <span
                         class="text-sm font-bold bg-verde-oliva/10 text-verde-oliva px-2 py-1 rounded-full whitespace-nowrap">
-                        {{ $top_producto->total }} vendidas
+                        {{ $top_producto->producto->total }} vendidas
                     </span>
-                    <a href="#" class="text-sm text-melocoton hover:underline">Ver detalles</a>
+                    <a href="/admin/productos/{{ $top_producto->producto->id }}" class="text-sm text-melocoton hover:underline">Ver detalles</a>
                 </div>
             </div>
             @endforeach
@@ -84,7 +84,7 @@
                 @foreach ($movimientos as $movimiento)
                 <tr class="odd:bg-white even:bg-gray-100">
                     <td class="p-3 text-sm text-gray-700 font-bold whitespace-nowrap">
-                        <a href="#" class="font-bold text-melocoton hover:underline">
+                        <a href="{{ route('productos.show', $movimiento->producto->id) }}" class="font-bold text-melocoton hover:underline">
                             {{ $movimiento->producto->nombre_producto }}
                         </a>
                     </td>
