@@ -58,7 +58,7 @@
             @endforeach
         </div>
 
-        <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Ultimas acciones</h2>
+        <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Últimas acciones</h2>
 
         <div class="mt-4 overflow-hidden rounded-lg border-1">
             <table class="min-w-full border-separate border-spacing-0 text-sm">
