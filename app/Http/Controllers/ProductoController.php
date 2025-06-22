@@ -222,4 +222,23 @@ class ProductoController extends Controller
 
         return redirect()->route('productos.index');
     }
+
+    public function disable(Producto $producto)
+    {
+        if (request()->user('admin')->cannot('update', Producto::class)) {
+            abort(403);
+        }
+
+        if ($producto->activo) {
+            $producto->update(['activo' => false]);
+            session()->flash('success', 'Producto desactivado');
+            Registro::registrar_accion($producto, 'Desactiva un producto');
+        } else {
+            $producto->update(['activo' => true]);
+            session()->flash('success', 'Producto reactivado');
+            Registro::registrar_accion($producto, 'Reactiva un producto');
+        }
+
+        return redirect()->back();
+    }
 }

@@ -12,7 +12,7 @@
             <div class="w-full max-w-[240px]">
                 <div class="overflow-hidden border rounded-lg aspect-square">
                     <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
-                        alt="Imagen del producto" class="object-cover w-full h-full">
+                        alt="Imagen del producto" class="object-cover w-full h-full {{ $producto->activo ? '' : 'grayscale-75'}}">
                 </div>
             </div>
 
@@ -40,7 +40,11 @@
 
                 <div class="border p-2 rounded-lg bg-gray-50">
                     <p class="text-gray-500 text-sm mb-1">Estado</p>
-                    <p class="text-green-600">Activo</p>
+                    @if ($producto->activo)
+                        <p class="text-green-600">Activo</p>
+                    @else
+                        <p class="text-red-600">Desactivado</p>
+                    @endif
                 </div>
 
                 <div class="border p-2 rounded-lg bg-gray-50">

@@ -41,6 +41,7 @@
                             <th class="w-34 px-4 py-2 text-left">Precio</th>
                             <th class="w-16 px-4 py-2 text-left">Stock</th>
                             <th class="w-34 px-4 py-2 text-left">Estado Stock</th>
+                            <th class="w-34 px-4 py-2 text-left">Activo</th>
                             <th class="w-60 px-4 py-2 text-right">Acciones</th>
                         </tr>
                     </thead>
@@ -50,7 +51,7 @@
                                 <td class="px-4 py-1">
                                     <div class="w-15 h-15 bg-gray-100 border rounded-lg overflow-hidden flex-shrink-0">
                                         <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
-                                            alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover">
+                                            alt="{{ $producto->nombre_producto }}" class="w-full h-full object-cover {{ $producto->activo ? '' : 'grayscale-75' }}">
                                     </div>
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->nombre_producto }}</td>
@@ -65,6 +66,13 @@
                                         <flux:badge variant="pill" color="yellow">Bajo</flux:badge>
                                     @else
                                         <flux:badge variant="pill" color="red">Agotado</flux:badge>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                    @if ($producto->activo)
+                                        <flux:badge variant="pill" color="green">Activo</flux:badge>
+                                    @else
+                                        <flux:badge variant="pill" color="gray">Desactivado</flux:badge>
                                     @endif
                                 </td>
                                 <td class="space-x-2 px-4 py-2 whitespace-nowrap font-bold text-right ">

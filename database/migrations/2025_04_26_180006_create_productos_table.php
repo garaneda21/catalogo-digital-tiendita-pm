@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('stock_actual', false, true)->default(0);
             $table->integer('precio')->default(0);
             $table->string('imagen_url', 500)->nullable();
-            $table->boolean('estado_producto')->default(1);
+            $table->boolean('activo')->default(1);
             $table->foreignIdFor(Categoria::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });

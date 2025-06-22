@@ -16,13 +16,13 @@
                     <flux:navlist.item href="/admin/productos/{{ $producto->id }}/edit"
                         class="data-current:bg-gray-200! hover:underline!">Editar</flux:navlist.item>
 
-                    @if ($producto->activo)
-                        <flux:navlist.item href="" class="text-red-500! hover:underline!">
-                            Desactivar Producto
-                        </flux:navlist.item>
-                    @else
-                        <flux:navlist.item href="" class="hover:underline!">Reactivar</flux:navlist.item>
-                    @endif
+                    <flux:navlist.item href="/admin/productos/{{ $producto->id }}/disable" class="hover:underline!">
+                        @if ($producto->activo)
+                            Desactivar
+                        @else
+                            Reactivar
+                        @endif
+                    </flux:navlist.item>
                 @endcan
 
 

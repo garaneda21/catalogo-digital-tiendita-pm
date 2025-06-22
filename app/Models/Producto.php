@@ -16,6 +16,7 @@ class Producto extends Model
         'stock_actual',
         'precio',
         'imagen_url',
+        'activo',
         'categoria_id',
     ];
 
