@@ -12,6 +12,7 @@ class Categoria extends Model
 
     protected $fillable = [
         'nombre_categoria',
+        'slug',
         'descripcion_categoria'
     ];
 
@@ -21,6 +22,6 @@ class Categoria extends Model
         return $this->hasMany(Producto::class);
     }
 
-    
+
 
 }
