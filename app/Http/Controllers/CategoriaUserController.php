@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class CategoriaUserController extends Controller
 {
-    public function index($categoria, Request $request)
+    public function index($slug, Request $request)
     {
-        $categorias = Categoria::where('nombre_categoria', $categoria)->first();
+        $categorias = Categoria::where('slug', $slug)->first();
 
         if (! $categorias) {
             abort(404);

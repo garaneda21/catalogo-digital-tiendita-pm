@@ -2,26 +2,28 @@
 <x-layouts.estructura>
 
     <!-- Barra de categorías -->
-    <div class="w-full bg-[#f8e9d4] py-2 px-4 overflow-w-auto">
-        <div class="flex justify-center space-x-4 whitespace-nowrap">
-            <x-categoria-barra href="/productos/categorias/perfumes">Perfumes</x-categoria-barra>
-            <x-categoria-barra href="/productos/categorias/skincare">Skincare</x-categoria-barra>
-            <x-categoria-barra href="/productos/categorias/maquillaje">Maquillaje</x-categoria-barra>
-            <x-categoria-barra href="/productos/categorias/ropa">Ropa</x-categoria-barra>
-            <x-categoria-barra href="/productos/categorias/carteras">Carteras</x-categoria-barra>
+    <div class="w-full bg-crema py-4 px-6">
+        <div class="flex flex-wrap justify-center gap-3">
+            @foreach ($categorias as $categoria)
+                <a href="{{ route('categorias.show', $categoria->slug) }}"
+                    class="px-4 py-1 text-sm font-medium text-white bg-terracota rounded-full hover:bg-terracota/70">
+                    {{ $categoria->nombre_categoria }}
+                </a>
+            @endforeach
         </div>
     </div>
 
-    <section class="py-2 px-6 bg-[#f8e9d4]">
+    <section class="py-2 px-6 bg-crema">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
 
             <!-- Texto a la izquierda -->
             <div class="md:w-1/2 text-left">
-                <h1 class="text-5xl font-bold mb-4 text-[#3D3C63]">Bienvenida a Tiendita PM</h1>
-                <p class="text-[#587A6C] text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de detalles,
+                <h1 class="text-5xl font-bold mb-4 text-azul-profundo">Bienvenida a Tiendita PM</h1>
+                <p class="text-verde-oliva font-semibold text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de
+                    detalles,
                     colores y productos únicos.</p>
                 <a href="/productos"
-                    class="mt-6 inline-block bg-[#db928d] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#ca8a85] transition">
+                    class="mt-6 inline-block bg-terracota text-white font-semibold px-6 py-3 rounded-full hover:bg-terracota/70">
                     Ver Catálogo
                 </a>
             </div>
@@ -35,7 +37,7 @@
     </section>
 
     <!-- Destacados -->
-    <section class="py-16 px-6 bg-[#fcf6ed]">
+    <section class="py-16 px-6 bg-crema-claro">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-semibold text-center mb-10">Productos Destacados</h2>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -68,7 +70,7 @@
     </section>
 
     <!-- Categorías -->
-    <section class="py-16 px-6 bg-[#fcf6ed]">
+    <section class="py-16 px-6 bg-crema-claro">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-3xl font-semibold text-center mb-10">Categorías</h2>
             <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">

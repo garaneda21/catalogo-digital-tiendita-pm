@@ -28,9 +28,9 @@ class ProductoUserController extends Controller
      * ej url con id =   producto/15
      * ej url con slug = producto/polera-oversize-blanca
      */
-    public function show($id)
+    public function show($slug)
     {
-        $producto = Producto::where('id', $id)->firstOrFail();
+        $producto = Producto::where('slug', $slug)->firstOrFail();
 
         return view('productos.show', compact('producto'));
     }

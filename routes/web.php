@@ -1,42 +1,44 @@
 <?php
 
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CarritoController;
-use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\AdministradoresController;
-use App\Http\Controllers\CategoriaUserController;
+use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CategoriaUserController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
 use App\Http\Controllers\WebpayController;
+use App\Http\Controllers\UsuariosController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Categoria;
 use Illuminate\Support\Facades\Route;
 
 // Vista de prueba
 Route::view('/test', 'test');
 
 // Vistas principales
-Route::view('/', 'inicio')->name('inicio');
+Route::view('/', 'inicio', ['categorias' => Categoria::all()])->name('inicio');
 Route::redirect('admin', 'admin/dashboard');
 
 // Vista Productos Clientes
 Route::get('/productos', [ProductoUserController::class, 'index']);
-Route::get('/productos/categorias/{categoria}', [CategoriaUserController::class, 'index']);
-Route::get('/productos/{id}', [ProductoUserController::class, 'show']);
+Route::get('/productos/categorias/{slug}', [CategoriaUserController::class, 'index']);
+Route::get('/productos/{slug}', [ProductoUserController::class, 'show']);
 
 // Rutas a las que solo puede acceder el admin
 Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin')->group(function () {
     Route::get('/dashboard', DashboardController::class);
 
+    // Rutas de Productos
     Route::resource('/productos', ProductoController::class);
+    Route::get('/productos/{producto}/disable', [ProductoController::class, 'disable']);
     Route::resource('/categorias', CategoriaController::class);
 
+    // Rutas de Admins
     Route::get('/administradores/{administrador}/edit-permisos', [AdministradoresController::class, 'edit_permisos']);
     Route::put('/administradores/{administrador}/update-permisos', [AdministradoresController::class, 'update_permisos'])
         ->name('administradores.update-permisos');
@@ -54,9 +56,13 @@ Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin
     Route::delete('/usuarios/{usuario}', [UsuariosController::class, 'destroy'])
         ->name('usuarios.destroy');
 
+    Route::get('/movimientos', [MovimientosController::class, 'index']);
+
     Route::get('/movimientos/salida/{producto}/create-venta', [MovimientosController::class, 'create_venta']);
     Route::post('/movimientos/salida/{producto}', [MovimientosController::class, 'store_venta']);
 
+    Route::get('/movimientos/entrada/{producto}/create-stock', [MovimientosController::class, 'create_stock']);
+    Route::post('/movimientos/entrada/{producto}', [MovimientosController::class, 'store_stock']);
 });
 
 // Rutas de carrito de compras, parece que estas no se usaran xddd

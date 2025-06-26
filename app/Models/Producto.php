@@ -12,10 +12,12 @@ class Producto extends Model
 
     protected $fillable = [
         'nombre_producto',
+        'slug',
         'descripcion',
         'stock_actual',
         'precio',
         'imagen_url',
+        'activo',
         'categoria_id',
     ];
 
@@ -53,12 +55,18 @@ class Producto extends Model
             case 'precio_desc':
                 $query->orderBy('precio', 'desc');
                 break;
+            case 'stock_asc':
+                $query->orderBy('stock_actual', 'asc');
+                break;
+            case 'stock_desc':
+                $query->orderBy('stock_actual', 'desc');
+                break;
             default:
                 $query->orderBy('created_at', 'desc');
                 break;
         }
 
         // Paginación con parámetros persistentes
-        return $query->paginate(10)->appends($request->only(['search', 'ordering']));
+        return $query->paginate(20)->appends($request->only(['search', 'ordering']));
     }
 }
