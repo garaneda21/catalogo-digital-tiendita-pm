@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Carrito;
 use App\Models\ItemCarrito;
+use App\Models\Orden;
+use App\Models\ItemOrden;
+
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+
 use Transbank\Webpay\Options;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Transbank\Webpay\WebpayPlus\Responses\TransactionCommitResponse;
@@ -63,8 +69,49 @@ class WebpayController extends Controller
         $response = $transaction->commit($token);
         
         // Aquí podrías verificar el estado y guardar en la DB
-        if ($response->isApproved()) {
-            // Guardar datos en base de datos
+        if ($response->isApproved()) {      
+            // Verificar si el carrito existe      
+            $carrito = Carrito::with('items.producto')
+                ->where(function ($query) {
+                    $query->when(Auth::check(), fn($q) => $q->where('user_id', Auth::id()))
+                          ->when(!Auth::check(), fn($q) => $q->where('token', session()->getId()));
+                })
+                ->first();
+
+            if (!$carrito) {
+                return redirect()->route('checkout.error');
+            }
+
+            // Crear la orden en la base de datos
+            $orden = Orden::create([
+                'user_id'       => Auth::id(),
+                'token_sesion'  => session()->getId(),
+                'buy_order'     => $response->getBuyOrder(),
+                'monto_total'   => $response->getAmount(),
+                'estado'        => 'aprobado',
+            ]);
+            
+            if (Auth::check()) {
+                Auth::user()->notify(new \App\Notifications\PagoAprobado($orden));
+            }
+            
+            // Guardar los items del carrito en la orden
+            foreach ($carrito->items as $item) {
+                ItemOrden::create([
+                    'orden_id'          => $orden->id,
+                    'producto_id'       => $item->producto_id,
+                    'cantidad'          => $item->cantidad,
+                    'precio_unitario'   => $item->precio_unitario,
+                ]);
+
+                $producto = $item->producto;
+                $producto->stock_actual -= $item->cantidad;
+                $producto->save();
+            }
+
+            // Limpiar el carrito después de la compra
+            $carrito->items()->delete();
+            $carrito->delete();
 
             return view('checkout.exito', ['response' => $response]);
         } else {
