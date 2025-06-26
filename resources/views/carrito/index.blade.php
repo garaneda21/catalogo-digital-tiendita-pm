@@ -68,6 +68,14 @@
                     Continuar tu compra
                 </a>
 
+                <div class="text-sm text-gray-500 border-t pt-2">
+                    <p class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l1.6 8M17 13l-1.6 8M9 21h6" />
+                        </svg>
+                        El costo de envío se calculará en el siguiente paso
+                    </p>
+                </div>
             </div>
         </div>
     </div>
