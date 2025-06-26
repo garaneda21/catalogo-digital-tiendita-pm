@@ -13,9 +13,9 @@ class TipoMovimientoSeeder extends Seeder
     public function run(): void
     {
         $tipos = [
-            ['nombre_tipo' => 'salida'],
-            ['nombre_tipo' => 'entrada'],
-            ['nombre_tipo' => 'ajuste'],
+            ['nombre_tipo' => 'salida'],    //id = 1
+            ['nombre_tipo' => 'entrada'],   //id = 2
+            ['nombre_tipo' => 'ajuste'],    //id = 3
             // ...
         ];
 
