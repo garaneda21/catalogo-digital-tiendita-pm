@@ -32,7 +32,7 @@
                 @if ($producto->activo)
                     <div
                         class="group relative flex flex-col items-center justify-between bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
-                        <a href="/productos/{{ $producto->id }}" class="group text-center">
+                        <a href="/productos/{{ $producto->slug }}" class="group text-center">
                             <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
                                 alt="{{ $producto->nombre_producto }}"
                                 class="rounded-2xl border aspect-square w-full object-cover group-hover:opacity-75">

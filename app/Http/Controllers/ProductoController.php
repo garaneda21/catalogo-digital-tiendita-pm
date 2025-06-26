@@ -10,6 +10,7 @@ use App\Models\Registro;
 use App\Models\TipoMovimiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class ProductoController extends Controller
@@ -89,6 +90,7 @@ class ProductoController extends Controller
 
         $producto = Producto::create([
             'nombre_producto' => request('nombre_producto'),
+            'slug'            => Str::slug(request('nombre_producto')),
             'categoria_id'    => request('categoria') ?? null,
             'descripcion'     => request('descripcion'),
             'stock_actual'    => $stock,
@@ -209,6 +211,7 @@ class ProductoController extends Controller
 
         $producto->update([
             'nombre_producto' => $request->input('nombre_producto'),
+            'slug'            => Str::slug($request->input('nombre_producto')),
             'categoria_id'    => $request->input('categoria') ?? null,
             'descripcion'     => $request->input('descripcion'),
             'stock_actual'    => $stock,
