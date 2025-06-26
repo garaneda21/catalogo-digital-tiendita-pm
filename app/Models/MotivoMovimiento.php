@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class MotivoMovimiento extends Model
 {
-    protected $fillable = ['nombre_motivo', 'tipo_motivo_id'];
+    protected $fillable = ['nombre_motivo', 'tipo_movimiento_id'];
 
     public $timestamps = false;
 
-    public function movimiento() {
-        return $this->hasOne(Movimiento::class);
+    public function movimientos() {
+        return $this->hasMany(Movimiento::class);
     }
 
     public function tipo_movimiento() {
-        return $this->hasOne(TipoMovimiento::class);
+        return $this->belongsTo(TipoMovimiento::class, 'tipo_motivo_id');
     }
 }
