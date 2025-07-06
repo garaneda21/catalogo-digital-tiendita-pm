@@ -22,6 +22,14 @@ contenido @yield('contenido_catalogo') --}}
 
     <div class="bg-blanco min-h-screen">
         {{ $slot }}
+        <!-- Modal con items del carrito que se despliega al añadir un -->
+        <flux:modal name="desplegar-modal-carrito" class="w-96 md:w-[500px]">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-[#3D3C63] mb-4">Carrito de Compras</h2>
+                <p class="text-melocoton mb-4">Productos agregados:</p>
+            </div>
+        </flux:modal>
+
     </div>
 
     <footer id="contacto" class="bg-azul-profundo text-white py-12">
@@ -52,7 +60,39 @@ contenido @yield('contenido_catalogo') --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
     </script>
-    
+
+    <!-- Script para ingresar productos al carrito usando AJAX para que no se recargue la pagina -->
+    <script>
+    document.querySelectorAll('.form-add-to-cart').forEach(form => {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const action = form.getAttribute('action');
+            const token = form.querySelector('input[name="_token"]').value;
+            const producto_id = form.querySelector('input[name="producto_id"]').value;
+            const cantidad = form.querySelector('input[name="cantidad"]').value;
+
+            const response = await fetch(action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ producto_id, cantidad })
+            });
+
+            if (response.ok) {
+                // Abrir el modal si se agregó correctamente
+                Flux.open('desplegar-modal-carrito');
+            } else {
+                const res = await response.json();
+                alert(res.message || 'Ocurrió un error al agregar al carrito');
+            }
+        });
+    });
+    </script>
+
     @fluxScripts
 </body>
 

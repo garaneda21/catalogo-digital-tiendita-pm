@@ -21,16 +21,8 @@
                                     <form action="{{ route('carrito.update', $item->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('PATCH')
-                                        <input type="hidden" name="cantidad" value="{{ max(1, $item->cantidad - 1) }}">
-                                        <button type="submit" class="bg-gray-300 px-2" {{ $item->cantidad <= 1 ? 'disabled' : '' }}>-</button>
-                                    </form>
-                                    <span>{{ $item->cantidad }}</span>
-                                    {{-- Botón para aumentar la cantidad del producto --}}
-                                    <form action="{{ route('carrito.update', $item->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="hidden" name="cantidad" value="{{ $item->cantidad + 1 }}">
-                                        <button type="submit" class="bg-gray-300 px-2">+</button>
+                                        <input type="number" name="cantidad" value="{{ $item->cantidad }}">
+                                        <button type="submit" class="px-2 cursor-pointer">🔄️</button>
                                     </form>
                                 </div>
 
@@ -38,7 +30,7 @@
                                 <form action="{{ route('carrito.remove', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 text-sm hover:underline">Eliminar</button>
+                                    <button type="submit" class="text-red-600 text-sm hover:underline cursor-pointer">Eliminar</button>
                                 </form>
                             </div>
                         </div>

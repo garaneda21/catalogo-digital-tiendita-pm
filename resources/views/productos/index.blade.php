@@ -48,7 +48,7 @@
                         </a>
                         <!-- Botón carrito -->
                         
-                        <form action="{{ route('carrito.add') }}" method="POST">
+                        <form class="form-add-to-cart" action="{{ route('carrito.add') }}" method="POST">
                             @csrf
                             <input type="hidden" name="producto_id" value="{{ $producto->id }}">
                             <input type="hidden" name="cantidad" value="1" min="1">
@@ -58,31 +58,7 @@
                             </flux:modal.trigger>
                         </form>
                         
-                        <!-- Modal con items del carrito -->
-                        <flux:modal name="desplegar-modal-carrito" class="w-96 md:w-125">
-                            <div class="p-6">
-                                <h2 class="text-2xl font-bold text-[#3D3C63] mb-4">Carrito de Compras</h2>
-                                <p class="text-melocoton mb-4">Estos son los productos que has agregado a tu carrito:</p>
-                                <ul class="space-y-4">
-                                    @foreach (session('carrito', []) as $item)
-                                        <li class="flex justify-between items-center">
-                                            <div>
-                                                <h3 class="font-semibold">{{ $item['nombre_producto'] }}</h3>
-                                                <p class="text-sm text-gray-600">Cantidad: {{ $item['cantidad'] }}</p>
-                                            </div>
-                                            <span class="text-lg font-bold text-[#587A6C]">${{ number_format($item['precio'], 0, ',', '.') }}</span>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                                <div class="mt-6">
-                                    <p class="text-lg font-semibold text-[#3D3C63]">Total:</p>
-                                </div>
-                                <div class="mt-6 flex justify-end">
-                                    <flux:modal.close>
-                                        <flux:button variant="ghost">Cerrar</flux:button>
-                                    </flux:modal.close>
-                            </div>
-                        </flux:modal>
+                        
                     </div>
                 @endif
             @endforeach

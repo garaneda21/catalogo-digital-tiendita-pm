@@ -80,6 +80,10 @@ class CarritoController extends Controller
             ]
         );
 
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Producto agregado al carrito']);
+        }
+
         return redirect()->back()->with('success', 'Producto agregado al carrito!');
     }
 
