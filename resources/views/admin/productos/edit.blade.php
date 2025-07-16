@@ -31,10 +31,19 @@
                 value="{{ '$' . number_format($producto->precio, 0, ',', '.') }}" />
 
             <!-- Stock Actual -->
-            <flux:input name="stock_actual" id="stock_actual" label="Stock Actual (*)" type="text" value="{{ number_format($producto->stock_actual, 0, ',', '.') }}" />
+            <flux:input name="stock_actual" id="stock_actual" label="Stock Actual (*)" type="text"
+                value="{{ number_format($producto->stock_actual, 0, ',', '.') }}" />
+
+            <!-- Producto destacado -->
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="destacado" id="destacado" value="1"
+                    {{ $producto->destacado ? 'checked' : '' }}
+                    class="w-4 h-4 text-verde-oliva border-gray-300 rounded focus:ring-verde-oliva">
+                <label for="destacado" class="text-sm font-semibold text-azul-profundo">Marcar como producto destacado</label>
+            </div>
 
             <!-- Descripción -->
-            <flux:textarea label="Descripción del Producto" name="descripcion" id="descripcion" >
+            <flux:textarea label="Descripción del Producto" name="descripcion" id="descripcion">
                 {{ $producto->descripcion }}
             </flux:textarea>
 
@@ -49,7 +58,7 @@
             <div class="flex items-center justify-end gap-x-6">
                 <flux:button type="submit" variant="primary" icon="arrow-path"
                     class="bg-verde-oliva hover:bg-verde-oliva/70! dark:text-black! dark:bg-white! rounded-3xl!">
-    Actualizar
+                    Actualizar
                 </flux:button>
             </div>
         </div>
