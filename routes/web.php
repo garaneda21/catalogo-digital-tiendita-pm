@@ -70,8 +70,11 @@ Route::controller(CarritoController::class)->group(function () {
     Route::post('/carrito/agregar', 'add')->name('carrito.add');    // Agrega un item al carrito
     Route::patch('/carrito/actualizar/{itemId}', 'update')->name('carrito.update'); // Actualiza un item del carrito
     Route::delete('/carrito/eliminar/{itemId}', 'remove')->name('carrito.remove');  // Elimina un item del carrito
-    Route::post('/carrito/vaciar', 'clear')->name('carrito.clear'); // Vacía todo el carrito
+    Route::post('/carrito/vaciar', 'clear')->name('carrito.clear'); // Vacía todo el carrito    
 });
+Route::get('/carrito/contenido', [CarritoController::class, 'contenido'])->name('carrito.contenido');
+Route::get('/carrito/cantidad', [CarritoController::class, 'cantidad'])->name('carrito.cantidad');
+
 
 // Rutas de checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');

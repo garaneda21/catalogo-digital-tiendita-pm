@@ -22,13 +22,24 @@ contenido @yield('contenido_catalogo') --}}
 
     <div class="bg-blanco min-h-screen">
         {{ $slot }}
-        <!-- Modal con items del carrito que se despliega al añadir un -->
-        <flux:modal name="desplegar-modal-carrito" class="w-96 md:w-[500px]">
-            <div class="p-6">
+        <!-- Modal con items del carrito que se despliega al añadir un producto-->
+        <flux:modal name="desplegar-modal-carrito" class="w-full max-w-[800px]">
+            <div class="p-6 flex flex-col h-[80vh]">
                 <h2 class="text-2xl font-bold text-[#3D3C63] mb-4">Carrito de Compras</h2>
                 <p class="text-melocoton mb-4">Productos agregados:</p>
+            
+                <div id="contenido-carrito" class="flex-1 overflow-y-auto border rounded p-4 bg-white">
+                    <!-- Se carga dinámicamente -->
+                </div>
+            
+                <div class="mt-4 flex justify-end">
+                    <flux:modal.close>
+                        <flux:button variant="ghost">Cerrar</flux:button>
+                    </flux:modal.close>
+                </div>
             </div>
         </flux:modal>
+
 
     </div>
 
@@ -61,8 +72,38 @@ contenido @yield('contenido_catalogo') --}}
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
     </script>
 
-    <!-- Script para ingresar productos al carrito usando AJAX para que no se recargue la pagina -->
+    <!-- Script para actualizar el contenido del carrito -->
     <script>
+    async function actualizarContenidoCarrito() {
+        const res = await fetch('{{ route('carrito.contenido') }}');
+        const html = await res.text();
+        document.getElementById('contenido-carrito').innerHTML = html;
+
+        document.querySelectorAll('.form-cantidad').forEach(form => {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const action = form.getAttribute('action');
+                const token = form.querySelector('input[name="_token"]').value;
+                const cantidad = form.querySelector('input[name="cantidad"]').value;
+
+                const res = await fetch(action, {
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ cantidad })
+                });
+
+                if (res.ok) {
+                    await actualizarContadorCarrito();
+                    await actualizarContenidoCarrito();
+                }
+            });
+        });
+    }
+
     document.querySelectorAll('.form-add-to-cart').forEach(form => {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -83,15 +124,18 @@ contenido @yield('contenido_catalogo') --}}
             });
 
             if (response.ok) {
-                // Abrir el modal si se agregó correctamente
+                await actualizarContadorCarrito();
+                await actualizarContenidoCarrito();
                 Flux.open('desplegar-modal-carrito');
-            } else {
-                const res = await response.json();
-                alert(res.message || 'Ocurrió un error al agregar al carrito');
             }
         });
     });
+     // Ejecutar al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+        actualizarContadorCarrito();
+    });
     </script>
+
 
     @fluxScripts
 </body>

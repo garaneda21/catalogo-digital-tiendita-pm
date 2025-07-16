@@ -1,8 +1,38 @@
 <x-layouts.estructura>
     <div class="mx-auto max-w-6xl p-4">
+        
+
+        @if(isset($categorias) && $categorias->count())
+        <div class="mb-1">
+            <ul class="flex space-x-4 pb-3">
+                {{-- Opción "Todas" --}}
+                <li>
+                    <a href="{{ url('/productos') }}"
+                       class="px-3 py-1 rounded-full transition-colors duration-200
+                              {{ empty($slugSeleccionado) ? 'bg-[#587A6C] text-white' : 'bg-gray-200 text-gray-700' }}">
+                        Todas
+                    </a>
+                </li>
+            
+                {{-- Otras categorías --}}
+                @foreach ($categorias as $cat)
+                    <li>
+                        <a href="{{ url('/productos/categorias/' . $cat->slug) }}"
+                           class="px-3 py-1 rounded-full transition-colors duration-200
+                                  {{ (isset($slugSeleccionado) && $slugSeleccionado === $cat->slug)
+                                      ? 'bg-[#587A6C] text-white'
+                                      : 'bg-gray-200 text-gray-700' }}">
+                            {{ $cat->nombre_categoria }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+            <hr>
+        </div>
+        @endif
 
         @isset($categoria)
-            <div class="flex items-center text-azul-profundo space-x-6">
+            <div class="flex items-center text-azul-profundo space-x-6 pt-3">
                 <h2 class="text-4xl pb-4 font-bold">{{ $categoria }}</h2>
                 <p class="text-sm font-semibold text-azul-profundo/90">{{ count($productos) }} productos</p>
             </div>
@@ -53,7 +83,7 @@
                             <input type="hidden" name="producto_id" value="{{ $producto->id }}">
                             <input type="hidden" name="cantidad" value="1" min="1">
                             <flux:modal.trigger name="desplegar-modal-carrito">        
-                                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 cursor-pointer">
                                     Agregar al Carrito</button>
                             </flux:modal.trigger>
                         </form>

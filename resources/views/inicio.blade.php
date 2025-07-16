@@ -1,18 +1,6 @@
 {{-- Con extends definimos la estructura descrita en layouts --}}
 <x-layouts.estructura>
 
-    <!-- Barra de categorías -->
-    <div class="w-full bg-crema py-4 px-6">
-        <div class="flex flex-wrap justify-center gap-3">
-            @foreach ($categorias as $categoria)
-                <a href="{{ route('categorias.show', $categoria->slug) }}"
-                    class="px-4 py-1 text-sm font-medium text-white bg-terracota rounded-full hover:bg-terracota/70">
-                    {{ $categoria->nombre_categoria }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-
     <section class="py-2 px-6 bg-crema">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
 

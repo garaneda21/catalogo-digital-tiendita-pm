@@ -32,6 +32,27 @@ class CarritoController extends Controller
         return view('carrito.index', compact('carrito', 'total'));
     }
 
+    public function contenido()
+    {
+        $carrito = $this->getCart();
+        $carrito->load('items.producto');
+    
+        $total = $carrito->items->reduce(function ($carry, $item) {
+            return $carry + ($item->cantidad * $item->precio_unitario);
+        }, 0);
+    
+        return view('carrito._contenido', compact('carrito', 'total'))->render();
+    }
+
+    public function cantidad()
+    {
+        $carrito = $this->getCart();
+        $cantidad = $carrito->items->sum('cantidad');
+    
+        return response()->json(['cantidad' => $cantidad]);
+    }
+    
+
     /**
      * Agrega un producto al carrito.
      *
