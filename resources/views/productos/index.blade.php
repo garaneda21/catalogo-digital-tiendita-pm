@@ -1,35 +1,5 @@
 <x-layouts.estructura>
     <div class="mx-auto max-w-6xl p-4">
-        
-
-        @if(isset($categorias) && $categorias->count())
-        <div class="mb-1">
-            <ul class="flex space-x-4 pb-3">
-                {{-- Opción "Todas" --}}
-                <li>
-                    <a href="{{ url('/productos') }}"
-                       class="px-3 py-1 rounded-full transition-colors duration-200
-                              {{ empty($slugSeleccionado) ? 'bg-[#587A6C] text-white' : 'bg-gray-200 text-gray-700' }}">
-                        Todas
-                    </a>
-                </li>
-            
-                {{-- Otras categorías --}}
-                @foreach ($categorias as $cat)
-                    <li>
-                        <a href="{{ url('/productos/categorias/' . $cat->slug) }}"
-                           class="px-3 py-1 rounded-full transition-colors duration-200
-                                  {{ (isset($slugSeleccionado) && $slugSeleccionado === $cat->slug)
-                                      ? 'bg-[#587A6C] text-white'
-                                      : 'bg-gray-200 text-gray-700' }}">
-                            {{ $cat->nombre_categoria }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-            <hr>
-        </div>
-        @endif
 
         @isset($categoria)
             <div class="flex items-center text-azul-profundo space-x-6 pt-3">
@@ -39,6 +9,25 @@
 
             <hr>
         @endisset
+
+        @if (isset($categorias) && $categorias->count())
+            <div class="w-full py-4 px-6">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="/productos"
+                        class="px-4 py-1 text-sm font-medium rounded-full hover:bg-verde-oliva/70 {{ empty($slugSeleccionado) ? 'bg-verde-oliva text-white' : 'bg-gray-200 text-gray-700' }}">Todas</a>
+
+                    @foreach ($categorias as $cat)
+                        <a href="/productos/categorias/{{ $cat->slug }}"
+                            class="px-4 py-1 text-sm font-medium rounded-full hover:bg-verde-oliva/70 {{ isset($slugSeleccionado) && $slugSeleccionado === $cat->slug
+                                      ? 'bg-[#587A6C] text-white'
+                                      : 'bg-gray-200 text-gray-700' }}">
+                            {{ $cat->nombre_categoria }}
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+            <hr>
+        @endif
 
         <div class="mb-4">
             {{ $productos->links() }}
@@ -61,7 +50,7 @@
             @foreach ($productos as $producto)
                 @if ($producto->activo)
                     <div
-                        class="group relative flex flex-col items-center justify-between bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
+                        class="group relative flex flex-col items-center justify-between bg-white rounded-2xl p-4">
                         <a href="/productos/{{ $producto->slug }}" class="group text-center">
                             <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
                                 alt="{{ $producto->nombre_producto }}"
@@ -70,25 +59,13 @@
                                 <h2 class="text-lg font-semibold text-[#3D3C63]">
                                     {{ $producto->nombre_producto }}
                                 </h2>
-                                <p class="text-md text-gray-500 mt-1">{{ $producto->categoria->nombre_categoria ?? '' }}
+                                <p class="text-md text-gray-500 mt-1">
+                                    {{ $producto->categoria->nombre_categoria ?? '' }}
                                 </p>
                                 <p class="text-xl font-bold text-[#587A6C] mt-2">
                                     ${{ number_format($producto->precio, 0, ',', '.') }}</p>
                             </div>
                         </a>
-                        <!-- Botón carrito -->
-                        
-                        <form class="form-add-to-cart" action="{{ route('carrito.add') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="producto_id" value="{{ $producto->id }}">
-                            <input type="hidden" name="cantidad" value="1" min="1">
-                            <flux:modal.trigger name="desplegar-modal-carrito">        
-                                <button type="submit" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 cursor-pointer">
-                                    Agregar al Carrito</button>
-                            </flux:modal.trigger>
-                        </form>
-                        
-                        
                     </div>
                 @endif
             @endforeach

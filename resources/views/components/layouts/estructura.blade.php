@@ -27,11 +27,11 @@ contenido @yield('contenido_catalogo') --}}
             <div class="p-6 flex flex-col h-[80vh]">
                 <h2 class="text-2xl font-bold text-[#3D3C63] mb-4">Carrito de Compras</h2>
                 <p class="text-melocoton mb-4">Productos agregados:</p>
-            
+
                 <div id="contenido-carrito" class="flex-1 overflow-y-auto border rounded p-4 bg-white">
                     <!-- Se carga dinámicamente -->
                 </div>
-            
+
                 <div class="mt-4 flex justify-end">
                     <flux:modal.close>
                         <flux:button variant="ghost">Cerrar</flux:button>
