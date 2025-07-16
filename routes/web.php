@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CategoriaUserController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
@@ -13,19 +14,14 @@ use App\Http\Controllers\UsuariosController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
-use App\Models\Categoria;
-use App\Models\Producto;
 use Illuminate\Support\Facades\Route;
 
 // Vista de prueba
 Route::view('/test', 'test');
 
 // Vistas principales
-Route::view('/', 'inicio', [
-    'categorias' => Categoria::all(),
-    'destacados' => Producto::where('destacado', true)->latest()->get(),
-    'nuevos' => Producto::latest()->take(10)->get(),
-])->name('inicio');
+Route::get('/', InicioController::class)->name('inicio');
+
 Route::redirect('admin', 'admin/dashboard');
 
 // Vista Productos Clientes
