@@ -14,13 +14,18 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Models\Categoria;
+use App\Models\Producto;
 use Illuminate\Support\Facades\Route;
 
 // Vista de prueba
 Route::view('/test', 'test');
 
 // Vistas principales
-Route::view('/', 'inicio', ['categorias' => Categoria::all()])->name('inicio');
+Route::view('/', 'inicio', [
+    'categorias' => Categoria::all(),
+    'destacados' => Producto::where('destacado', true)->latest()->get(),
+    'nuevos' => Producto::latest()->take(10)->get(),
+])->name('inicio');
 Route::redirect('admin', 'admin/dashboard');
 
 // Vista Productos Clientes

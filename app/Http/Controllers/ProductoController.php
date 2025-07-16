@@ -70,6 +70,7 @@ class ProductoController extends Controller
         $request->validate([
             'nombre_producto' => ['required', 'max:250', 'unique:productos'],
             'categoria'       => ['nullable'],
+            'destacado'       => [],
             'descripcion'     => [],
             'stock_actual'    => ['required', 'string'],
             'precio'          => ['required', 'string'],
@@ -92,6 +93,7 @@ class ProductoController extends Controller
             'nombre_producto' => request('nombre_producto'),
             'slug'            => Str::slug(request('nombre_producto')),
             'categoria_id'    => request('categoria') ?? null,
+            'destacado'       => request()->has('destacado'),
             'descripcion'     => request('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,
@@ -213,6 +215,7 @@ class ProductoController extends Controller
             'nombre_producto' => $request->input('nombre_producto'),
             'slug'            => Str::slug($request->input('nombre_producto')),
             'categoria_id'    => $request->input('categoria') ?? null,
+            'destacado'       => $request->has('destacado'),
             'descripcion'     => $request->input('descripcion'),
             'stock_actual'    => $stock,
             'precio'          => $precio,
