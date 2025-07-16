@@ -10,19 +10,23 @@ class CategoriaUserController extends Controller
 {
     public function index($slug, Request $request)
     {
-        $categorias = Categoria::where('slug', $slug)->first();
+        $categoriaSeleccionada = Categoria::where('slug', $slug)->first();
 
-        if (! $categorias) {
+        if (! $categoriaSeleccionada) {
             abort(404);
         }
 
-        $query = Producto::with('categoria')->where('categoria_id', $categorias->id);
+        $query = Producto::with('categoria')->where('categoria_id', $categoriaSeleccionada->id);
 
         $productos = Producto::busqueda($request, $query);
 
+        $categorias = Categoria::orderBy('nombre_categoria')->get();
+
         return view('productos.index', [
             'productos' => $productos,
-            'categoria' => $categorias->nombre_categoria,
+            'categoria' => $categoriaSeleccionada->nombre_categoria,
+            'categorias' => $categorias,
+            'slugSeleccionado' => $slug, // indica que hay una categoría seleccionada
         ]);
     }
 }

@@ -2,13 +2,32 @@
     <div class="mx-auto max-w-6xl p-4">
 
         @isset($categoria)
-            <div class="flex items-center text-azul-profundo space-x-6">
+            <div class="flex items-center text-azul-profundo space-x-6 pt-3">
                 <h2 class="text-4xl pb-4 font-bold">{{ $categoria }}</h2>
                 <p class="text-sm font-semibold text-azul-profundo/90">{{ count($productos) }} productos</p>
             </div>
 
             <hr>
         @endisset
+
+        @if (isset($categorias) && $categorias->count())
+            <div class="w-full py-4 px-6">
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="/productos"
+                        class="px-4 py-1 text-sm font-medium rounded-full hover:bg-verde-oliva/70 {{ empty($slugSeleccionado) ? 'bg-verde-oliva text-white' : 'bg-gray-200 text-gray-700' }}">Todas</a>
+
+                    @foreach ($categorias as $cat)
+                        <a href="/productos/categorias/{{ $cat->slug }}"
+                            class="px-4 py-1 text-sm font-medium rounded-full hover:bg-verde-oliva/70 {{ isset($slugSeleccionado) && $slugSeleccionado === $cat->slug
+                                      ? 'bg-[#587A6C] text-white'
+                                      : 'bg-gray-200 text-gray-700' }}">
+                            {{ $cat->nombre_categoria }}
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+            <hr>
+        @endif
 
         <div class="mb-4">
             {{ $productos->links() }}
@@ -31,7 +50,7 @@
             @foreach ($productos as $producto)
                 @if ($producto->activo)
                     <div
-                        class="group relative flex flex-col items-center justify-between bg-white rounded-2xl shadow-lg p-4 hover:shadow-xl transition-shadow duration-300">
+                        class="group relative flex flex-col items-center justify-between bg-white rounded-2xl p-4">
                         <a href="/productos/{{ $producto->slug }}" class="group text-center">
                             <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
                                 alt="{{ $producto->nombre_producto }}"
@@ -40,17 +59,13 @@
                                 <h2 class="text-lg font-semibold text-[#3D3C63]">
                                     {{ $producto->nombre_producto }}
                                 </h2>
-                                <p class="text-md text-gray-500 mt-1">{{ $producto->categoria->nombre_categoria ?? '' }}
+                                <p class="text-md text-gray-500 mt-1">
+                                    {{ $producto->categoria->nombre_categoria ?? '' }}
                                 </p>
                                 <p class="text-xl font-bold text-[#587A6C] mt-2">
                                     ${{ number_format($producto->precio, 0, ',', '.') }}</p>
                             </div>
                         </a>
-                        <!-- Botón carrito -->
-                        <button onclick="agregarAlCarrito({{ $producto->id }})"
-                            class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                            Agregar al carrito
-                        </button>
                     </div>
                 @endif
             @endforeach

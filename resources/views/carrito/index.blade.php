@@ -12,19 +12,25 @@
                         <div class="flex-1">
                             <h2 class="font-semibold">{{ $item->producto->nombre_producto }}</h2>
                             <p class="text-sm text-gray-600">{{ $item->producto->categoria->nombre_categoria }}</p>
-                            <p class="text-xs text-gray-400">SKU {{ $item->producto->descripcion }}</p>
+                            <p class="text-xs text-gray-400">{{ $item->producto->descripcion }}</p>
 
                             <div class="mt-3 flex items-center gap-2">
+                                {{-- Botones para actualizar la cantidad del producto --}}
                                 <div class="flex items-center mt-2 gap-2">
-                                    <button onclick="actualizarCantidad({{ $item->id }}, -1)" class="bg-gray-300 px-2">-</button>
-                                    <span>{{ $item->cantidad }}</span>
-                                    <button onclick="actualizarCantidad({{ $item->id }}, 1)" class="bg-gray-300 px-2">+</button>
+                                    {{-- Botón para disminuir la cantidad del producto --}}
+                                    <form action="{{ route('carrito.update', $item->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="number" name="cantidad" value="{{ $item->cantidad }}">
+                                        <button type="submit" class="px-2 cursor-pointer">🔄️</button>
+                                    </form>
                                 </div>
 
-                                <form action="{{ route('carrito.eliminar', $item->id) }}" method="POST" onsubmit="return confirm('¿Eliminar producto?')">
+                                {{-- Botón para eliminar el producto del carrito --}}
+                                <form action="{{ route('carrito.remove', $item->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="text-red-600 text-sm hover:underline">Eliminar</button>
+                                    <button type="submit" class="text-red-600 text-sm hover:underline cursor-pointer">Eliminar</button>
                                 </form>
                             </div>
                         </div>
@@ -52,11 +58,6 @@
                     <div class="flex justify-between">
                         <span>Costo de tus productos</span>
                         <span>${{ number_format($total, 0, ',', '.') }}</span>
-                    </div>
-                    <!-- Aqui podria ir el costo de envio o algo asi no se xd -->
-                    <div class="flex justify-between">
-                        <span>Descuentos</span>
-                        <span class="text-red-600">-${{ number_format($descuentoTotal, 0, ',', '.') }}</span>
                     </div>
                     <hr>
                     <div class="flex justify-between font-semibold">
