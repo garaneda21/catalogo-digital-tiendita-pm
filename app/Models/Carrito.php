@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\ItemCarrito;
 use App\Models\User;
+use App\Models\Orden;
 use Illuminate\Database\Eloquent\Model;
 
 class Carrito extends Model
