@@ -45,7 +45,7 @@ class Login extends Component
         Session::regenerate();
 
         // registrar login del usuario
-        Registro::registrar_accion(null, null, 1);
+        Registro::registrar_accion(null, 'usuario logea', 1);
 
         $this->redirectIntended(default: route('inicio', absolute: false), navigate: false);
     }
