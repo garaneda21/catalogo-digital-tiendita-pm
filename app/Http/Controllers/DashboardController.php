@@ -36,6 +36,10 @@ class DashboardController extends Controller
 
         $stock_total = Producto::all()->sum('stock_actual');
 
+        $valor_total_productos = DB::table('productos')
+            ->select(DB::raw('SUM(precio * stock_actual) as total'))
+            ->value('total');
+
         $top_productos = Movimiento::select('producto_id', DB::raw('SUM(cantidad) as total'))
             ->where('tipo_movimiento_id', 1)
             ->groupBy('producto_id')
@@ -50,6 +54,7 @@ class DashboardController extends Controller
             'entradas_mes',
             'bajo_stock',
             'stock_total',
+            'valor_total_productos',
             'top_productos'
         ));
     }

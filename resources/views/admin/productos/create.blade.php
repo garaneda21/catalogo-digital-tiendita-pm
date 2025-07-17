@@ -35,6 +35,13 @@
             <flux:input name="stock_actual" id="stock_actual" label="Stock Actual (*)" type="text" autofocus
                 :value="old('stock_actual')" />
 
+            <!-- Producto destacado -->
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="destacado" id="destacado" value="1"
+                    class="w-4 h-4 text-verde-oliva border-gray-300 rounded focus:ring-verde-oliva">
+                <label for="destacado" class="text-sm text-azul-profundo">Marcar como producto destacado</label>
+            </div>
+
             <!-- Descripción -->
             <flux:textarea label="Descripción del Producto" name="descripcion" id="descripcion">
                 {{ old('descripcion') }}
