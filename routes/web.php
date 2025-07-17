@@ -31,7 +31,7 @@ Route::get('/productos/{slug}', [ProductoUserController::class, 'show']);
 
 // Rutas a las que solo puede acceder el admin
 Route::middleware(['auth:admin', 'verified', 'can:admin-activo'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', DashboardController::class);
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     // Rutas de Productos
     Route::resource('/productos', ProductoController::class);
@@ -71,7 +71,7 @@ Route::controller(CarritoController::class)->group(function () {
     Route::post('/carrito/agregar', 'add')->name('carrito.add');    // Agrega un item al carrito
     Route::patch('/carrito/actualizar/{itemId}', 'update')->name('carrito.update'); // Actualiza un item del carrito
     Route::delete('/carrito/eliminar/{itemId}', 'remove')->name('carrito.remove');  // Elimina un item del carrito
-    Route::post('/carrito/vaciar', 'clear')->name('carrito.clear'); // Vacía todo el carrito    
+    Route::post('/carrito/vaciar', 'clear')->name('carrito.clear'); // Vacía todo el carrito
 });
 Route::get('/carrito/contenido', [CarritoController::class, 'contenido'])->name('carrito.contenido');
 Route::get('/carrito/cantidad', [CarritoController::class, 'cantidad'])->name('carrito.cantidad');
@@ -81,13 +81,6 @@ Route::get('/carrito/cantidad', [CarritoController::class, 'cantidad'])->name('c
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
 // LARAVEL
-
-Route::get('/home', function () {
-    return view('welcome');
-})->name('home');
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 Route::middleware(['auth:web'])->group(function () {
     Route::redirect('settings', 'settings/profile');
