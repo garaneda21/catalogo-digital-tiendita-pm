@@ -102,7 +102,7 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->nombre_producto }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap">{{ $producto->categoria->nombre_categoria }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap">
                                     {{ '$' . number_format($producto->precio, 0, ',', '.') }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->stock_actual }}</td>
@@ -167,7 +167,7 @@
                                 <h3 class="font-sans! font-semibold text-[#3D3C63] truncate">
                                     {{ $producto->nombre_producto }}
                                 </h3>
-                                <div class="text-sm text-gray-500">Categoría: {{ $producto->categoria->nombre_categoria }}
+                                <div class="text-sm text-gray-500">Categoría: {{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}
                                 </div>
                                 <div class="text-sm text-gray-500 mb-1">
                                     Stock actual: {{ $producto->stock_actual }}

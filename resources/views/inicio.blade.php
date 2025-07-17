@@ -41,7 +41,7 @@
                                         {{ $producto->nombre_producto }}
                                     </h3>
                                     <a
-                                        class="text-sm text-gray-500 mb-2">{{ $producto->categoria->nombre_categoria }}</a>
+                                        class="text-sm text-gray-500 mb-2">{{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</a>
                                     <p class="text-verde-oliva font-bold text-base">${{ $producto->precio }}</p>
                                 </div>
                             </a>
@@ -68,7 +68,7 @@
                                         {{ $producto->nombre_producto }}
                                     </h3>
                                     <a
-                                        class="text-sm text-gray-500 mb-2">{{ $producto->categoria->nombre_categoria }}</a>
+                                        class="text-sm text-gray-500 mb-2">{{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</a>
                                     <p class="text-verde-oliva font-bold text-base">${{ $producto->precio }}</p>
                                 </div>
                             </a>

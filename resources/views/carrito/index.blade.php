@@ -11,7 +11,7 @@
 
                         <div class="flex-1">
                             <h2 class="font-semibold">{{ $item->producto->nombre_producto }}</h2>
-                            <p class="text-sm text-gray-600">{{ $item->producto->categoria->nombre_categoria }}</p>
+                            <p class="text-sm text-gray-600">{{ $item->producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</p>
                             <p class="text-xs text-gray-400">{{ $item->producto->descripcion }}</p>
 
                             <div class="mt-3 flex items-center gap-2">
