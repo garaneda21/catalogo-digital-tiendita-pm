@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Carrito;
 use App\Models\ItemOrden;
+use App\Models\Movimiento;
 use App\Models\Orden;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,6 +101,17 @@ class WebpayController extends Controller
                 $producto = $item->producto;
                 $producto->stock_actual -= $item->cantidad;
                 $producto->save();
+
+                // --- registrar venta
+                Movimiento::create([
+                    'cantidad'             => $item->cantidad,
+                    'producto_id'          => $item->id,
+                    'tipo_movimiento_id'   => 1, // 1 -> salida
+                    'motivo_movimiento_id' => 5,
+                ]);
+
+                $producto->update(['stock_actual' => $producto->stock_actual - $item->cantidad]);
+                // --- registrar venta
             }
 
             // Limpiar el carrito después de la compra

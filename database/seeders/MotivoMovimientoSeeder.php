@@ -29,7 +29,10 @@ class MotivoMovimientoSeeder extends Seeder
                 'nombre_motivo' => 'Ingreso general',
                 'tipo_movimiento_id' => 2
             ],
-            
+            [
+                'nombre_motivo' => 'Venta Web',
+                'tipo_movimiento_id' => 1
+            ],
             // ...
         ];
 
