@@ -7,7 +7,10 @@
             <div class="lg:col-span-2 space-y-4 overflow-y-auto" style="max-height: 600px;">
                 @foreach($carrito->items as $item)
                     <div class="border rounded-lg p-4 flex items-start gap-4 bg-white">
-                        <img src="/images/placeholder-product.jpg" class="w-32 h-32 object-contain" alt="Imagen">
+                        
+                        <img src="{{ $item->producto->imagen_url ? asset('storage/' . $item->producto->imagen_url) : '/images/placeholder-product.jpg' }}"
+                             alt="{{ $item->producto->nombre_producto }}"
+                             class="w-32 h-32 object-contain">
 
                         <div class="flex-1">
                             <h2 class="font-semibold">{{ $item->producto->nombre_producto }}</h2>
@@ -17,20 +20,28 @@
                             <div class="mt-3 flex items-center gap-2">
                                 {{-- Botones para actualizar la cantidad del producto --}}
                                 <div class="flex items-center mt-2 gap-2">
-                                    {{-- Botón para disminuir la cantidad del producto --}}
-                                    <form action="{{ route('carrito.update', $item->id) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('carrito.update', $item->id) }}" method="POST" class="flex items-center gap-2">
                                         @csrf
                                         @method('PATCH')
-                                        <input type="number" name="cantidad" value="{{ $item->cantidad }}">
-                                        <button type="submit" class="px-2 cursor-pointer">🔄️</button>
+                                        <span>Cantidad:</span>
+                                        <input type="number" name="cantidad" value="{{ $item->cantidad }}" min="1"
+       class="w-20 px-3 py-2 border border-gray-300 rounded-lg text-center text-gray-800 shadow-sm
+              focus:outline-none focus:ring-2 focus:ring-verde-oliva focus:border-verde-oliva
+              transition-all duration-200 ease-in-out font-medium hover:border-verde-oliva" />
+                                        <button type="submit" class="bg-verde-oliva hover:bg-verde-oliva/80 text-white rounded-lg px-4 py-2 flex items-center gap-2 shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-verde-oliva/60 focus:ring-opacity-75 cursor-pointer">
+                                            <flux:icon.arrow-path />
+                                            <span class="font-semibold text-sm">Actualizar</span>
+                                        </button>
                                     </form>
                                 </div>
 
-                                {{-- Botón para eliminar el producto del carrito --}}
-                                <form action="{{ route('carrito.remove', $item->id) }}" method="POST">
+                                <form action="{{ route('carrito.remove', $item->id) }}" method="POST" class="ml-2">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 text-sm hover:underline cursor-pointer">Eliminar</button>
+                                    <button type="submit" class="bg-gray-100 hover:bg-red-100 text-red-600 text-sm rounded-lg px-3 py-1 shadow transition flex items-center gap-1 cursor-pointer">
+                                        <flux:icon.trash />
+                                        <span>Eliminar</span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -61,22 +72,16 @@
                     </div>
                     <hr>
                     <div class="flex justify-between font-semibold">
-                        <span>Subtotal</span>
+                        <span>Total</span>
                         <span>${{ number_format($total, 0, ',', '.') }}</span>
                 </div>
 
-                <a href="{{ route('checkout') }}" class="block bg-red-600 text-white text-center py-2 rounded hover:bg-red-700 transition">
+                <a href="{{ route('checkout') }}" class="block bg-verde-oliva text-white text-center py-2 rounded hover:bg-verde-oliva/80 transition">
                     Continuar tu compra
                 </a>
 
-                <div class="text-sm text-gray-500 border-t pt-2">
-                    <p class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l1.6 8M17 13l-1.6 8M9 21h6" />
-                        </svg>
-                        El costo de envío se calculará en el siguiente paso
-                    </p>
-                </div>
+                
+                
             </div>
         </div>
     </div>
