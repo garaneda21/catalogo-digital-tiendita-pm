@@ -87,7 +87,6 @@
                             <th class="w-16 px-4 py-2 text-left">Stock</th>
                             <th class="w-34 px-4 py-2 text-left">Estado Stock</th>
                             <th class="w-34 px-4 py-2 text-left">Activo</th>
-                            <th class="w-24 px-4 py-2 text-left">Destacado</th>
                             <th class="w-60 px-4 py-2 text-right">Acciones</th>
                         </tr>
                     </thead>
@@ -102,7 +101,7 @@
                                     </div>
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->nombre_producto }}</td>
-                                <td class="px-4 py-2 whitespace-nowrap">{{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</td>
+                                <td class="px-4 py-2 whitespace-nowrap">{{ $producto->categoria->nombre_categoria }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap">
                                     {{ '$' . number_format($producto->precio, 0, ',', '.') }}</td>
                                 <td class="px-4 py-2 whitespace-nowrap font-bold">{{ $producto->stock_actual }}</td>
@@ -120,13 +119,6 @@
                                         <flux:badge variant="pill" color="green">Activo</flux:badge>
                                     @else
                                         <flux:badge variant="pill" color="gray">Desactivado</flux:badge>
-                                    @endif
-                                </td>
-                                <td class="px-4 py-2 whitespace-nowrap">
-                                    @if ($producto->destacado)
-                                        <flux:badge variant="pill" color="amber">Si</flux:badge>
-                                    @else
-                                        <flux:badge variant="pill" color="gray">No</flux:badge>
                                     @endif
                                 </td>
                                 <td class="space-x-2 px-4 py-2 whitespace-nowrap font-bold text-right ">
@@ -167,7 +159,7 @@
                                 <h3 class="font-sans! font-semibold text-[#3D3C63] truncate">
                                     {{ $producto->nombre_producto }}
                                 </h3>
-                                <div class="text-sm text-gray-500">Categoría: {{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}
+                                <div class="text-sm text-gray-500">Categoría: {{ $producto->categoria->nombre_categoria }}
                                 </div>
                                 <div class="text-sm text-gray-500 mb-1">
                                     Stock actual: {{ $producto->stock_actual }}

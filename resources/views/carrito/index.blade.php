@@ -11,26 +11,20 @@
 
                         <div class="flex-1">
                             <h2 class="font-semibold">{{ $item->producto->nombre_producto }}</h2>
-                            <p class="text-sm text-gray-600">{{ $item->producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</p>
-                            <p class="text-xs text-gray-400">{{ $item->producto->descripcion }}</p>
+                            <p class="text-sm text-gray-600">{{ $item->producto->categoria->nombre_categoria }}</p>
+                            <p class="text-xs text-gray-400">SKU {{ $item->producto->descripcion }}</p>
 
                             <div class="mt-3 flex items-center gap-2">
-                                {{-- Botones para actualizar la cantidad del producto --}}
                                 <div class="flex items-center mt-2 gap-2">
-                                    {{-- Botón para disminuir la cantidad del producto --}}
-                                    <form action="{{ route('carrito.update', $item->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('PATCH')
-                                        <input type="number" name="cantidad" value="{{ $item->cantidad }}">
-                                        <button type="submit" class="px-2 cursor-pointer">🔄️</button>
-                                    </form>
+                                    <button onclick="actualizarCantidad({{ $item->id }}, -1)" class="bg-gray-300 px-2">-</button>
+                                    <span>{{ $item->cantidad }}</span>
+                                    <button onclick="actualizarCantidad({{ $item->id }}, 1)" class="bg-gray-300 px-2">+</button>
                                 </div>
 
-                                {{-- Botón para eliminar el producto del carrito --}}
-                                <form action="{{ route('carrito.remove', $item->id) }}" method="POST">
+                                <form action="{{ route('carrito.eliminar', $item->id) }}" method="POST" onsubmit="return confirm('¿Eliminar producto?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 text-sm hover:underline cursor-pointer">Eliminar</button>
+                                    <button class="text-red-600 text-sm hover:underline">Eliminar</button>
                                 </form>
                             </div>
                         </div>
@@ -59,6 +53,11 @@
                         <span>Costo de tus productos</span>
                         <span>${{ number_format($total, 0, ',', '.') }}</span>
                     </div>
+                    <!-- Aqui podria ir el costo de envio o algo asi no se xd -->
+                    <div class="flex justify-between">
+                        <span>Descuentos</span>
+                        <span class="text-red-600">-${{ number_format($descuentoTotal, 0, ',', '.') }}</span>
+                    </div>
                     <hr>
                     <div class="flex justify-between font-semibold">
                         <span>Subtotal</span>
@@ -69,14 +68,6 @@
                     Continuar tu compra
                 </a>
 
-                <div class="text-sm text-gray-500 border-t pt-2">
-                    <p class="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l1.6 8M17 13l-1.6 8M9 21h6" />
-                        </svg>
-                        El costo de envío se calculará en el siguiente paso
-                    </p>
-                </div>
             </div>
         </div>
     </div>
