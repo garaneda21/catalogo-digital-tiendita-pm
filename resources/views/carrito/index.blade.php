@@ -17,20 +17,32 @@
                             <div class="mt-3 flex items-center gap-2">
                                 {{-- Botones para actualizar la cantidad del producto --}}
                                 <div class="flex items-center mt-2 gap-2">
-                                    {{-- Botón para disminuir la cantidad del producto --}}
-                                    <form action="{{ route('carrito.update', $item->id) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('carrito.update', $item->id) }}" method="POST" class="flex items-center gap-2">
                                         @csrf
                                         @method('PATCH')
-                                        <input type="number" name="cantidad" value="{{ $item->cantidad }}">
-                                        <button type="submit" class="px-2 cursor-pointer">🔄️</button>
+                                        <span>Cantidad:</span>
+                                        <input type="number" name="cantidad" value="{{ $item->cantidad }}" min="1"
+       class="w-20 px-3 py-2 border border-gray-300 rounded-lg text-center text-gray-800 shadow-sm
+              focus:outline-none focus:ring-2 focus:ring-verde-oliva focus:border-verde-oliva
+              transition-all duration-200 ease-in-out font-medium hover:border-verde-oliva" />
+                                        <button type="submit" class="bg-verde-oliva hover:bg-verde-oliva/80 text-white rounded-lg px-4 py-2 flex items-center gap-2 shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-verde-oliva/60 focus:ring-opacity-75 cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.6M22 12.5A10 10 0 0 1 3.2 17.6"/>
+                                            </svg>
+                                            <span class="font-semibold text-sm">Actualizar</span>
+                                        </button>
                                     </form>
                                 </div>
 
-                                {{-- Botón para eliminar el producto del carrito --}}
-                                <form action="{{ route('carrito.remove', $item->id) }}" method="POST">
+                                <form action="{{ route('carrito.remove', $item->id) }}" method="POST" class="ml-2">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="text-red-600 text-sm hover:underline cursor-pointer">Eliminar</button>
+                                    <button type="submit" class="bg-gray-100 hover:bg-red-100 text-red-600 text-sm rounded-lg px-3 py-1 shadow transition flex items-center gap-1 cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        <span>Eliminar</span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -65,7 +77,7 @@
                         <span>${{ number_format($total, 0, ',', '.') }}</span>
                 </div>
 
-                <a href="{{ route('checkout') }}" class="block bg-red-600 text-white text-center py-2 rounded hover:bg-red-700 transition">
+                <a href="{{ route('checkout') }}" class="block bg-verde-oliva text-white text-center py-2 rounded hover:bg-verde-oliva/80 transition">
                     Continuar tu compra
                 </a>
 

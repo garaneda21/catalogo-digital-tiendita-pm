@@ -21,6 +21,53 @@ contenido @yield('contenido_catalogo') --}}
     </header>
 
     <div class="bg-blanco min-h-screen">
+
+        @if (session('success'))
+            <div id="success-alert" class="bg-green-100 text-green-700 p-4 rounded-lg mb-4 flex justify-between items-center shadow-md" role="alert">
+                <span>{{ session('success') }}</span>
+                <button type="button" class="text-green-700 hover:text-green-900 ml-4" onclick="document.getElementById('success-alert').style.display='none';">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const successAlert = document.getElementById('success-alert');
+                    if (successAlert) {
+                        setTimeout(() => {
+                            successAlert.style.transition = 'opacity 0.5s ease-out';
+                            successAlert.style.opacity = '0';
+                            setTimeout(() => successAlert.remove(), 500); // Elimina después de la transición
+                        }, 3000); // El mensaje desaparece después de 5 segundos (5000 ms)
+                    }
+                });
+            </script>
+        @endif
+        
+        @if (session('error'))
+            <div id="error-alert" class="bg-red-100 text-red-700 p-4 rounded-lg mb-4 flex justify-between items-center shadow-md" role="alert">
+                <span>{{ session('error') }}</span>
+                <button type="button" class="text-red-700 hover:text-red-900 ml-4" onclick="document.getElementById('error-alert').style.display='none';">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const errorAlert = document.getElementById('error-alert');
+                    if (errorAlert) {
+                        setTimeout(() => {
+                            errorAlert.style.transition = 'opacity 0.5s ease-out';
+                            errorAlert.style.opacity = '0';
+                            setTimeout(() => errorAlert.remove(), 500); // Elimina después de la transición
+                        }, 5000); // El mensaje de error desaparece después de 7 segundos
+                    }
+                });
+            </script>
+        @endif
+
         {{ $slot }}
         <!-- Modal con items del carrito que se despliega al añadir un producto-->
         <flux:modal name="desplegar-modal-carrito" class="w-full max-w-[800px]">
@@ -33,9 +80,10 @@ contenido @yield('contenido_catalogo') --}}
                 </div>
 
                 <div class="mt-4 flex justify-end">
-                    <flux:modal.close>
-                        <flux:button variant="ghost">Cerrar</flux:button>
-                    </flux:modal.close>
+                    <flux:button variant="primary" class="mr-2" onclick="location.href='{{ route('carrito.index') }}'">
+                        Ir al carrito
+                    </flux:button>
+                    <flux:button variant="ghost" onclick="location.href='{{ url('/productos') }}'">Seguir comprando</flux:button>
                 </div>
             </div>
         </flux:modal>

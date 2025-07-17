@@ -133,7 +133,7 @@ class CarritoController extends Controller
 
         // Comparamos la nueva cantidad solicitada con el stock del producto
         if ($item->producto->stock_actual < $request->cantidad) {
-            return redirect()->route('carrito.index')->with('error', 'No puedes agregar más de ' . $item->producto->stock_actual . ' unidades.');
+            return redirect()->route('carrito.index')->with('error', 'No hay suficiente stock. Solo quedan ' . $item->producto->stock_actual . ' unidades.');
         }
 
         // --- FIN DE LA MODIFICACIÓN ---
