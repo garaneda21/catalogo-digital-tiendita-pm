@@ -22,7 +22,6 @@ class ProductoSeeder extends Seeder
                 'precio'          => 25990,
                 'imagen_url'      => null,
                 'activo' => 1,
-                'destacado' => 1,
                 'categoria_id'    => 1,
             ],
             [
@@ -33,7 +32,6 @@ class ProductoSeeder extends Seeder
                 'precio'          => 29990,
                 'imagen_url'      => null,
                 'activo' => 1,
-                'destacado' => 1,
                 'categoria_id'    => 1,
             ],
             [
@@ -44,7 +42,6 @@ class ProductoSeeder extends Seeder
                 'precio'          => 14990,
                 'imagen_url'      => null,
                 'activo' => 1,
-                'destacado' => 1,
                 'categoria_id'    => 2,
             ],
             [
@@ -55,7 +52,6 @@ class ProductoSeeder extends Seeder
                 'precio'          => 17990,
                 'imagen_url'      => null,
                 'activo' => 1,
-                'destacado' => 1,
                 'categoria_id'    => 2,
             ],
             [
@@ -66,7 +62,6 @@ class ProductoSeeder extends Seeder
                 'precio'          => 10990,
                 'imagen_url'      => null,
                 'activo' => 1,
-                'destacado' => 1,
                 'categoria_id'    => 3,
             ],
             [
@@ -77,7 +72,6 @@ class ProductoSeeder extends Seeder
                 'precio'          => 8990,
                 'imagen_url'      => null,
                 'activo' => 1,
-                'destacado' => 1,
                 'categoria_id'    => 3,
             ],
             [

@@ -1,14 +1,25 @@
 {{-- Con extends definimos la estructura descrita en layouts --}}
 <x-layouts.estructura>
 
+    <!-- Barra de categorías -->
+    <div class="w-full bg-crema py-4 px-6">
+        <div class="flex flex-wrap justify-center gap-3">
+            @foreach ($categorias as $categoria)
+                <a href="{{ route('categorias.show', $categoria->slug) }}"
+                    class="px-4 py-1 text-sm font-medium text-white bg-terracota rounded-full hover:bg-terracota/70">
+                    {{ $categoria->nombre_categoria }}
+                </a>
+            @endforeach
+        </div>
+    </div>
+
     <section class="py-2 px-6 bg-crema">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
 
             <!-- Texto a la izquierda -->
             <div class="md:w-1/2 text-left">
                 <h1 class="text-5xl font-bold mb-4 text-azul-profundo">Bienvenida a Tiendita PM</h1>
-                <p class="text-verde-oliva font-semibold text-lg mb-6 max-w-md">Explora una colección pensada para ti,
-                    llena de
+                <p class="text-verde-oliva font-semibold text-lg mb-6 max-w-md">Explora una colección pensada para ti, llena de
                     detalles,
                     colores y productos únicos.</p>
                 <a href="/productos"
@@ -25,55 +36,59 @@
         </div>
     </section>
 
-    <section class="w-full px-6 py-8 bg-crema-claro">
+    <!-- Destacados -->
+    <section class="py-16 px-6 bg-crema-claro">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-center text-azul-profundo mb-4">Productos Destacados</h2>
-
-            <div class="overflow-x-auto">
-                <div class="flex space-x-4">
-                    @foreach ($destacados as $producto)
-                        <div class="min-w-[200px] bg-white rounded-xl border border-gray-200">
-                            <a href="/productos/{{ $producto->slug }}">
-                                <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
-                                    alt="" class="w-full h-48 object-cover rounded-t-xl">
-                                <div class="p-4">
-                                    <h3 class="text-lg font-semibold text-azul-profundo mb-1">
-                                        {{ $producto->nombre_producto }}
-                                    </h3>
-                                    <a
-                                        class="text-sm text-gray-500 mb-2">{{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</a>
-                                    <p class="text-verde-oliva font-bold text-base">${{ $producto->precio }}</p>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
+            <h2 class="text-3xl font-semibold text-center mb-10">Productos Destacados</h2>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Producto 1"
+                        class="w-full h-64 object-cover rounded-t-2xl">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Producto 1</h3>
+                        <p class="text-[#D88C4B] font-semibold">$12.000</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Producto 2"
+                        class="w-full h-64 object-cover rounded-t-2xl">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Producto 2</h3>
+                        <p class="text-[#D88C4B] font-semibold">$15.500</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Producto 3"
+                        class="w-full h-64 object-cover rounded-t-2xl">
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold">Producto 3</h3>
+                        <p class="text-[#D88C4B] font-semibold">$18.990</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="w-full px-6 py-8 bg-crema-claro">
+    <!-- Categorías -->
+    <section class="py-16 px-6 bg-crema-claro">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-center text-azul-profundo mb-4">Productos Nuevos</h2>
-
-            <div class="overflow-x-auto">
-                <div class="flex space-x-4">
-                    @foreach ($nuevos as $producto)
-                        <div class="min-w-[200px] bg-white rounded-xl border border-gray-200">
-                            <a href="/productos/{{ $producto->slug }}">
-                                <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
-                                    alt="" class="w-full h-48 object-cover rounded-t-xl">
-                                <div class="p-4">
-                                    <h3 class="text-lg font-semibold text-azul-profundo mb-1">
-                                        {{ $producto->nombre_producto }}
-                                    </h3>
-                                    <a
-                                        class="text-sm text-gray-500 mb-2">{{ $producto->categoria->nombre_categoria ?? 'Sin Categoría' }}</a>
-                                    <p class="text-verde-oliva font-bold text-base">${{ $producto->precio }}</p>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
+            <h2 class="text-3xl font-semibold text-center mb-10">Categorías</h2>
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Perfumes" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Perfumes</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Skincare" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Skincare</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Maquillaje" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Maquillaje</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow hover:shadow-lg transition">
+                    <img src="https://placehold.co/500x500" alt="Ropa" class="mx-auto mb-4">
+                    <h3 class="text-lg font-bold text-[#D88C4B]">Ropa</h3>
                 </div>
             </div>
         </div>

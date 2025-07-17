@@ -23,7 +23,6 @@ return new class extends Migration
             $table->integer('precio')->default(0);
             $table->string('imagen_url', 500)->nullable();
             $table->boolean('activo')->default(1);
-            $table->boolean('destacado')->default(0);
             $table->foreignIdFor(Categoria::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });

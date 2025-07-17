@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -18,13 +17,7 @@ class ProductoUserController extends Controller
         //realiza búsqueda y retorna datos paginados
         $productos = Producto::busqueda($request, $query);
 
-        $categorias = Categoria::orderBy('nombre_categoria')->get();
-
-        return view('productos.index', [
-            'productos' => $productos,
-            'categorias' => $categorias,
-            'slugSeleccionado' => null, // indica que no hay categoría seleccionada
-        ]);
+        return view('productos.index', compact('productos'));
     }
 
     /**

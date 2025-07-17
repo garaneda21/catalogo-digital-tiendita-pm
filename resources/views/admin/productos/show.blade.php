@@ -12,8 +12,7 @@
             <div class="w-full max-w-[240px]">
                 <div class="overflow-hidden border rounded-lg aspect-square">
                     <img src="{{ $producto->imagen_url ? asset('storage/' . $producto->imagen_url) : '/images/placeholder-product.jpg' }}"
-                        alt="Imagen del producto"
-                        class="object-cover w-full h-full {{ $producto->activo ? '' : 'grayscale-75' }}">
+                        alt="Imagen del producto" class="object-cover w-full h-full {{ $producto->activo ? '' : 'grayscale-75'}}">
                 </div>
             </div>
 
@@ -47,13 +46,6 @@
                         <p class="text-red-600">Desactivado</p>
                     @endif
                 </div>
-
-                @if ($producto->destacado)
-                    <div class="border p-2 rounded-lg bg-gray-50">
-                        <p class="text-gray-500 text-sm mb-1">Destacado</p>
-                        <p class="text-amber-500">Destacado</p>
-                    </div>
-                @endif
 
                 <div class="border p-2 rounded-lg bg-gray-50">
                     <p class="text-gray-500 text-sm mb-1">Creado el</p>

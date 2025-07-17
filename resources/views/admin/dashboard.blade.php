@@ -2,7 +2,7 @@
 
     <x-panel.header nombre_header="Dashboard"></x-panel.header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 my-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 my-6">
         <div class="bg-gray-50 p-4 rounded-lg border">
             <span class="text-md text-gray-500">Ventas este mes</span>
             <p class="text-xl font-bold text-azul-profundo">
@@ -25,12 +25,6 @@
             <span class="text-md text-gray-500">Stock total</span>
             <p class="text-xl font-bold text-azul-profundo">
                 <span class="text-2xl">{{ $stock_total }}</span> unidades
-            </p>
-        </div>
-        <div class="bg-gray-50 p-4 rounded-lg border">
-            <span class="text-md text-gray-500">Valor Total Productos</span>
-            <p class="text-xl font-bold text-azul-profundo">
-                <span class="text-2xl">$ {{ number_format($valor_total_productos, 0, ',', '.') }}</span>
             </p>
         </div>
     </div>

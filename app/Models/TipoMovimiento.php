@@ -10,7 +10,7 @@ class TipoMovimiento extends Model
 
     public $timestamps = false;
 
-    public function movimiento() {
-        return $this->hasOne(Movimiento::class);
+    public function movimientos() {
+        return $this->hasMany(Movimiento::class);
     }
 }
