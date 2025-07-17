@@ -88,9 +88,7 @@
             @endphp
                         
             <a href="{{ route('carrito.index') }}" class="relative">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-                </svg>
+                <flux:icon.shopping-bag class="size-8 text-azul-profundo" />
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
                         0
                     </span>
@@ -119,7 +117,7 @@
                     class="block mt-2 py-3 cursor-pointer rounded-2xl border-1 text-red-400 border-red-400 hover:bg-black/10 transition-colors duration-200">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="cursor-pointe class="cursor-pointer"r">Cerrar sesión</button>
+                        <button type="submit" class="cursor-pointer">Cerrar sesión</button>
                     </form>
                 </div>
             @else
