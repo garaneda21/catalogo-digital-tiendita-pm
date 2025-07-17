@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password as PasswordRule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
+use Livewire\Attributes\Layout;
 
 class Password extends Component
 {
@@ -39,5 +40,13 @@ class Password extends Component
         $this->reset('current_password', 'password', 'password_confirmation');
 
         $this->dispatch('password-updated');
+    }
+    /**
+     * Incluye el layout del catalogo a los settings de livewire.
+     */
+    public function render()
+    {
+        return view('livewire.settings.password')
+            ->layout('components.layouts.estructura');
     }
 }

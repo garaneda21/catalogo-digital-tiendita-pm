@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Models\Registro;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -38,6 +39,9 @@ class AdminLogin extends Component
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
+
+        // registrar login del usuario
+        Registro::registrar_accion(null, 'Inicia sesión');
 
         $this->redirectIntended(default: route('login-admin', absolute: false), navigate: false);
     }

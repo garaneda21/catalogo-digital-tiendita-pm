@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use App\Models\Registro;
 
 #[Layout('components.layouts.auth')]
 class Login extends Component
@@ -42,6 +43,9 @@ class Login extends Component
 
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
+
+        // registrar login del usuario
+        Registro::registrar_accion(null, 'usuario logea', 1);
 
         $this->redirectIntended(default: route('inicio', absolute: false), navigate: false);
     }

@@ -1,99 +1,94 @@
-<x-layouts.panel>
+<x-layouts.navlist-productos :producto="$producto">
+
+    <h2 class="mb-4 text-2xl text-azul-profundo font-bold">Editar Datos</h2>
 
     <form method="POST" enctype="multipart/form-data" action="{{ route('productos.update', $producto->id) }}">
         @csrf
         @method('PUT')
 
-        <div class="space-y-12">
-            <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base/7 font-semibold text-gray-900">Editar Producto</h2>
+        <div class="flex flex-col gap-6 max-w-lg">
+            <p class="text-melocoton">Edita los campos que quieras modificar</p>
 
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <!-- Nombre Producto -->
+            <flux:input name="nombre_producto" label="Nombre Producto (*)" type="text" autofocus
+                value="{{ $producto->nombre_producto }}" />
 
+            <!-- Categoría -->
+            <flux:select name="categoria" label="Categoría (*)">
+                <option value="">Sin categoría</option>
 
-                    <!-- Nombre Producto -->
-                    <x-form-field>
-                        <x-form-label for="nombre_producto">Nombre Producto
-                            <span class="text-sm text-red-500">(requerido)</span>
-                        </x-form-label>
-                        <div class="mt-2">
-                            <x-form-input type="text" name="nombre_producto" id="nombre_producto"
-                                value="{{ $producto->nombre_producto }}"></x-form-input>
-                        </div>
-                    </x-form-field>
+                @foreach ($categorias->all() as $categoria)
+                    {{ $esta_seleccionado = $producto->categoria_id == $categoria->id ? true : false }}
+                    <option value="{{ $categoria->id }}" {{ $esta_seleccionado ? 'selected' : '' }}>
+                        {{ $categoria->nombre_categoria }}
+                        {{ $esta_seleccionado ? '(seleccionado)' : '' }}
+                    </option>
+                @endforeach
+            </flux:select>
 
-                    <!-- Categoría -->
-                    <x-form-field>
-                        <x-form-label for="categoria">Categoría
-                            <span class="text-sm text-red-500">(requerido)</span>
-                        </x-form-label>
-                        <div class="mt-2">
-                            <x-form-select id="categoria" name="categoria">
-                                @foreach ($categorias->all() as $categoria)
-                                    {{ $esta_seleccionado = $producto->categoria_id == $categoria->id ? true : false }}
-                                    <option value="{{ $categoria->id }}" {{ $esta_seleccionado ? 'selected' : '' }}>
-                                        {{ $categoria->nombre_categoria }}
-                                        {{ $esta_seleccionado ? '(seleccionado)' : '' }}
-                                    </option>
-                                @endforeach
-                            </x-form-select>
-                        </div>
-                    </x-form-field>
+            <!-- Precio -->
+            <flux:input name="precio" id="precio" label="Precio (*)" type="text"
+                value="{{ '$' . number_format($producto->precio, 0, ',', '.') }}" />
 
-                    <!-- Precio -->
-                    <x-form-field>
-                        <x-form-label for="precio">Precio
-                            <span class="text-sm text-red-500">(requerido)</span>
-                        </x-form-label>
-                        <div class="mt-2">
-                            <x-form-input type="text" name="precio" id="precio"
-                                value="{{ $producto->precio }}"></x-form-input>
-                        </div>
-                    </x-form-field>
+            <!-- Stock Actual -->
+            <flux:input name="stock_actual" id="stock_actual" label="Stock Actual (*)" type="text"
+                value="{{ number_format($producto->stock_actual, 0, ',', '.') }}" />
 
-                    <!-- Stock Actual -->
-                    <x-form-field>
-                        <x-form-label for="stock_actual">Stock Actual</x-form-label>
-                        <div class="mt-2">
-                            <x-form-input type="text" name="stock_actual" id="stock_actual"
-                                value="{{ $producto->stock_actual }}"></x-form-input>
-                        </div>
-                    </x-form-field>
-
-
-                    <!-- Descripción -->
-                    <x-form-field>
-                        <x-form-label for="descripcion">Descripción</x-form-label>
-                        <div class="mt-2">
-                            <x-form-textarea name="descripcion" id="descripcion"
-                                rows="3">{{ $producto->descripcion }}</x-form-textarea>
-                        </div>
-                    </x-form-field>
-
-                    <!-- Imagen -->
-                    <x-form-field>
-                        <x-form-label for="imagen">Imagen del producto</x-form-label>
-
-                        <div class="mt-2">
-                            <x-form-input-image :imagen_actual="$producto->imagen_url" />
-                        </div>
-                    </x-form-field>
-
-                    @if ($errors->any())
-                        <x-form-errorcard />
-                    @endif
-                </div>
+            <!-- Producto destacado -->
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="destacado" id="destacado" value="1"
+                    {{ $producto->destacado ? 'checked' : '' }}
+                    class="w-4 h-4 text-verde-oliva border-gray-300 rounded focus:ring-verde-oliva">
+                <label for="destacado" class="text-sm font-semibold text-azul-profundo">Marcar como producto destacado</label>
             </div>
 
-            <div class="mt-6 flex items-center justify-end gap-x-6">
-                <a href="{{ route('productos.index') }}" class="text-sm/6 font-semibold text-gray-900">Cancelar</a>
-                <button type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            <!-- Descripción -->
+            <flux:textarea label="Descripción del Producto" name="descripcion" id="descripcion">
+                {{ $producto->descripcion }}
+            </flux:textarea>
+
+            <x-forms.input-imagen :imagen_actual="$producto->imagen_url" />
+
+            @if ($errors->any())
+                <x-forms.error-card></x-forms.error-card>
+            @endif
+
+            <hr>
+
+            <div class="flex items-center justify-end gap-x-6">
+                <flux:button type="submit" variant="primary" icon="arrow-path"
+                    class="bg-verde-oliva hover:bg-verde-oliva/70! dark:text-black! dark:bg-white! rounded-3xl!">
                     Actualizar
-                </button>
+                </flux:button>
             </div>
         </div>
-
     </form>
 
-</x-layouts.panel>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ------- Formateo del precio -------
+            const precioInput = document.getElementById('precio');
+
+            precioInput?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 9) {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value ? '$' + new Intl.NumberFormat('es-CL').format(value) : '';
+            });
+
+            // ------- Formateo del stock_actual -------
+            const stockInput = document.getElementById('stock_actual');
+
+            stockInput?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 9) {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value ? new Intl.NumberFormat('es-CL').format(value) : '';
+            });
+        });
+    </script>
+
+
+</x-layouts.navlist-productos>

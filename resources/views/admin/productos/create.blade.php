@@ -1,88 +1,94 @@
-<x-layouts.panel>
+<x-layouts.app :title="__('Dashboard')">
+
+    <x-panel.header nombre_header="Crear nuevo producto">
+        <flux:button href="/admin/productos" icon="arrow-left"
+            class="dark:text-black! dark:bg-white! hover:bg-gray-200! rounded-3xl!">
+            Volver
+        </flux:button>
+    </x-panel.header>
 
     <form method="post" enctype="multipart/form-data" action="/admin/productos">
         @csrf
+        <div class="flex flex-col gap-6 max-w-lg mt-6">
+            <p class="text-melocoton">Rellena los datos para crear tu nuevo producto</p>
 
-        <div class="space-y-12">
-            <div class="border-b border-gray-900/10 pb-12">
-                <h2 class="text-base font-semibold text-gray-900">Nuevo Producto</h2>
+            <!-- Nombre Producto -->
+            <flux:input name="nombre_producto" label="Nombre Producto (*)" type="text" autofocus
+                :value="old('nombre_producto')" />
 
-                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <!-- Categoría -->
+            <flux:select name="categoria" label="Categoría (*)">
+                <option value="">Sin categoría</option>
 
-                    <!-- Nombre Producto -->
-                    <x-form-field>
-                        <x-form-label for="nombre_producto">Nombre Producto <span
-                                class="text-blue-500">(requerido)</span></x-form-label>
-                        <div class="mt-2">
-                            <x-form-input type="text" name="nombre_producto" id="nombre_producto"
-                                :value="old('nombre_producto')"></x-form-input>
-                        </div>
-                        <x-form-error name="nombre_producto"></x-form-error>
-                    </x-form-field>
+                @foreach ($categorias->all() as $categoria)
+                    <option value="{{ $categoria->id }}" {{ old('categoria') == $categoria->id ? 'selected' : '' }}>
+                        {{ $categoria->nombre_categoria }}
+                    </option>
+                @endforeach
+            </flux:select>
 
-                    <!-- Categoría -->
-                    <x-form-field>
-                        <x-form-label for="categoria">Categoría <span
-                                class="text-blue-500">(requerido)</span></x-form-label>
-                        <x-form-select>
-                            @foreach ($categorias->all() as $categoria)
-                                <option value="{{ $categoria->id }}"
-                                    {{ old('categoria') == $categoria->id ? 'selected' : '' }}>
-                                    {{ $categoria->nombre_categoria }}</option>
-                            @endforeach
-                        </x-form-select>
-                    </x-form-field>
+            <!-- Precio -->
+            <flux:input name="precio" id="precio" label="Precio (*)" type="text" autofocus
+                :value="old('precio')" />
 
-                    <!-- Precio -->
-                    <x-form-field>
-                        <x-form-label for="precio">Precio <span class="text-blue-500">(requerido)</span></x-form-label>
-                        <div class="mt-2">
-                            <x-form-input type="text" name="precio" id="precio" :value="old('precio')"></x-form-input>
-                        </div>
-                        <x-form-error name="precio"></x-form-error>
-                    </x-form-field>
+            <!-- Stock Actual -->
+            <flux:input name="stock_actual" id="stock_actual" label="Stock Actual (*)" type="text" autofocus
+                :value="old('stock_actual')" />
 
-                    <!-- Stock Actual -->
-                    <x-form-field>
-                        <x-form-label for="stock_actual">Stock Actual</x-form-label>
-                        <div class="mt-2">
-                            <x-form-input type="text" name="stock_actual" id="stock_actual" :value="old('stock_actual')"
-                                min="0"></x-form-input>
-                        </div>
-                        <x-form-error name="stock_actual"></x-form-error>
-                    </x-form-field>
-
-                    <!-- Descripción -->
-                    <x-form-field>
-                        <x-form-label for="descripcion">Descripción</x-form-label>
-                        <div class="mt-2">
-                            <x-form-textarea type="text" name="descripcion" id="descripcion">
-                                {{ old('descripcion') }} </x-form-textarea>
-                        </div>
-                    </x-form-field>
-
-                    <!-- Imagen -->
-                    <x-form-field>
-                        <x-form-label for="imagen">Imagen del producto</x-form-label>
-
-                        <div class="mt-2">
-                            <x-form-input-image></x-form-input-image>
-                        </div </x-form-field>
-
-
-                        @if ($errors->any())
-                            <x-form-errorcard></x-form-errorcard>
-                        @endif
-                </div>
+            <!-- Producto destacado -->
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" name="destacado" id="destacado" value="1"
+                    class="w-4 h-4 text-verde-oliva border-gray-300 rounded focus:ring-verde-oliva">
+                <label for="destacado" class="text-sm text-azul-profundo">Marcar como producto destacado</label>
             </div>
 
+            <!-- Descripción -->
+            <flux:textarea label="Descripción del Producto" name="descripcion" id="descripcion">
+                {{ old('descripcion') }}
+            </flux:textarea>
 
-            <div class="mt-6 flex items-center justify-end gap-x-6">
-                <!-- <button type="button" class="text-sm/6 font-semibold text-gray-900">Cancelar</button> -->
-                <button type="submit"
-                    class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Guardar</button>
+            <x-forms.input-imagen />
+
+            @if ($errors->any())
+                <x-forms.error-card></x-forms.error-card>
+            @endif
+
+            <hr>
+
+            <div class="flex items-center justify-end gap-x-6">
+                <flux:button type="submit" variant="primary" icon="squares-plus"
+                    class="bg-verde-oliva hover:bg-verde-oliva/70! dark:text-black! dark:bg-white! rounded-3xl!">
+                    Crear Producto
+                </flux:button>
             </div>
         </div>
     </form>
 
-</x-layouts.panel>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ------- Formateo del precio -------
+            const precioInput = document.getElementById('precio');
+
+            precioInput?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 9) {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value ? '$' + new Intl.NumberFormat('es-CL').format(value) : '';
+            });
+
+            // ------- Formateo del stock_actual -------
+            const stockInput = document.getElementById('stock_actual');
+
+            stockInput?.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 9) {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value ? new Intl.NumberFormat('es-CL').format(value) : '';
+            });
+        });
+    </script>
+
+
+</x-layouts.app>

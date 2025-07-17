@@ -3,6 +3,7 @@
 use App\Models\Accion;
 use App\Models\Producto;
 use App\Models\Administrador;
+use App\Models\User;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,10 +18,13 @@ return new class extends Migration
     {
         Schema::create('registros', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('id_entidad_modificada')->nullable();
+            $table->string('entidad_modificada')->nullable();
+            $table->dateTime('fecha_registro');
             $table->foreignIdFor(Accion::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Producto::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Administrador::class)->constrained()->cascadeOnDelete();
-            $table->dateTime('fecha_hora');
+            $table->foreignIdFor(Administrador::class)->nullable()->constrained()->cascadeOnDelete();
+            //Añadiendo la relación con User
+            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete();
         });
     }
 

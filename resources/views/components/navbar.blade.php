@@ -17,8 +17,7 @@
         <div class="hidden sm:flex items-center gap-4">
             <!-- Enlaces del menú -->
             <div class="flex items-center font-bold gap-4 text-sm text-melocoton">
-                <a href="#" class="hover:underline">Inicio</a>
-                <a href="#" class="hover:underline">Catálogo</a>
+                <a href="/productos" class="hover:underline">Catálogo</a>
                 <a href="#" class="hover:underline">Nosotros</a>
                 <a href="#" class="hover:underline">Contacto</a>
             </div>
@@ -42,16 +41,18 @@
                                 <!-- Dropdown -->
                                 <div id="userDropdownMenu"
                                     class="hidden absolute overflow-hidden right-0 mt-2 w-48 bg-azul-profundo rounded-xl shadow-lg z-50">
+                                    <!-- Compras cliente -->
                                     <a href="#"
                                         class="flex items-center gap-2 px-4 py-2 text-sm text-blanco hover:underline">
                                         <x-iconos.bolsita /> Mis Compras
                                     </a>
-
-                                    <a href="#"
-                                        class="flex items-center gap-2 px-4 py-2 text-sm text-blanco hover:underline">
-                                        <x-iconos.cog /> Configuración
+                                    <!-- Configuracion -->
+                                    <a href="{{ route('settings.profile') }}"
+                                       class="flex items-center gap-2 px-4 py-2 text-sm text-blanco hover:underline">
+                                        <x-iconos.cog />
+                                        {{ __('Ajustes') }}
                                     </a>
-
+                                    <!-- Cerrar sesión -->
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit"
@@ -71,6 +72,28 @@
                     </nav>
                 </div>
             @endif
+
+            <!-- Linea separadora -->
+            <div class="h-5 w-[1px] bg-[#D9CBB6] mx-1"></div>
+
+            <!-- Icono del carrito con cantidad de productos -->
+
+            @php
+                use App\Models\Carrito;
+                        
+                $carrito = Auth::guard('web')->check()
+                    ? Carrito::where('user_id', Auth::guard('web')->id())->first()
+                    : Carrito::where('token', session()->getId())->first();
+                $total = $carrito ? $carrito->items->sum('cantidad') : 0;
+            @endphp
+                        
+            <a href="{{ route('carrito.index') }}" class="relative">
+                <flux:icon.shopping-bag class="size-8 text-azul-profundo" />
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                        0
+                    </span>
+            </a>
+
         </div>
     </div>
 
@@ -94,7 +117,7 @@
                     class="block mt-2 py-3 cursor-pointer rounded-2xl border-1 text-red-400 border-red-400 hover:bg-black/10 transition-colors duration-200">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="cursor-pointe class="cursor-pointer"r">Cerrar sesión</button>
+                        <button type="submit" class="cursor-pointer">Cerrar sesión</button>
                     </form>
                 </div>
             @else
@@ -131,4 +154,18 @@
             });
         });
     </script>
+
+    <script>
+    async function actualizarContadorCarrito() {
+        try {
+            const res = await fetch('{{ route('carrito.cantidad') }}');
+            const data = await res.json();
+            document.getElementById('cart-count').innerText = data.cantidad ?? 0;
+        } catch (err) {
+            console.error('Error al cargar el contador del carrito:', err);
+        }
+    }
+    </script>
+
+
 </nav>
