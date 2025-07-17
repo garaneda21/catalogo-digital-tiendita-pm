@@ -41,7 +41,7 @@ class Registro extends Model
      * - modelo: datos entrantes de la tabla que se está modificando
      * - nombre_acción: nombre de la acción a realizar, si no existe, se crea una nueva acción
      */
-    public static function registrar_accion(Model|null $modelo, string $nombre_accion)
+    public static function registrar_accion(Model|null $modelo, string|null $nombre_accion)
     {
         $admin = Auth::guard('admin')->user();
         $user = Auth::guard('web')->user();

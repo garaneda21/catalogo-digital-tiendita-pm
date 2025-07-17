@@ -11,6 +11,7 @@ use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProductoUserController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\WebpayController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -79,6 +80,16 @@ Route::get('/carrito/cantidad', [CarritoController::class, 'cantidad'])->name('c
 
 // Rutas de checkout
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout/pagar', [CheckoutController::class, 'pagar'])->name('checkout.pagar');
+Route::get('/checkout/error', function () {
+    return view('checkout.error', [
+        'mensaje' => 'Pago cancelado o no autorizado.',
+    ]);
+})->name('checkout.error');
+
+// Rutas de Webpay
+Route::post('/webpay/iniciar', [WebpayController::class, 'iniciarPago'])->name('webpay.iniciar');
+Route::match(['get', 'post'], '/webpay/respuesta', [WebpayController::class, 'respuestaPago'])->name('webpay.respuesta');
 
 // LARAVEL
 
