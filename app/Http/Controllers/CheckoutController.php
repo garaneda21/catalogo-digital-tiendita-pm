@@ -20,7 +20,8 @@ class CheckoutController extends Controller
             ->first();
 
         if (! $carrito || $carrito->items->isEmpty()) {
-            return redirect()->route('carrito.index')->with('error', 'El carrito está vacío.');
+            /* return redirect()->route('carrito.index')->with('error', 'El carrito está vacío.'); */
+            return redirect()->route('register');
         }
 
         $totalSinDescuento = $carrito->items->sum(function ($item) {
