@@ -1,5 +1,5 @@
 <x-layouts.estructura>
-    <div class="container mx-auto px-4 py-6">
+    <div class="container mx-auto px-4 py-6 min-h-screen">
         <h1 class="text-2xl font-bold mb-6">Tu compra ({{ $carrito->items->count() }} productos)</h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -7,7 +7,7 @@
             <div class="lg:col-span-2 space-y-4 overflow-y-auto" style="max-height: 600px;">
                 @foreach($carrito->items as $item)
                     <div class="border rounded-lg p-4 flex items-start gap-4 bg-white">
-                        
+
                         <img src="{{ $item->producto->imagen_url ? asset('storage/' . $item->producto->imagen_url) : '/images/placeholder-product.jpg' }}"
                              alt="{{ $item->producto->nombre_producto }}"
                              class="w-32 h-32 object-contain">
@@ -80,8 +80,8 @@
                     Continuar tu compra
                 </a>
 
-                
-                
+
+
             </div>
         </div>
     </div>
