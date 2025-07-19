@@ -2,6 +2,18 @@
 
 Sistema de catálogo digital para emprendimiento Tiendita PM, con visualización de productos y panel de administrador.
 
+<img width="750" alt="Screenshot 2025-07-17 at 17-11-22 " src="https://github.com/user-attachments/assets/dfc4e15e-758c-480c-bef9-472d93a85113" />
+
+> Pantalla de Inicio
+
+<img width="750" alt="Screenshot 2025-07-17 at 17-12-25 Dashboard" src="https://github.com/user-attachments/assets/fa2b50fb-4fac-415c-b7a3-92c990cfa37e" />
+
+> Panel de Administración, Módulo Productos
+
+<img width="750" alt="Screenshot 2025-07-17 at 17-39-52 Dashboard" src="https://github.com/user-attachments/assets/bb35eab3-2d19-4317-aefb-c4c7c8feda64" />
+
+> Panel de Administración, Módulo Administradores
+
 ## Requisitos
 
 - PHP 8.X
@@ -13,7 +25,6 @@ Sistema de catálogo digital para emprendimiento Tiendita PM, con visualización
 ## Instalación (entorno de desarrollo)
 
 <details>
-
 <summary>Click para pasos de instalación</summary>
 
 ### Instalando en entorno de desarrollo
@@ -73,7 +84,15 @@ php artisan migrate
 composer run dev
 ```
 
-    
+</details>
+
+## Instalación (entorno de desarrollo)
+
+<details>
+<summary>Click para pasos de instalación</summary>
+
+### *PRONTO*
+
 </details>
 
 ## Instalación (Producción)
