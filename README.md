@@ -86,15 +86,6 @@ composer run dev
 
 </details>
 
-## Instalación (entorno de desarrollo)
-
-<details>
-<summary>Click para pasos de instalación</summary>
-
-### *PRONTO*
-
-</details>
-
 ## Instalación (Producción)
 
 <details>
@@ -105,8 +96,10 @@ composer run dev
 
 Asumiendo que se instalará en un servidor usando Debian Linux, y que la base de
 datos MySQL se encuentra funcionando (La base de datos puede ser externa o
-estar instalada en el mismo servidor, luego configurar asegurarse de configurar
+estar instalada en el mismo servidor, luego asegurarse de configurar
 el archivo `.env`).
+
+No se toma en cuenta el uso de certificados SSL en los siguientes pasos.
 
 1. Clonar repositorio
 
@@ -131,18 +124,70 @@ cp .env.example .env
 - Configurar `APP_ENV=production`.
 - Configurar `APP_DEBUG=false` para el entorno de producción.
 - Configurar `APP_URL` con la URL que alojará la aplicación.
-- Configurar la conexión a la base de datos
+- Configurar la conexión a la base de datos.
 - Generar clave de aplicación en archivo ´.env´ con el comando `php artisan key:generate`.
 - Enlazar el storage con el directorio `/public` con el comando `php artisan storage:link`.
+- Ejecutar `npm run build`.
 
+4. Ahora se pasará a configurar el servidor, primero mover el proyecto al servidor (ftp, ssh, etc.).
 
+5. Instalar dependencias en el servidor.
 
+```bash
+sudo apt install php8.2 php8.2-cli php8.2-fpm php8.2-mysql php8.2-curl \
+php8.2-mbstring php8.2-xml php8.2-zip php8.2-bcmath php8.2-readline \
+php8.2-soap php8.2-intl php8.2-common unzip -y
+```
 
+6. Instalar servidor web NGINX
 
+```bash
+sudo apt install nginx
+```
 
+Comprobar que está funcionando NGINX
+- Se puede usar el comando `curl http://localhost:80` o abrir el mismo url en el navegador.
+- También se puede comprobar con el comando `systemctl status nginx`.
 
+7. Configurar NGINX
 
-Optimizar aplicación para producción
+- Mover proyecto a la ruta `/var/www`.
+- Entregar permisos de directorios al servicio.
+
+```bash
+sudo chown -R www-data:www-data /var/www/catalogo-digital-tiendita-pm/storage
+sudo chown -R www-data:www-data /var/www/catalogo-digital-tiendita-pm/bootstrap/cache
+```
+
+- Configurar NGINX para que sirva el proyecto, para esto, crear un archivo de configuración en `/etc/nginx/sites-available/tiendita-pm`, laravel entrega una configuración recomendada en la [documentación](https://laravel.com/docs/12.x/deployment#server-configuration). Y como dice en la documentación, cambiar las siguietes líneas.
+
+```conf
+server_name <IP o dominio que se utilizará>;
+root /var/www/catalogo-digital-tiendita-pm/public;
+```
+
+- Ahora activar el sitio creando un enlace simbólico de este archivo en `sites-enabled`.
+
+```bash
+sudo ln -s /etc/nginx/sites-available/tiendita-pm /etc/nginx/sites-enabled/
+```
+
+> [!note] Nota
+> Puede que haya conflicto con el archivo de configuración por defecto de nginx `/etc/nginx/sites-enabled/default`, de puede eliminar.
+
+- Comprobar si la configuración es correcta
+
+```bash
+sudo nginx -t
+```
+
+- Aplicar cambios
+
+```bash
+sudo systemctl reload nginx
+```
+
+- Optimizar aplicación para producción (debe existir la conexión a la base de datos)
 
 ```bash
 php artisan optimize
@@ -153,16 +198,8 @@ php artisan route:cache
 php artisan view:cache
 ```
 
-
-3. Instalar servidor web NGINX
-
-```bash
-sudo apt install nginx
-```
-
-Comprobar que está funcionando NGINX
-- Se puede usar el comando `curl http://localhost:80` o abrir el mismo url en el navegador.
-- También se puede comprobar con el comando `systemctl status nginx`.
+> [!note] Nota
+> *Puede que hayan errores con los permisos de los archivos, dando acceso a `www-data` a los directorios `/storage` y `/bootstrap/cache` debería ser suficiente para NGINX y Laravel.*
 
 </details>
 
