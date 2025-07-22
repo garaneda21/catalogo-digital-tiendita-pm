@@ -125,8 +125,8 @@ cp .env.example .env
 - Configurar `APP_DEBUG=false` para el entorno de producción.
 - Configurar `APP_URL` con la URL que alojará la aplicación.
 - Configurar la conexión a la base de datos.
-- Generar clave de aplicación en archivo ´.env´ con el comando `php artisan key:generate`.
-- Enlazar el storage con el directorio `/public` con el comando `php artisan storage:link`.
+- Generar clave de aplicación en archivo `.env` con el comando `php artisan key:generate`.
+- Enlazar el storage con el directorio `/public` con el comando `php artisan storage:link` (puede que este paso sea mejor realizarlo dentro del servidor).
 - Ejecutar `npm run build`.
 
 4. Ahora se pasará a configurar el servidor, primero mover el proyecto al servidor (ftp, ssh, etc.).
@@ -172,7 +172,7 @@ root /var/www/catalogo-digital-tiendita-pm/public;
 sudo ln -s /etc/nginx/sites-available/tiendita-pm /etc/nginx/sites-enabled/
 ```
 
-> [!note] Nota
+> [!NOTE] Nota
 > Puede que haya conflicto con el archivo de configuración por defecto de nginx `/etc/nginx/sites-enabled/default`, de puede eliminar.
 
 - Comprobar si la configuración es correcta
@@ -198,7 +198,7 @@ php artisan route:cache
 php artisan view:cache
 ```
 
-> [!note] Nota
+> [!NOTE] Nota
 > *Puede que hayan errores con los permisos de los archivos, dando acceso a `www-data` a los directorios `/storage` y `/bootstrap/cache` debería ser suficiente para NGINX y Laravel.*
 
 </details>
