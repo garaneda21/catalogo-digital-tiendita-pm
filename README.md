@@ -172,8 +172,7 @@ root /var/www/catalogo-digital-tiendita-pm/public;
 sudo ln -s /etc/nginx/sites-available/tiendita-pm /etc/nginx/sites-enabled/
 ```
 
-> [!NOTE]
-> Puede que haya conflicto con el archivo de configuración por defecto de nginx `/etc/nginx/sites-enabled/default`, de puede eliminar.
+> NOTA: Puede que haya conflicto con el archivo de configuración por defecto de nginx `/etc/nginx/sites-enabled/default`, de puede eliminar.
 
 - Comprobar si la configuración es correcta
 
@@ -198,8 +197,7 @@ php artisan route:cache
 php artisan view:cache
 ```
 
-> [!NOTE]
-> *Puede que hayan errores con los permisos de los archivos, dando acceso a `www-data` a los directorios `/storage` y `/bootstrap/cache` debería ser suficiente para NGINX y Laravel.*
+> NOTA: Puede que hayan errores con los permisos de los archivos, dando acceso a `www-data` a los directorios `/storage` y `/bootstrap/cache` debería ser suficiente para NGINX y Laravel.
 
 </details>
 
